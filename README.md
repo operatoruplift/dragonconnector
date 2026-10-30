@@ -94,7 +94,7 @@ npm run assets
 
 ## Deploying
 
-Vercel serves `public/` as a static site. `vercel.json` runs the tests as the build step and sets a strict Content Security Policy.
+The Vercel project `dragonconnectorapp` deploys `main` to https://dragonconnectorapp.vercel.app, a public test address until the app moves to its own domain. It serves `public/` as a static site; `vercel.json` runs the tests as the build step and sets a strict Content Security Policy.
 
 ## Credits
 
