@@ -1,0 +1,29 @@
+{
+  "id": "/",
+  "name": "Dragon Connector · Da Nang / 001",
+  "short_name": "Dragon Connector",
+  "description": "Your quest log for Dragon Connector, a proposed Solana Mobile and AI hackathon in Da Nang.",
+  "lang": "en",
+  "start_url": "./#/",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0B0B0B",
+  "theme_color": "#0B0B0B",
+  "categories": ["events", "social", "productivity"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "brand/dragon-connector-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ],
+  "shortcuts": [
+    { "name": "Quests", "url": "./#/quests" },
+    { "name": "Messages", "url": "./#/inbox" },
+    { "name": "Schedule", "url": "./#/schedule" },
+    { "name": "Check-in pass", "url": "./#/checkin" }
+  ],
+  "screenshots": [
+    { "src": "icons/screenshot-narrow.png", "sizes": "780x1688", "type": "image/png", "form_factor": "narrow", "label": "Your quest journey from waitlist to demo" },
+    { "src": "icons/screenshot-wide.png", "sizes": "1440x900", "type": "image/png", "form_factor": "wide", "label": "Teammate matches with the reasons behind them" }
+  ]
+}

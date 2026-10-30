@@ -1,0 +1,181 @@
+// Event facts, taken from the Dragon Connector proposal (operatoruplift/da-nang-hackathon-proposal,
+// dist/proposal.json, revised 29 October 2026). Everything here is a proposal until the organizers
+// confirm it; keep the caveats with the facts when you change them.
+
+export const EVENT = {
+  name: 'Dragon Connector',
+  edition: 'Da Nang / 001',
+  tagline: 'Build. Ship. Connect.',
+  promise: 'Where builders connect.',
+  status: 'Event in planning',
+  summary: 'A proposed Solana Mobile and AI hackathon in Da Nang, Vietnam.',
+  timezone: 'Asia/Ho_Chi_Minh',
+  timezoneLabel: 'ICT · UTC+7',
+  proposalUrl: 'https://dragonconnector.vercel.app',
+  contentUpdated: '30 October 2026',
+  organizer: 'Matt Sim, Lead Executive Producer & Organizer',
+  venue: {
+    name: 'Swinburne University Vietnam',
+    city: 'Da Nang',
+    status: 'Proposed venue. The booking, room, address, capacity and access are not confirmed.',
+  },
+};
+
+// The organizers flip these when each step goes live. Preview mode unlocks the closed steps on
+// this device for demonstration only.
+export const GATES = {
+  registration: { open: false, note: 'Registration is not open. You can pre-register now: your details stay on this device until the official registration page exists.' },
+  checkIn: { note: 'Check-in opens at the venue on event day.' },
+  submissions: { note: 'Submissions open on event day and close at code freeze.' },
+};
+
+// Connect real services here. While these are null, the app keeps everything on the device and
+// says so wherever it matters.
+export const INTEGRATIONS = {
+  waitlistEndpoint: null, // HTTPS endpoint that accepts a JSON POST of the waitlist entry
+  registrationUrl: null, // the official registration page, once it exists
+  // SHA-256 (hex) of the venue check-in code, set shortly before the event; null until then.
+  checkInCodeSha256: null,
+};
+
+export const PREVIEW_CHECK_IN_CODE = 'DRAGON-001';
+
+const session = (format, day, start, end, title, type, detail = '') => ({ id: `${format}${day}-${start.replace(':', '')}`, start, end, title, type, detail });
+
+export const FORMATS = {
+  A: {
+    id: 'A',
+    label: 'Option A · one day',
+    short: 'One day',
+    dateLabel: 'Sunday 13 December 2026',
+    dates: ['2026-12-13'],
+    onboarding: '6–12 December',
+    buildLabel: '6h 45m of scheduled building',
+    buildMinutes: 405,
+    codeFreeze: '17:30–18:00',
+    close: '20:30',
+    note: 'A compact, single-day programme with two build sprints and evening demos.',
+    days: [{
+      date: '2026-12-13',
+      label: 'Sunday 13 December',
+      sessions: [
+        session('A', 1, '08:00', '09:00', 'Arrival and readiness', 'arrival', 'Registration, breakfast and technical checks.'),
+        session('A', 1, '09:00', '09:45', 'Opening and team formation', 'ceremony', 'Rules, team formation and approved partner remarks only.'),
+        session('A', 1, '09:45', '13:00', 'Morning build sprint', 'build', 'Build with mentor support, subject to accepted mentor availability.'),
+        session('A', 1, '13:00', '14:00', 'Lunch', 'meal', 'Optional interviews only with staffing and consent.'),
+        session('A', 1, '14:00', '17:30', 'Afternoon build and pitch preparation', 'build', 'Proposed dinner pickup 17:00–17:30; meal scope and vendor still to agree.'),
+        session('A', 1, '17:30', '18:00', 'Code freeze and upload', 'submission', 'Submit your repository and demo; eligibility review begins.'),
+        session('A', 1, '18:00', '18:15', 'Screening and finalist shortlist', 'judging', 'Up to ten finalists are announced.'),
+        session('A', 1, '18:15', '19:15', 'Finalist demos', 'demo', 'Up to ten slots: 3-minute demo, 2-minute Q&A, 1-minute transition.'),
+        session('A', 1, '19:15', '19:45', 'Deliberation and buffer', 'judging', 'Independent judging and programme buffer.'),
+        session('A', 1, '19:45', '20:30', 'Awards and close', 'ceremony', 'Awards only under funded, agreed terms; approved group photo.'),
+      ],
+    }],
+  },
+  B: {
+    id: 'B',
+    label: 'Option B · two days',
+    short: 'Two days',
+    dateLabel: 'Saturday 12 and Sunday 13 December 2026',
+    dates: ['2026-12-12', '2026-12-13'],
+    onboarding: '6–11 December',
+    buildLabel: '13h 15m of scheduled building',
+    buildMinutes: 795,
+    codeFreeze: 'Day 2, 16:00–16:30',
+    close: '19:00 on day 1, 18:45 on day 2',
+    note: 'Two daytime sessions with more time to integrate and test. The venue closes overnight; accommodation and travel are not included.',
+    days: [
+      {
+        date: '2026-12-12',
+        label: 'Day 1 · Saturday 12 December',
+        sessions: [
+          session('B', 1, '08:30', '09:15', 'Check-in and breakfast', 'arrival'),
+          session('B', 1, '09:15', '10:00', 'Opening, rules and team formation', 'ceremony'),
+          session('B', 1, '10:00', '12:30', 'Build sprint and mentor support', 'build'),
+          session('B', 1, '12:30', '13:15', 'Lunch', 'meal'),
+          session('B', 1, '13:15', '17:45', 'Build sprint and mentor support', 'build'),
+          session('B', 1, '17:45', '18:15', 'Progress checkpoint and next-day briefing', 'checkpoint'),
+          session('B', 1, '18:15', '19:00', 'Dinner and venue close', 'meal'),
+        ],
+      },
+      {
+        date: '2026-12-13',
+        label: 'Day 2 · Sunday 13 December',
+        sessions: [
+          session('B', 2, '08:30', '09:00', 'Breakfast and technical check', 'arrival'),
+          session('B', 2, '09:00', '12:30', 'Build sprint', 'build'),
+          session('B', 2, '12:30', '13:15', 'Lunch', 'meal'),
+          session('B', 2, '13:15', '16:00', 'Final build and pitch preparation', 'build'),
+          session('B', 2, '16:00', '16:30', 'Code freeze and submission upload', 'submission'),
+          session('B', 2, '16:30', '16:45', 'Eligibility screening and shortlist of up to ten finalists', 'judging'),
+          session('B', 2, '16:45', '17:45', 'Finalist demos', 'demo', 'Up to ten slots: 3-minute demo, 2-minute Q&A, 1-minute transition.'),
+          session('B', 2, '17:45', '18:15', 'Judging deliberation', 'judging'),
+          session('B', 2, '18:15', '18:45', 'Awards and close', 'ceremony'),
+        ],
+      },
+    ],
+  },
+};
+
+export const TRACKS = [
+  { id: 'mobile', title: 'Solana Mobile', description: 'Practical mobile experiences with a clear user problem and a demonstrable prototype.', output: 'Working mobile demo, repository and integration evidence', eligibility: 'Tooling, device access, exact integration requirements and any partner bounty terms are still to be agreed. Normal dApp Store requirements apply; no publishing fast-track is promised.' },
+  { id: 'ai', title: 'AI × Web3', description: 'Useful AI-assisted or AI-powered workflows with credible on-chain or mobile integration.', output: 'Working AI workflow, technical explanation and demo', eligibility: 'Actual tooling, credits, data rights and partner criteria must be confirmed.' },
+  { id: 'university', title: 'University Builder', description: 'Student teams turning an idea into an explainable working prototype.', output: 'Prototype, problem statement and concise pitch', eligibility: 'University and team eligibility and scoring rules will be published; no university participation is confirmed.' },
+];
+
+export const JUDGING = {
+  finalists: 10,
+  slotMinutes: 6,
+  slot: [{ label: 'Demo', minutes: 3 }, { label: 'Q&A', minutes: 2 }, { label: 'Transition', minutes: 1 }],
+  rubric: [
+    { label: 'Working mobile / AI prototype', points: 25 },
+    { label: 'UI/UX and consumer readiness', points: 25 },
+    { label: 'Solana / agreed partner integration', points: 25 },
+    { label: 'Pitch and business viability', points: 25 },
+  ],
+  status: 'Proposed rubric. Evidence standards, track rules, conflicts and tie-breaks will be published before launch. Sponsor bounties may have separate agreed criteria.',
+};
+
+export const PRIZES = {
+  // The same planned prize allocation applies to both formats.
+  scenarios: [
+    { tier: 'Lean', usd: 800 },
+    { tier: 'Target', usd: 1500 },
+    { tier: 'Flagship', usd: 3000 },
+  ],
+  cashReceivedUsd: 0,
+  notes: [
+    'These are planned allocations in the proposal budget, not funded or announced awards.',
+    'No sponsor cash has been received. The final pool depends on the funding scenario the event can secure.',
+    'Prize splits, eligibility, payment responsibility and timing will be published with the rules before launch.',
+    'Partner contributions fund the selected scenario. They do not automatically add to the prize pool.',
+  ],
+};
+
+export const TARGETS = [
+  { label: 'Registrations', range: '150–250' },
+  { label: 'Active builders', range: '80–120' },
+  { label: 'Eligible prototypes', range: '20–30' },
+];
+export const TARGET_NOTE = 'Planning targets, not guaranteed results. Final capacity depends on the venue, available funds and accepted staffing.';
+
+// Confirmed sponsors only: organizations that have agreed in writing to be named.
+// Shape: { name, tier, url, logo }. Empty until then; prospects are never listed here.
+export const SPONSORS = [];
+
+export const PARTNER_OFFERS = [
+  { title: 'Help fund the core event', funds: ['Prizes', 'Builder catering', 'Print', 'Connectivity', 'Confirmed delivery costs'] },
+  { title: 'Support a mobile builder track', funds: ['A restricted track bounty within the prize plan', 'An agreed device or testing scope'] },
+  { title: 'Back a focused technical bounty', funds: ['An agreed integration bounty within the selected funding scenario'] },
+  { title: 'Bring builders and expertise', funds: ['Outreach', 'Mentor hours', 'Accepted volunteer shifts'] },
+  { title: 'Cover a tangible delivery need', funds: ['Room and AV', 'Catered headcount', 'Connectivity and power', 'Consented media capture'] },
+];
+
+export const FAQS = [
+  { q: 'Is the event confirmed?', a: 'It is a proposal. Dates, format, the Swinburne booking, funds and delivery support still need agreement.' },
+  { q: 'Can people register now?', a: 'No registration page exists yet. Registration details will follow a viable delivery decision and published rules. You can pre-register in this app; your details stay on your device.' },
+  { q: 'Are prizes guaranteed?', a: 'Prize amounts are planning allowances. Funds, eligibility, payment ownership and every sponsor benefit must be agreed before they are announced.' },
+  { q: 'Are there sponsors?', a: 'Not yet. Organizations are prospects for discussion; no sponsorship, endorsement, credit or service support is confirmed.' },
+  { q: 'Does the two-day format include overnight access?', a: 'No. The venue closes overnight, and accommodation and travel are not included.' },
+  { q: 'Is the planned budget a ticket price?', a: 'No. It is the proposed production budget in USD. Admission terms have not been set.' },
+];
