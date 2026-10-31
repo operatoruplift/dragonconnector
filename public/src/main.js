@@ -1,11 +1,13 @@
-// App bootstrap: state, routing, the shell around each view, celebrations, install and offline.
-import { createStore } from './lib/store.js';
+// App bootstrap: state, routing, the shell around each view, celebrations, install, offline and
+// the connection to live services.
+import { createStore, newPassCode } from './lib/store.js';
+import { createBackend } from './lib/backend.js';
 import { html } from './lib/html.js';
 import { icon } from './lib/icons.js';
 import { levelFor, xpOf } from './lib/game.js';
 import { celebrate, startTour, toast } from './lib/ui.js';
 import { seedThreads } from './data/threads.js';
-import { EVENT } from './data/event.js';
+import { EVENT, INTEGRATIONS } from './data/event.js';
 import home from './views/home.js';
 import waitlist from './views/waitlist.js';
 import register from './views/register.js';
@@ -91,13 +93,6 @@ function safeStorage() {
   try { return window.localStorage; } catch { return null; }
 }
 
-function newPassCode() {
-  const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  const bytes = crypto.getRandomValues(new Uint8Array(8));
-  const code = [...bytes].map((byte) => alphabet[byte % alphabet.length]).join('');
-  return `DC-${code.slice(0, 4)}-${code.slice(4)}`;
-}
-
 // First run: the starting conversations and a check-in pass code.
 store.update((state) => {
   for (const thread of seedThreads()) if (!state.threads[thread.id]) state.threads[thread.id] = thread;
@@ -110,8 +105,31 @@ let installPrompt = null;
 addEventListener('beforeinstallprompt', (event) => { event.preventDefault(); installPrompt = event; scheduleRender(); });
 addEventListener('appinstalled', () => { installPrompt = null; store.update((state) => { state.installed = true; }); });
 
+// Supabase loads after the first render, so the app never waits for it.
+function loadSupabase() {
+  return new Promise((resolve, reject) => {
+    if (window.supabase?.createClient) { resolve(window.supabase.createClient); return; }
+    const script = document.createElement('script');
+    script.src = 'src/vendor/supabase.js';
+    script.onload = () => (window.supabase?.createClient ? resolve(window.supabase.createClient) : reject(new Error('Supabase did not load')));
+    script.onerror = () => { script.remove(); reject(new TypeError('Failed to fetch src/vendor/supabase.js')); };
+    document.head.append(script);
+  });
+}
+
+const backend = createBackend({
+  config: INTEGRATIONS.supabase,
+  loadClient: loadSupabase,
+  store,
+  viewing: () => (route().name === 'inbox' ? route().params[0] ?? null : null),
+  notify: (text, title) => toast(text, { title, duration: 6500 }),
+  onChange: () => scheduleRender(),
+  online: () => navigator.onLine !== false,
+});
+
 const ctx = {
   store,
+  backend,
   now: () => Date.now(),
   toast,
   celebrate,
@@ -143,6 +161,15 @@ const ctx = {
 
 const GLOBAL_ACTIONS = {
   'start-tour': () => ctx.startTour(),
+  'connect-details': async (button) => {
+    button.disabled = true;
+    await backend.connectDetails();
+    const status = backend.status();
+    if (status === 'live') toast('Your details are saved to your Dragon Connector account.', { title: 'Connected' });
+    else if (status === 'offline') toast('You are offline. Your details are sent when you are back online.', { title: 'Connecting later' });
+    else toast(`${backend.problem() || 'Accounts are not available right now.'} Your details stay on this device for now.`, { title: 'Not connected yet' });
+    button.disabled = false;
+  },
   install: async () => {
     if (!(await ctx.install()) && !store.get().installed) toast('Use your browser menu to add Dragon Connector to your home screen.', { title: 'Install' });
   },
@@ -259,9 +286,16 @@ for (const type of ['input', 'change']) {
 }
 
 store.subscribe(scheduleRender);
-addEventListener('hashchange', () => { recordVisit(); render(); });
+addEventListener('hashchange', () => { recordVisit(); render(); if (route().name === 'team') backend.refreshBuilders(); });
 recordVisit();
 render();
+
+// Live services: connect now, catch up when the connection or the app comes back, and check for
+// team changes while the app is open.
+backend.start().then(() => { if (route().name === 'team') backend.refreshBuilders(); });
+addEventListener('online', () => backend.start());
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') backend.refresh(); });
+setInterval(() => { if (document.visibilityState === 'visible') backend.refresh({ full: false }); }, 60000);
 
 // First visit: a short welcome, then the tour.
 if (!store.get().welcomed) {

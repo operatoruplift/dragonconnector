@@ -1,6 +1,6 @@
 // Guides, docs, the requirements checklist and the venue map. Body blocks are plain data
 // ({ p }, { h }, { list }, { links }) that the views escape and render.
-import { EVENT, FAQS, FORMATS, JUDGING } from './event.js';
+import { EVENT, FAQS, FORMATS, INTEGRATIONS, JUDGING } from './event.js';
 
 export const GUIDES = [
   {
@@ -13,7 +13,7 @@ export const GUIDES = [
       { h: 'The journey' },
       { list: ['Join the waitlist to show your interest.', 'Build your profile so teammates can find you.', 'Pre-register now, then complete registration when the official page opens.', 'Check in at the venue on event day.', 'Find teammates, message them and form a team.', 'Submit your project before code freeze.'] },
       { h: 'What is confirmed' },
-      { p: 'Nothing about the event is confirmed yet. Dates, venue, funding and prizes are proposals. The app says so wherever it matters, and keeps your data on this device until the official services exist.' },
+      { p: 'Nothing about the event is confirmed yet. Dates, venue, funding and prizes are proposals, and the app says so wherever it matters. The privacy doc explains where your details are kept.' },
     ],
   },
   {
@@ -147,7 +147,27 @@ export const DOCS = [
     slug: 'privacy',
     title: 'Privacy and your data',
     summary: 'What this app stores and where.',
-    body: [
+    body: INTEGRATIONS.supabase ? [
+      { p: 'Dragon Connector keeps what you enter in two places: on this device, so the app works offline, and in your Dragon Connector account, so the organizers can prepare the event and other builders can reach you.' },
+      { h: 'Your account' },
+      { p: `Your account is anonymous: there is no password or login email. It lives in this browser and is created the first time you save something, message someone or open Teammates. If you clear this browser's data, you lose access to it. Account data is stored by Supabase, hosted in ${INTEGRATIONS.supabase.region}.` },
+      { h: 'What goes to your account' },
+      { list: [
+        'Your waitlist entry (name, email, role and track), when you join the waitlist.',
+        'Your builder profile, pre-registration, pass code and project submission.',
+        'Your check-in time, and the messages and teams you take part in.',
+      ] },
+      { h: 'Who can see it' },
+      { list: [
+        'The organizers can see everything in the event database, including the waitlist, pre-registrations, submissions, check-ins and messages.',
+        'Other builders see your profile only if you choose "Show my profile to other builders", or once you message them or join the same team.',
+        'Messages are visible to the people in that conversation and to the organizers.',
+        'Messages to sample profiles and the Dragon Guide, your tasks, saved sessions and XP stay on this device.',
+      ] },
+      { h: 'Deleting your data' },
+      { p: 'Delete my data in Settings removes your profile, pre-registration, submission, check-in, the messages you sent, your team memberships and your waitlist entry from your account, disbands teams you created and clears this device. A waitlist entry sent before you had an account cannot be traced back to you, so ask the organizers to remove it.' },
+      { p: 'When registration opens, its own privacy notice will explain what is collected and why. Event reporting shares aggregate numbers only. Identifiable attendance records stay restricted.' },
+    ] : [
       { p: 'This app keeps everything you enter on this device only, in your browser\'s storage: your profile, waitlist entry, pre-registration, messages, tasks and submission. Nothing is sent to the organizers or anyone else.' },
       { p: 'Clearing your browser data, or choosing Reset in Settings, deletes it.' },
       { p: 'When registration opens, its own privacy notice will explain what is collected and why.' },

@@ -1,9 +1,9 @@
 import { html } from '../lib/html.js';
 import { icon } from '../lib/icons.js';
 import { REGISTRATION_STEPS, validateRegistrationStep } from '../lib/validate.js';
-import { registrationOpen } from '../lib/gates.js';
+import { officialRegistrationOpen, registrationOpen } from '../lib/gates.js';
 import { FORMATS, GATES, INTEGRATIONS } from '../data/event.js';
-import { errorSummary, field, head, options, previewNotice, questTag, readForm, roleLabel, showErrors, trackTitle } from './common.js';
+import { SERVICES, errorSummary, field, head, options, previewNotice, questTag, readForm, roleLabel, showErrors, syncNote, trackTitle } from './common.js';
 import { profileFields, readProfile } from './profile.js';
 
 const EXPERIENCE = [
@@ -36,7 +36,9 @@ function stepFields(step, data, profile) {
     return html`
       <div class="field"><label class="option"><input type="checkbox" name="conduct" ${data.conduct ? 'checked' : ''}><span>I agree to follow the <a href="#/docs/conduct">code of conduct</a>.</span></label><p class="error" data-error-for="conduct" hidden></p></div>
       ${options('media', MEDIA, data.media, { legend: 'Event photos and video' })}
-      <div class="field"><label class="option"><input type="checkbox" name="data" ${data.data ? 'checked' : ''}><span>I understand my pre-registration stays on this device until the official registration page exists, and that I will need to confirm my details there.</span></label><p class="error" data-error-for="data" hidden></p></div>`;
+      <div class="field"><label class="option"><input type="checkbox" name="data" ${data.data ? 'checked' : ''}><span>${SERVICES
+        ? html`Send my pre-registration to the Dragon Connector organizers. It is stored in their database to prepare registration, I will confirm my details when registration opens, and I can delete them in Settings. <a href="#/docs/privacy">How your data is kept</a>`
+        : 'I understand my pre-registration stays on this device until the official registration page exists, and that I will need to confirm my details there.'}</span></label><p class="error" data-error-for="data" hidden></p></div>`;
   }
   const format = FORMAT_CHOICES.find((choice) => choice.id === data.format);
   return html`<dl class="summary-list">
@@ -60,25 +62,25 @@ function readStep(step, form, state) {
 }
 
 export default {
-  title: () => (GATES.registration.open ? 'Register' : 'Pre-register'),
+  title: (state) => (officialRegistrationOpen(state) ? 'Register' : 'Pre-register'),
   live: false,
-  render(state, params) {
+  render(state, params, ctx) {
     const registration = state.registration;
-    const open = GATES.registration.open;
+    const open = officialRegistrationOpen(state);
     const title = open ? 'Register' : 'Pre-register';
     const intro = head('Step 02 · Get in', title, open
-      ? 'Registration is open. Complete these steps, then confirm on the official registration page.'
+      ? `Registration is open. Complete these steps${INTEGRATIONS.registrationUrl ? ', then confirm on the official registration page' : ' to register'}.`
       : GATES.registration.note);
     const finished = ['pre-registered', 'registered'].includes(registration.status);
     if (finished && params[0] !== 'edit') {
       return html`<section class="view">${intro}
         <div class="card accent">
-          <div class="card-head"><p class="eyebrow">${open && INTEGRATIONS.registrationUrl ? 'Almost there' : 'Pre-registration saved'}</p>${questTag(state, 'register')}</div>
+          <div class="card-head"><p class="eyebrow">${open && INTEGRATIONS.registrationUrl ? 'Almost there' : registration.status === 'registered' ? 'Registered' : 'Pre-registration saved'}</p>${questTag(state, 'register')}</div>
           <h2>${registration.data.name}, you are ready.</h2>
           ${stepFields(4, registration.data, state.profile)}
           <p class="muted">${INTEGRATIONS.registrationUrl && open
             ? 'Finish on the official registration page to secure your place. Your details here are a copy for your reference.'
-            : 'Saved on this device on ' + new Date(registration.updatedAt).toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' }) + '. When registration opens you will confirm these details on the official page.'}</p>
+            : `Last updated ${new Date(registration.updatedAt).toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' })}. ${syncNote(state, ctx)}${open ? '' : ' When registration opens, you will confirm these details.'}`}</p>
           <div class="form-actions">${INTEGRATIONS.registrationUrl && open ? html`<a class="btn primary" href="${INTEGRATIONS.registrationUrl}" target="_blank" rel="noopener noreferrer">Official registration ${icon('external')}</a>` : html`<a class="btn primary" href="#/team">Find teammates ${icon('arrow')}</a>`}<a class="btn" href="#/register/edit">Edit details</a></div>
         </div>
       </section>`;
@@ -96,7 +98,7 @@ export default {
           ${step > 0 ? html`<button type="button" class="btn" data-action="previous">${icon('back')} Back</button>` : ''}
           <button class="btn primary" type="submit">${last ? (registrationOpen(state) && open ? 'Complete registration' : 'Save pre-registration') : 'Continue'} ${last ? icon('check') : icon('arrow')}</button>
         </div>
-        <p class="small-print">Saved on this device as you go.</p>
+        <p class="small-print">${SERVICES ? 'Saved on this device as you go. The organizers receive a copy when you finish.' : 'Saved on this device as you go.'}</p>
       </form>
     </section>`;
   },
@@ -127,7 +129,7 @@ export default {
         });
       } else {
         ctx.store.update((draft) => {
-          draft.registration.status = GATES.registration.open ? 'registered' : 'pre-registered';
+          draft.registration.status = officialRegistrationOpen(draft) ? 'registered' : 'pre-registered';
           draft.registration.updatedAt = ctx.now();
           draft.registration.step = 0;
         });

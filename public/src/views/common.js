@@ -3,7 +3,39 @@ import { html, esc } from '../lib/html.js';
 import { icon } from '../lib/icons.js';
 import { QUESTS } from '../lib/game.js';
 import { ROLES } from '../data/people.js';
-import { TRACKS } from '../data/event.js';
+import { INTEGRATIONS, TRACKS } from '../data/event.js';
+
+/** True when the app is built to talk to live services (copy that must not change mid-form). */
+export const SERVICES = Boolean(INTEGRATIONS.supabase);
+
+/**
+ * How live services stand for this builder right now: 'local' (none), 'device' (details saved
+ * before accounts were connected, waiting for consent), or the connection status: 'connecting',
+ * 'ready', 'live', 'guest' (no account can be made) or 'offline'.
+ */
+export function liveMode(state, ctx) {
+  const status = ctx.backend?.status() ?? 'local';
+  if (status === 'local') return 'local';
+  return state.dataHome === 'account' ? status : 'device';
+}
+export const canGoLive = (mode) => ['connecting', 'ready', 'live'].includes(mode);
+
+/** Where something just saved has gone, in plain words. */
+export function syncNote(state, ctx) {
+  const mode = liveMode(state, ctx);
+  if (mode === 'local') return 'Saved on this device.';
+  if (mode === 'device') return 'Saved on this device. Connect your details in Settings to send a copy to the organizers.';
+  if (mode === 'offline') return 'Saved on this device. A copy goes to your Dragon Connector account when you are back online.';
+  if (mode === 'guest') return 'Saved on this device. A copy goes to your Dragon Connector account once accounts are switched on.';
+  return 'Saved on this device and to your Dragon Connector account.';
+}
+
+/** The invitation to connect details saved before accounts existed. */
+export const connectCard = () => html`<div class="card accent">
+  <div class="card-head"><h2>Connect your details</h2></div>
+  <p class="muted">You saved details here before Dragon Connector accounts were switched on, so they are on this device only. Connect them to send your waitlist entry, profile, pre-registration, team and submission to your account (Supabase, hosted in ${INTEGRATIONS.supabase?.region ?? 'the cloud'}). Then you can message builders and join teams. <a href="#/docs/privacy">How your data is kept</a>.</p>
+  <div class="row"><button type="button" class="btn primary small" data-action="connect-details">Connect my details</button></div>
+</div>`;
 
 export const usd = (value) => `$${Number(value).toLocaleString('en-US')}`;
 export const roleLabel = (id) => ROLES.find((role) => role.id === id)?.label ?? 'Role not set';
@@ -32,7 +64,7 @@ export function avatar(name, { me = false, large = false } = {}) {
 }
 
 export const previewNotice = (state) => (state.preview
-  ? html`<p class="notice"><strong>Preview mode is on.</strong> Steps that open later are unlocked on this device so you can try them. Nothing is sent anywhere.</p>`
+  ? html`<p class="notice"><strong>Preview mode is on.</strong> Steps that open later are unlocked on this device so you can try them. Preview check-ins and submissions are not sent to the organizers.</p>`
   : '');
 
 /** A labelled control with its hint and an error slot. */

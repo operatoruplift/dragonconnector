@@ -1,4 +1,5 @@
-// Conversations every new installation starts with.
+// Conversations every new installation starts with. Once the app reaches the event service, the
+// organizers' published announcements replace these copies.
 import { EVENT, FORMATS } from './event.js';
 
 const posted = Date.parse('2026-10-30T09:00:00+07:00');
@@ -8,14 +9,14 @@ export function seedThreads() {
     {
       id: 'announcements',
       kind: 'announcements',
-      title: 'Organizers',
-      subtitle: 'Announcements',
+      title: 'Announcements',
+      subtitle: 'From the organizers',
       readOnly: true,
       unread: 3,
       messages: [
         { id: 'a1', from: 'organizers', at: posted, text: `${EVENT.name} · ${EVENT.edition} is in planning. Dates, venue, funding and prizes are proposals until we confirm them here.` },
         { id: 'a2', from: 'organizers', at: posted + 60000, text: `Proposed formats: Option A on ${FORMATS.A.dateLabel} (one day), or Option B on ${FORMATS.B.dateLabel} (two daytime sessions). Proposed venue: ${EVENT.venue.name}, ${EVENT.venue.city}.` },
-        { id: 'a3', from: 'organizers', at: posted + 120000, text: 'Registration is not open. Join the waitlist and pre-register in the app so your details are ready. They stay on your device until the official registration page exists.' },
+        { id: 'a3', from: 'organizers', at: posted + 120000, text: 'Registration is not open. Join the waitlist and pre-register in the app so your details are ready.' },
       ],
     },
     {

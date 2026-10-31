@@ -3,7 +3,7 @@ import { icon } from '../lib/icons.js';
 import { submissionsOpen, formatOf } from '../lib/gates.js';
 import { SUBMISSION_CHECKS, splitList, validateSubmission } from '../lib/validate.js';
 import { GATES, TRACKS } from '../data/event.js';
-import { errorSummary, field, head, previewNotice, questTag, readForm, showErrors, trackTitle } from './common.js';
+import { SERVICES, errorSummary, field, head, previewNotice, questTag, readForm, showErrors, syncNote, trackTitle } from './common.js';
 
 function readSubmission(form) {
   const data = readForm(form);
@@ -44,17 +44,19 @@ export default {
     if (submission.status === 'submitted' && params[0] !== 'edit') {
       return html`<section class="view">${intro}
         <div class="card accent">
-          <div class="card-head"><p class="eyebrow">Submitted${state.preview ? ' · preview' : ''}</p>${questTag(state, 'submit')}</div>
+          <div class="card-head"><p class="eyebrow">Submitted${submission.preview ? ' · preview' : ''}</p>${questTag(state, 'submit')}</div>
           <h2>${data.name}</h2>
           ${summary(state, data)}
-          <p class="small-print">Submitted ${new Date(submission.submittedAt).toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' })}. Saved on this device; the official submission platform will be announced with the rules.</p>
+          <p class="small-print">Submitted ${new Date(submission.submittedAt).toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' })}. ${submission.preview
+            ? 'This was a preview, so it stays on this device. Submit again once submissions open.'
+            : SERVICES ? syncNote(state, ctx) : 'Saved on this device; the official submission platform will be announced with the rules.'}</p>
           <div class="form-actions"><a class="btn primary" href="#/guides/demo">Prepare your demo ${icon('arrow')}</a><a class="btn" href="#/submit/edit">Update submission</a></div>
         </div>
       </section>`;
     }
     return html`<section class="view">${intro}
       ${previewNotice(state)}
-      ${open ? '' : html`<p class="notice quiet">${GATES.submissions.note} Your draft saves on this device as you type.</p>`}
+      ${open ? '' : html`<p class="notice quiet">${GATES.submissions.note} Your draft saves as you type.</p>`}
       <form data-form="submission" class="card" novalidate data-input="autosave">
         <div class="card-head"><h2>Project details</h2><div class="row">${questTag(state, 'draft')}${questTag(state, 'submit')}</div></div>
         ${errorSummary()}
@@ -98,7 +100,7 @@ export default {
         draft.submission.updatedAt = ctx.now();
         if (draft.submission.status === 'empty') draft.submission.status = 'draft';
       });
-      ctx.toast('Your draft is saved on this device.', { title: 'Draft saved' });
+      ctx.toast(syncNote(ctx.store.get(), ctx), { title: 'Draft saved' });
     },
   },
   forms: {
@@ -112,8 +114,10 @@ export default {
         return;
       }
       if (!showErrors(form, validateSubmission(data, { final: true }))) return;
+      // Submitted only through preview mode: kept on this device, a draft for the organizers.
+      const preview = !submissionsOpen({ ...state, preview: false }, ctx.now());
       ctx.store.update((draft) => {
-        draft.submission = { status: 'submitted', data, updatedAt: ctx.now(), submittedAt: ctx.now() };
+        draft.submission = { status: 'submitted', data, updatedAt: ctx.now(), submittedAt: ctx.now(), preview };
       });
       ctx.navigate('submit');
       ctx.rerender();

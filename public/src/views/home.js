@@ -1,9 +1,10 @@
 import { html } from '../lib/html.js';
 import { icon } from '../lib/icons.js';
 import { BADGES, QUESTS, earnedBadges, levelFor, nextQuest, xpOf } from '../lib/game.js';
-import { checkInOpen, formatOf, submissionsOpen } from '../lib/gates.js';
+import { checkInOpen, formatOf, officialRegistrationOpen, submissionsOpen } from '../lib/gates.js';
 import { countdown, eventWindow } from '../lib/time.js';
-import { EVENT, GATES } from '../data/event.js';
+import { EVENT } from '../data/event.js';
+import { connectCard, liveMode } from './common.js';
 
 // The participant journey, in the order people move through it.
 export const JOURNEY = [
@@ -88,7 +89,8 @@ export default {
         </div>` : html`<div class="card accent"><p class="eyebrow">All quests complete</p><h2>Legendary.</h2><p class="muted">You have done everything the app can track. See you on the build floor.</p></div>`}
       </div>
 
-      ${GATES.registration.open ? '' : html`<p class="notice"><strong>Registration is not open.</strong> Join the waitlist and pre-register so you are ready when it opens. The app keeps your details on this device until then.</p>`}
+      ${officialRegistrationOpen(state) ? '' : html`<p class="notice"><strong>Registration is not open.</strong> Join the waitlist and pre-register so you are ready when it opens.</p>`}
+      ${liveMode(state, ctx) === 'device' ? connectCard() : ''}
 
       <section class="card" aria-labelledby="journey-title" data-tour="journey">
         <div class="card-head"><h2 id="journey-title">Your journey</h2><span class="small-print">${JOURNEY.filter((step) => state.quests[step.quest]).length} of ${JOURNEY.length} steps</span></div>

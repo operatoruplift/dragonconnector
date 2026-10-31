@@ -1,16 +1,8 @@
 import { html } from '../lib/html.js';
 import { icon } from '../lib/icons.js';
 import { DOCS } from '../data/content.js';
-import { INTEGRATIONS } from '../data/event.js';
 import { back, head, questTag } from './common.js';
 import { blocks } from './guides.js';
-
-function body(doc) {
-  if (doc.slug === 'privacy' && INTEGRATIONS.waitlistEndpoint) {
-    return [{ p: 'This app keeps what you enter on this device, in your browser\'s storage, except your waitlist entry: joining the waitlist sends your name, email, role and track to the organizers\' waitlist service.' }, ...doc.body.slice(1)];
-  }
-  return doc.body;
-}
 
 export default {
   title: (state, params) => DOCS.find((doc) => doc.slug === params[0])?.title ?? 'Docs',
@@ -23,7 +15,7 @@ export default {
         ${doc.slug === 'rules' ? html`<div class="row">${questTag(state, 'rules')}</div>` : ''}
         <article class="prose">${doc.faqs
           ? doc.faqs.map((item) => html`<details class="faq"><summary>${item.q}</summary><p>${item.a}</p></details>`)
-          : blocks(body(doc))}</article>
+          : blocks(doc.body)}</article>
       </section>`;
     }
     return html`<section class="view">

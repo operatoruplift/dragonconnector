@@ -21,21 +21,26 @@ export const EVENT = {
   },
 };
 
-// The organizers flip these when each step goes live. Preview mode unlocks the closed steps on
-// this device for demonstration only.
+// Fallbacks for which steps are open. Once the app reaches the event service, the organizers'
+// switches in the event_settings table decide (see lib/gates.js). Preview mode unlocks the closed
+// steps on this device for demonstration only.
 export const GATES = {
-  registration: { open: false, note: 'Registration is not open. You can pre-register now: your details stay on this device until the official registration page exists.' },
+  registration: { open: false, note: 'Registration is not open. Pre-register now so your details are ready when it opens.' },
   checkIn: { note: 'Check-in opens at the venue on event day.' },
   submissions: { note: 'Submissions open on event day and close at code freeze.' },
 };
 
-// Connect real services here. While these are null, the app keeps everything on the device and
-// says so wherever it matters.
+// Live services. Without supabase, the app keeps everything on the device and says so.
 export const INTEGRATIONS = {
-  waitlistEndpoint: null, // HTTPS endpoint that accepts a JSON POST of the waitlist entry
-  registrationUrl: null, // the official registration page, once it exists
-  // SHA-256 (hex) of the venue check-in code, set shortly before the event; null until then.
-  checkInCodeSha256: null,
+  registrationUrl: null, // an external registration page, if registration moves elsewhere
+  // The Supabase project behind accounts, the waitlist, messages, teams, submissions and check-in.
+  // The anon key is public by design: row-level security (supabase/migrations) decides what it
+  // can reach. Never put a service_role or secret key here.
+  supabase: {
+    url: 'https://ondistgfpmodesjrharp.supabase.co',
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9uZGlzdGdmcG1vZGVzanJoYXJwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcyNTIxNDEsImV4cCI6MjA3MjgyODE0MX0.QY_Bok1Uyb1y1QPANEOLmRT_GclQciajia8Hw7MQxuM',
+    region: 'the United States (Ohio)',
+  },
 };
 
 export const PREVIEW_CHECK_IN_CODE = 'DRAGON-001';
@@ -173,7 +178,7 @@ export const PARTNER_OFFERS = [
 
 export const FAQS = [
   { q: 'Is the event confirmed?', a: 'It is a proposal. Dates, format, the Swinburne booking, funds and delivery support still need agreement.' },
-  { q: 'Can people register now?', a: 'No registration page exists yet. Registration details will follow a viable delivery decision and published rules. You can pre-register in this app; your details stay on your device.' },
+  { q: 'Can people register now?', a: 'Not yet. Registration details will follow a viable delivery decision and published rules. You can join the waitlist and pre-register in this app so your details are ready.' },
   { q: 'Are prizes guaranteed?', a: 'Prize amounts are planning allowances. Funds, eligibility, payment ownership and every sponsor benefit must be agreed before they are announced.' },
   { q: 'Are there sponsors?', a: 'Not yet. Organizations are prospects for discussion; no sponsorship, endorsement, credit or service support is confirmed.' },
   { q: 'Does the two-day format include overnight access?', a: 'No. The venue closes overnight, and accommodation and travel are not included.' },

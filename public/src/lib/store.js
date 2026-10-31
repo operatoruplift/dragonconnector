@@ -3,6 +3,14 @@
 // the app keeps working in memory when it does.
 import { applyProgress } from './game.js';
 
+/** A check-in pass code like DC-7KQ4-M2XP, without look-alike characters. */
+export function newPassCode() {
+  const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  const bytes = crypto.getRandomValues(new Uint8Array(8));
+  const code = [...bytes].map((byte) => alphabet[byte % alphabet.length]).join('');
+  return `DC-${code.slice(0, 4)}-${code.slice(4)}`;
+}
+
 export const STORAGE_KEY = 'dragonconnector:v1';
 export const SCHEMA_VERSION = 1;
 
@@ -16,11 +24,17 @@ export function initialState(now) {
     installed: false,
     format: 'A',
     passCode: null,
-    profile: { name: '', email: '', role: '', skills: [], tracks: [], lookingFor: '', languages: [], formats: [], bio: '', github: '' },
+    // 'account': the builder's records sync to their Dragon Connector account. 'device': saved
+    // before accounts were connected, so they stay here until the builder connects them.
+    dataHome: 'account',
+    eventSettings: null,
+    profile: { name: '', email: '', role: '', skills: [], tracks: [], lookingFor: '', languages: [], formats: [], bio: '', github: '', discoverable: false },
     waitlist: null,
     registration: { status: 'none', step: 0, data: {}, updatedAt: null },
     checkIn: null,
     team: null,
+    invitations: [],
+    builders: [],
     threads: {},
     submission: { status: 'empty', data: {}, updatedAt: null, submittedAt: null },
     bookmarks: [],
@@ -32,14 +46,20 @@ export function initialState(now) {
   };
 }
 
+// Details typed before accounts were connected were promised to stay on the device.
+const hasPersonalData = (saved) => Boolean(saved.profile?.name?.trim() || saved.waitlist || saved.team
+  || (saved.registration?.status ?? 'none') !== 'none' || (saved.submission?.status ?? 'empty') !== 'empty'
+  || Object.values(saved.threads ?? {}).some((thread) => ['dm', 'team'].includes(thread?.kind) && thread.messages?.some((message) => message.from === 'me')));
+
 /** Fill in anything a saved state lacks, so older saves keep working as the app grows. */
 export function migrate(saved, now) {
   const base = initialState(now);
   if (!saved || typeof saved !== 'object' || saved.version !== SCHEMA_VERSION) return base;
   const merged = { ...base, ...saved };
   for (const key of ['profile', 'registration', 'submission']) merged[key] = { ...base[key], ...(saved[key] ?? {}) };
-  for (const key of ['bookmarks', 'guidesRead', 'requirementsChecked', 'tasks']) if (!Array.isArray(merged[key])) merged[key] = [];
+  for (const key of ['bookmarks', 'guidesRead', 'requirementsChecked', 'tasks', 'invitations', 'builders']) if (!Array.isArray(merged[key])) merged[key] = [];
   for (const key of ['threads', 'visited', 'quests']) if (!merged[key] || typeof merged[key] !== 'object') merged[key] = {};
+  if (!['account', 'device'].includes(saved.dataHome)) merged.dataHome = hasPersonalData(saved) ? 'device' : 'account';
   return merged;
 }
 

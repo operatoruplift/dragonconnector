@@ -50,6 +50,14 @@ test('the service worker caches every app file, and its list is up to date', () 
   assert.match(read('sw.js'), /importScripts\('precache\.js'\)/);
 });
 
+test('the vendored Supabase client is the published 2.118.0 build, loaded only after the app starts', () => {
+  assert.equal(createHash('sha256').update(readFileSync(file('src/vendor/supabase.js'))).digest('hex'), 'ee3be8de192b97cb1d73d1e95d6b82bb1f6b658c0f97c4ef757fc331996ed3d3');
+  assert.match(read('src/vendor/LICENSE-supabase-js.txt'), /^MIT License/);
+  assert.doesNotMatch(read('index.html'), /supabase/, 'the first render never waits for it');
+  assert.match(read('src/main.js'), /script\.src = 'src\/vendor\/supabase\.js'/);
+  assert.ok(read('precache.js').includes('"src/vendor/supabase.js"'), 'cached for offline use');
+});
+
 test('the vendored QR library is the published file and draws a square code with a quiet zone', () => {
   assert.equal(createHash('sha256').update(readFileSync(file('src/vendor/qrcode.mjs'))).digest('hex'), 'ea91d7118a5395289170da848b7c6758b996163bfbccf312591ab65a4911b7c0');
   const svg = String(qrSvg('DC001:DC-7KQ4-M2XP'));
