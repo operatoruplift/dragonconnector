@@ -3,6 +3,7 @@
 export const isEmail = (value = '') => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value.trim());
 
 export function isWebUrl(value = '') {
+  if (/\s/.test(value.trim())) return false;
   try {
     const url = new URL(value.trim());
     return (url.protocol === 'https:' || url.protocol === 'http:') && url.hostname.includes('.');
@@ -34,10 +35,12 @@ export function validateProfile(profile) {
   length(errors, 'name', profile.name, { min: 2, max: 60, label: 'your name' });
   if (!profile.role) errors.role = 'Choose your main role.';
   if ((profile.skills?.length ?? 0) < 3) errors.skills = 'Add at least three skills, separated by commas.';
+  else if (profile.skills.some((skill) => skill.length > 40)) errors.skills = 'Keep each skill under 40 characters.';
   if (!profile.tracks?.length) errors.tracks = 'Choose at least one track.';
   if (!profile.lookingFor) errors.lookingFor = 'Choose what you are looking for.';
   if (text(profile.bio).length > 280) errors.bio = 'Keep your bio under 280 characters.';
   if (text(profile.github) && !isWebUrl(profile.github)) errors.github = 'Enter a full link, starting with https://.';
+  else if (text(profile.github).length > 200) errors.github = 'Keep the link under 200 characters.';
   return errors;
 }
 
@@ -82,6 +85,8 @@ export function validateSubmission(data, { final = false } = {}) {
   if (!isWebUrl(data.repo)) errors.repo = 'Enter your repository link, starting with https://.';
   if (text(data.video) && !isWebUrl(data.video)) errors.video = 'Enter the full video link, starting with https://.';
   if (text(data.live) && !isWebUrl(data.live)) errors.live = 'Enter the full demo link, starting with https://.';
+  for (const field of ['repo', 'video', 'live']) if (!errors[field] && text(data[field]).length > 300) errors[field] = 'Keep links under 300 characters.';
+  if (data.stack?.some((item) => item.length > 40)) errors.stack = 'Keep each item under 40 characters.';
   const missing = SUBMISSION_CHECKS.filter((check) => !data.checks?.includes(check.id));
   if (missing.length) errors.checks = 'Confirm every statement before you submit.';
   return errors;

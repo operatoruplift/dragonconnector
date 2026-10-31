@@ -52,9 +52,31 @@ test('the app names no sponsor or prospect, never says "apply now", and keeps re
   for (const name of prospects) assert.doesNotMatch(appText, new RegExp(`\\b${name}\\b`), name);
   assert.doesNotMatch(appText, /apply now/i);
   assert.equal(GATES.registration.open, false);
-  assert.deepEqual(INTEGRATIONS, { waitlistEndpoint: null, registrationUrl: null, checkInCodeSha256: null });
+  assert.equal(INTEGRATIONS.registrationUrl, null);
   for (const offer of PARTNER_OFFERS) assert.ok(offer.title && offer.funds.length);
   assert.ok(FAQS.some((faq) => /not confirmed|It is a proposal/.test(faq.a)));
+});
+
+test('live services use the public key of one Supabase project, and the security policy allows only that project', () => {
+  const { url, anonKey, region } = INTEGRATIONS.supabase;
+  const { protocol, hostname, pathname } = new URL(url);
+  assert.equal(protocol, 'https:');
+  assert.equal(pathname, '/');
+  assert.match(hostname, /^[a-z]{20}\.supabase\.co$/);
+  assert.ok(region);
+  // The key ships to every browser, so it must be the public anon role. Never a service_role or secret key.
+  for (const [token] of appText.matchAll(/eyJ[\w-]+\.eyJ[\w-]+\.[\w-]+/g)) {
+    const claims = JSON.parse(Buffer.from(token.split('.')[1], 'base64url').toString());
+    assert.equal(claims.role, 'anon', 'only the anon key may appear in the app');
+    assert.equal(claims.ref, hostname.split('.')[0]);
+  }
+  assert.ok(appText.includes(anonKey));
+  assert.doesNotMatch(appText, /sb_secret_/);
+  const headers = JSON.parse(readFileSync(new URL('../vercel.json', import.meta.url), 'utf8')).headers[0].headers;
+  const csp = headers.find((header) => header.key === 'Content-Security-Policy').value.split(';').map((part) => part.trim().split(/\s+/));
+  const directive = (name) => csp.find(([key]) => key === name)?.slice(1);
+  assert.deepEqual(directive('connect-src'), ["'self'", `https://${hostname}`, `wss://${hostname}`]);
+  assert.deepEqual(directive('script-src'), ["'self'"]);
 });
 
 test('sample profiles are labelled, complete and use known roles and tracks', () => {

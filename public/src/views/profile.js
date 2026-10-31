@@ -4,7 +4,7 @@ import { profileComplete } from '../lib/game.js';
 import { splitList, validateProfile } from '../lib/validate.js';
 import { FORMATS, TRACKS } from '../data/event.js';
 import { LANGUAGES, LOOKING_FOR, ROLES, SKILL_SUGGESTIONS } from '../data/people.js';
-import { avatar, errorSummary, field, head, options, questTag, readForm, roleLabel, showErrors } from './common.js';
+import { SERVICES, avatar, errorSummary, field, head, options, questTag, readForm, roleLabel, showErrors, syncNote } from './common.js';
 
 /** The builder-profile fields, shared with step 2 of registration. */
 export function profileFields(profile) {
@@ -40,7 +40,7 @@ export function readProfile(form, previous = {}) {
 export default {
   title: () => 'Profile',
   live: false,
-  render(state) {
+  render(state, params, ctx) {
     const profile = state.profile;
     return html`<section class="view">
       ${head('You', 'Builder profile', 'Teammates see this when they look for people to build with. Matching uses your role, skills, tracks and goals.')}
@@ -49,17 +49,21 @@ export default {
       <form data-form="profile" novalidate class="card">
         ${errorSummary()}
         ${profileFields(profile)}
+        ${SERVICES ? html`<div class="field"><label class="option"><input type="checkbox" name="discoverable" ${profile.discoverable ? 'checked' : ''}><span><strong>Show my profile to other builders</strong><small>They see your name, role, skills, tracks, goals, languages, formats, bio and link, so they can send you an intro or invite you to a team. Turn it off any time.</small></span></label></div>` : ''}
         <div class="form-actions"><button class="btn primary" type="submit">${icon('check')} Save profile</button><a class="btn ghost" href="#/team">Find teammates</a></div>
-        <p class="small-print">Your profile stays on this device. Real builders will see profiles once accounts go live.</p>
+        <p class="small-print">${SERVICES
+          ? `${syncNote(state, ctx)} People you message or team up with can see your profile; everyone else only if you show it.`
+          : 'Your profile stays on this device. Real builders will see profiles once accounts go live.'}</p>
       </form>
     </section>`;
   },
   forms: {
     profile(form, event, ctx) {
       const profile = readProfile(form, ctx.store.get().profile);
+      if (form.elements.discoverable) profile.discoverable = form.elements.discoverable.checked;
       if (!showErrors(form, validateProfile(profile))) return;
       ctx.store.update((state) => { state.profile = profile; });
-      ctx.toast('Your profile is saved.', { title: 'Saved' });
+      ctx.toast(syncNote(ctx.store.get(), ctx), { title: 'Profile saved' });
       ctx.rerender();
     },
   },

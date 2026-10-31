@@ -3,8 +3,8 @@ import { icon } from '../lib/icons.js';
 import { checkInOpen, formatOf } from '../lib/gates.js';
 import { countdown, eventWindow } from '../lib/time.js';
 import qrcode from '../vendor/qrcode.mjs';
-import { GATES, INTEGRATIONS, PREVIEW_CHECK_IN_CODE } from '../data/event.js';
-import { head, previewNotice, questTag } from './common.js';
+import { GATES, PREVIEW_CHECK_IN_CODE } from '../data/event.js';
+import { SERVICES, head, previewNotice, questTag } from './common.js';
 
 /** An SVG QR code with a quiet zone, dark modules on ivory for reliable scanning. */
 export function qrSvg(text) {
@@ -19,11 +19,6 @@ export function qrSvg(text) {
     for (let column = 0; column < count; column += 1) if (code.isDark(row, column)) path += `M${column + quiet} ${row + quiet}h1v1h-1z`;
   }
   return raw(`<svg viewBox="0 0 ${size} ${size}" shape-rendering="crispEdges" aria-hidden="true"><rect width="${size}" height="${size}" fill="#F8F8F6"/><path d="${path}" fill="#0B0B0B"/></svg>`);
-}
-
-async function sha256(text) {
-  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
-  return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, '0')).join('');
 }
 
 export const normaliseCode = (value) => String(value).trim().toUpperCase().replace(/\s+/g, '');
@@ -54,6 +49,7 @@ export default {
             ${state.preview ? html`<p class="hint">Preview mode: use ${PREVIEW_CHECK_IN_CODE}.</p>` : ''}</div>
           <button class="btn primary" type="submit" ${open && !checked ? '' : 'disabled'}>${icon('scan')} Check in</button>
           ${!open ? html`<p class="small-print">${GATES.checkIn.note} Turn on preview mode in <a href="#/settings">Settings</a> to try it now.</p>` : ''}
+          ${SERVICES && !checked && !['pre-registered', 'registered'].includes(state.registration.status) ? html`<p class="small-print"><a href="#/register">Pre-register</a> first, so the organizers know who is checking in.</p>` : ''}
         </form>
       </div>
     </section>`;
@@ -65,12 +61,23 @@ export default {
       const slot = form.querySelector('[data-error-for="code"]');
       const fail = (message) => { slot.textContent = message; slot.hidden = false; form.querySelector('#f-code').setAttribute('aria-invalid', 'true'); form.querySelector('#f-code').focus(); };
       if (!entered) return fail('Enter the venue code.');
-      let valid = false;
-      if (state.preview) valid = entered === PREVIEW_CHECK_IN_CODE;
-      else if (INTEGRATIONS.checkInCodeSha256) valid = (await sha256(entered)) === INTEGRATIONS.checkInCodeSha256;
-      else return fail('Self check-in is not set up yet. Ask the check-in desk to scan your pass.');
-      if (!valid) return fail('That code does not match. Check it at the desk and try again.');
-      ctx.store.update((draft) => { draft.checkIn = { at: ctx.now(), method: 'code', preview: draft.preview }; });
+      // Before check-in really opens, preview mode checks the demo code on this device only.
+      if (state.preview && !checkInOpen({ ...state, preview: false }, ctx.now())) {
+        if (entered !== PREVIEW_CHECK_IN_CODE) return fail('That code does not match. Check it at the desk and try again.');
+        ctx.store.update((draft) => { draft.checkIn = { at: ctx.now(), method: 'code', preview: true }; });
+        return;
+      }
+      if (!ctx.backend || ctx.backend.status() === 'local') return fail('Self check-in is not set up yet. Ask the check-in desk to scan your pass.');
+      const button = form.querySelector('button[type="submit"]');
+      button.disabled = true;
+      const result = await ctx.backend.checkIn(entered);
+      button.disabled = false;
+      const problems = {
+        'wrong-code': 'That code does not match. Check it at the desk and try again.',
+        closed: 'Self check-in is not open yet. Ask the check-in desk to scan your pass.',
+        'too-many': 'Too many attempts. Wait ten minutes, or ask the check-in desk to scan your pass.',
+      };
+      if (result.status !== 'checked-in') fail(problems[result.status] ?? result.message ?? 'Check-in did not go through. Ask the check-in desk to scan your pass.');
     },
   },
 };

@@ -28,7 +28,7 @@ export const QUESTS = [
   { id: 'tour', phase: 'Get in', title: 'Take the app tour', xp: 50, route: 'home', done: (s) => s.tourDone },
   { id: 'install', phase: 'Get in', title: 'Install the app', xp: 50, route: 'settings', done: (s) => s.installed },
   { id: 'browse', phase: 'Find your crew', title: 'Explore teammate matches', xp: 20, route: 'team', done: (s) => Boolean(s.visited.team) },
-  { id: 'intro', phase: 'Find your crew', title: 'Send an intro to a builder', xp: 75, route: 'team', done: (s) => Object.values(s.threads).some((thread) => thread.kind === 'dm' && sentByMe(thread)) },
+  { id: 'intro', phase: 'Find your crew', title: 'Send an intro to a builder', xp: 75, route: 'team', done: (s) => Object.values(s.threads).some((thread) => ['dm', 'direct'].includes(thread.kind) && sentByMe(thread)) },
   { id: 'team', phase: 'Find your crew', title: 'Create your team', xp: 100, route: 'team', done: (s) => Boolean(s.team) },
   { id: 'guide-chat', phase: 'Find your crew', title: 'Ask the Dragon Guide a question', xp: 25, route: 'inbox/guide', done: (s) => sentByMe(s.threads.guide) },
   { id: 'first-guide', phase: 'Prepare', title: 'Read your first guide', xp: 20, route: 'guides', done: (s) => s.guidesRead.length >= 1 },
