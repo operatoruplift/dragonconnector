@@ -80,7 +80,7 @@ export default {
     async reset(button, event, ctx) {
       const services = Boolean(ctx.backend?.configured);
       if (!confirm(services
-        ? 'Delete your data? This removes your profile, pre-registration, submission, check-in, the messages you sent, your team and your waitlist entry from your Dragon Connector account, then clears this device. It cannot be undone.'
+        ? 'Delete your data? This removes your profile, pre-registration, submission, check-in, the messages you sent, your team and your waitlist entry, deletes your Dragon Connector account, then clears this device. It cannot be undone.'
         : 'Reset the app? This deletes your profile, messages, tasks, submission and XP from this device.')) return;
       if (services) {
         button.disabled = true;

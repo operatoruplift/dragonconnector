@@ -165,7 +165,7 @@ export const DOCS = [
         'Messages to sample profiles and the Dragon Guide, your tasks, saved sessions and XP stay on this device.',
       ] },
       { h: 'Deleting your data' },
-      { p: 'Delete my data in Settings removes your profile, pre-registration, submission, check-in, the messages you sent, your team memberships and your waitlist entry from your account, disbands teams you created and clears this device. A waitlist entry sent before you had an account cannot be traced back to you, so ask the organizers to remove it.' },
+      { p: 'Delete my data in Settings removes your profile, pre-registration, submission, check-in, the messages you sent, your team memberships and your waitlist entry, disbands teams you created, deletes the anonymous account itself and clears this device. A waitlist entry sent before you had an account cannot be traced back to you, so ask the organizers to remove it.' },
       { p: 'When registration opens, its own privacy notice will explain what is collected and why. Event reporting shares aggregate numbers only. Identifiable attendance records stay restricted.' },
     ] : [
       { p: 'This app keeps everything you enter on this device only, in your browser\'s storage: your profile, waitlist entry, pre-registration, messages, tasks and submission. Nothing is sent to the organizers or anyone else.' },

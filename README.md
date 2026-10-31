@@ -124,7 +124,7 @@ The other 14 quests reward the rest of the app, such as building your profile, a
   </tr>
   <tr valign="top">
     <td><b>Plain about data</b></td>
-    <td>Builders get an anonymous account (no password, no login email) the first time they save something, message someone or open Teammates. Browsing creates nothing. What they enter is also kept on the device, so the app works offline and syncs later. Each form says where its data goes, and the privacy doc lists who can see what. <b>Delete my data</b> in Settings removes the server copy and clears the device.</td>
+    <td>Builders get an anonymous account (no password, no login email) the first time they save something, message someone or open Teammates. Browsing creates nothing. What they enter is also kept on the device, so the app works offline and syncs later. Each form says where its data goes, and the privacy doc lists who can see what. <b>Delete my data</b> in Settings removes the server copy, deletes the anonymous account itself and clears the device.</td>
   </tr>
   <tr valign="top">
     <td><b>Consent for older data</b></td>
