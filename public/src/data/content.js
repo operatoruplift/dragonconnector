@@ -13,7 +13,7 @@ export const GUIDES = [
       { h: 'The journey' },
       { list: ['Join the waitlist to show your interest.', 'Build your profile so teammates can find you.', 'Pre-register now, then complete registration when the official page opens.', 'Check in at the venue on event day.', 'Find teammates, message them and form a team.', 'Submit your project before code freeze.'] },
       { h: 'What is confirmed' },
-      { p: 'Nothing about the event is confirmed yet. Dates, venue, funding and prizes are proposals. The app says so wherever it matters, and keeps your data on this device until the official services exist.' },
+      { p: 'Nothing about the event is confirmed yet. Dates, venue, funding and prizes are proposals, and the app says so wherever it matters. The privacy doc explains where your details are kept.' },
     ],
   },
   {
