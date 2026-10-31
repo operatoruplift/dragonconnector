@@ -64,15 +64,17 @@ Edit `public/src/data/event.js`:
 - **FAQ:** `FAQS`.
 - **Opening a step:** `GATES`. Set `registration.open` to `true` when registration opens.
 
-Run `npm test` afterwards. The content tests check the schedules still add up.
+Then run `npm run precache` and `npm test`. The content tests check the schedules still add up.
+
+Some tests pin today's state on purpose: registration closed, every `INTEGRATIONS` value `null` and `SPONSORS` empty. Opening registration, connecting a service or naming a sponsor fails `npm test`, and so the Vercel build, until the tests that pin it change in the same commit: `tests/content.test.mjs` in every case, `tests/engine.test.mjs` for registration or a sponsor (the Dragon Guide's answers change), and `tests/views.test.mjs` for registration.
 
 ## Connecting real services
 
 Settings live in `INTEGRATIONS` in `public/src/data/event.js`:
 
-- **`waitlistEndpoint`:** an HTTPS URL that accepts a JSON POST of `{ name, email, role, track, joinedAt }`. Add its origin to `connect-src` in the `vercel.json` security policy. The waitlist copy and the privacy doc change automatically.
+- **`waitlistEndpoint`:** an HTTPS URL that accepts a JSON POST of the entry, `{ name, email, role, track, joinedAt, sent }`, where `joinedAt` is a timestamp in milliseconds and `sent` is `false`. A 2xx response marks the entry as sent. Add its origin to `connect-src` in the `vercel.json` security policy. The waitlist copy and the privacy doc change automatically.
 - **`registrationUrl`:** the official registration page. Once registration is open, the registration screen links to it.
-- **`checkInCodeSha256`:** the SHA-256 hash of the venue code, so the code itself never appears in the public source. Create it with `printf 'YOUR-CODE' | sha256sum`.
+- **`checkInCodeSha256`:** the SHA-256 hash of the venue code, so the code itself never appears in the public source. The app trims what people type, converts it to upper case and removes spaces before hashing, so hash the code in that form: `printf 'YOUR-CODE' | sha256sum`, then copy the hex digest.
 
 Accounts, live messaging between builders, real teams and stored submissions need a backend with authentication. Supabase is a natural fit. The store (`lib/store.js`) is the place to sync from.
 
