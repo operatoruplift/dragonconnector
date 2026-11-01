@@ -45,7 +45,7 @@ export default {
       </div>
       <div class="card">
         <h2>Preview mode</h2>
-        <p class="muted">Registration, check-in and submission open later. Preview mode unlocks them on this device so organizers and builders can try the full journey. Preview check-ins and submissions are not sent to the organizers.</p>
+        <p class="muted">Registration, check-in and submission open later. Preview mode unlocks them on this device so organizers and builders can try the full journey, and fills the Sponsors page with example placements. Preview check-ins and submissions are not sent to the organizers.</p>
         <label class="option"><input type="checkbox" data-action="preview" ${state.preview ? 'checked' : ''}><span><strong>Preview closed steps</strong><small>Shows a Preview badge at the top while it is on.</small></span></label>
       </div>
       <div class="card">

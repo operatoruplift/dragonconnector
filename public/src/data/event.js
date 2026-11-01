@@ -1,5 +1,5 @@
 // Event facts, taken from the Dragon Connector proposal (operatoruplift/da-nang-hackathon-proposal,
-// dist/proposal.json, revised 29 October 2026). Everything here is a proposal until the organizers
+// dist/proposal.json, revised 1 November 2026). Everything here is a proposal until the organizers
 // confirm it; keep the caveats with the facts when you change them.
 
 export const EVENT = {
@@ -8,11 +8,11 @@ export const EVENT = {
   tagline: 'Build. Ship. Connect.',
   promise: 'Where builders connect.',
   status: 'Event in planning',
-  summary: 'A proposed Solana Mobile and AI hackathon in Da Nang, Vietnam.',
+  summary: 'A proposed mobile and AI hackathon in Da Nang, Vietnam.',
   timezone: 'Asia/Ho_Chi_Minh',
   timezoneLabel: 'ICT · UTC+7',
   proposalUrl: 'https://dragonconnector.vercel.app',
-  contentUpdated: '30 October 2026',
+  contentUpdated: '1 November 2026',
   organizer: 'Matt Sim, Lead Executive Producer & Organizer',
   venue: {
     name: 'Swinburne University Vietnam',
@@ -165,15 +165,34 @@ export const TARGETS = [
 export const TARGET_NOTE = 'Planning targets, not guaranteed results. Final capacity depends on the venue, available funds and accepted staffing.';
 
 // Confirmed sponsors only: organizations that have agreed in writing to be named.
-// Shape: { name, tier, url, logo }. Empty until then; prospects are never listed here.
+// Shape: { name, package, url, logo, blurb, track, challenge, provides }, where package is one of the
+// PACKAGES ids and decides where the sponsor appears. Empty until then; prospects are never listed here.
 export const SPONSORS = [];
 
-export const PARTNER_OFFERS = [
-  { title: 'Help fund the core event', funds: ['Prizes', 'Builder catering', 'Print', 'Connectivity', 'Confirmed delivery costs'] },
-  { title: 'Support a mobile builder track', funds: ['A restricted track bounty within the prize plan', 'An agreed device or testing scope'] },
-  { title: 'Back a focused technical bounty', funds: ['An agreed integration bounty within the selected funding scenario'] },
-  { title: 'Bring builders and expertise', funds: ['Outreach', 'Mentor hours', 'Accepted volunteer shifts'] },
-  { title: 'Cover a tangible delivery need', funds: ['Room and AV', 'Catered headcount', 'Connectivity and power', 'Consented media capture'] },
+// The five suggested packages from the proposal (dist/proposal.json, sponsor_packages), and where each
+// appears on the Sponsors page. Suggestions for discussion: nothing is sold or committed.
+export const PACKAGES = [
+  { id: 'presenting', name: 'Presenting partner', contribution: 'From $3,000', placement: 'The top banner: “Presented by”, with a logo, a description and a link.', funds: ['The core event: prizes, food, connectivity and print'] },
+  { id: 'track', name: 'Track partner', contribution: '$1,000–$2,500', placement: 'A featured card with a logo, the track it names, a description and a link.', funds: ['One track’s prizes and judging'] },
+  { id: 'challenge', name: 'Challenge partner', contribution: '$300–$1,000', placement: 'A logo card with its challenge and a link.', funds: ['One challenge prize inside a track'] },
+  { id: 'in-kind', name: 'In-kind partner', contribution: 'Goods or services', placement: 'A logo in the partners row, with what it provides.', funds: ['A delivery need: room and AV, catering, connectivity, apparel or media'] },
+  { id: 'community', name: 'Community partner', contribution: 'Time and reach', placement: 'A name in the community partners list.', funds: ['Outreach, mentor hours and volunteers'] },
+];
+
+// Placeholder brands that Preview mode shows on the Sponsors page, so organizers can show prospective
+// sponsors where each package appears. They are labelled as examples and never mixed with real sponsors.
+export const EXAMPLE_SPONSORS = [
+  { name: 'Your brand', package: 'presenting', blurb: 'A line about your company and why it backs Da Nang’s builders, with a link to your page.' },
+  { name: 'Your brand', package: 'track', track: 'Open track', blurb: 'Names the open track and sets its challenge.' },
+  { name: 'Your brand', package: 'track', track: 'Mobile track', blurb: 'Names the mobile track and sets its challenge.' },
+  { name: 'Your brand', package: 'challenge', challenge: 'Connected tourism' },
+  { name: 'Your brand', package: 'challenge', challenge: 'Everyday payments' },
+  { name: 'Your brand', package: 'in-kind', provides: 'Venue' },
+  { name: 'Your brand', package: 'in-kind', provides: 'Food and drink' },
+  { name: 'Your brand', package: 'in-kind', provides: 'Apparel' },
+  { name: 'Your community', package: 'community' },
+  { name: 'Your university', package: 'community' },
+  { name: 'Your media', package: 'community' },
 ];
 
 export const FAQS = [

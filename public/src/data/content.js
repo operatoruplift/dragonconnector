@@ -9,7 +9,7 @@ export const GUIDES = [
     minutes: 2,
     summary: 'How the app works, from the waitlist to your demo.',
     body: [
-      { p: `${EVENT.name} · ${EVENT.edition} is a proposed Solana Mobile and AI hackathon in Da Nang. This app turns every stage into a quest: each step you complete earns XP and moves you up a level.` },
+      { p: `${EVENT.name} · ${EVENT.edition} is a proposed mobile and AI hackathon in Da Nang. This app turns every stage into a quest: each step you complete earns XP and moves you up a level.` },
       { h: 'The journey' },
       { list: ['Join the waitlist to show your interest.', 'Build your profile so teammates can find you.', 'Pre-register now, then complete registration when the official page opens.', 'Check in at the venue on event day.', 'Find teammates, message them and form a team.', 'Submit your project before code freeze.'] },
       { h: 'What is confirmed' },

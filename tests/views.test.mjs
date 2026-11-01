@@ -175,3 +175,19 @@ test("the organizers' switches decide which steps are open once the app has hear
   assert.match(String(views.register.render(state, [], live(before))), /Registration is open/);
   assert.equal(views.register.title(state, []), 'Register');
 });
+
+test('the Sponsors page shows example placements only in Preview mode, labelled as examples', () => {
+  const state = fresh();
+  const closed = String(views.sponsors.render(state, [], ctx(before)));
+  assert.match(closed, /To be announced/);
+  assert.doesNotMatch(closed, /Your brand|Example placements/);
+  state.preview = true;
+  const preview = String(views.sponsors.render(state, [], ctx(before)));
+  assert.match(preview, /<strong>Example placements\.<\/strong>/);
+  assert.match(preview, /None of them is a sponsor/);
+  assert.doesNotMatch(preview, /To be announced/);
+  for (const words of [/Presented by/, /Track partners/, /Challenge partners/, /In-kind partners/, /Community partners/, /Your logo/, /Open track/]) assert.match(preview, words);
+  // Placeholders link nowhere, and the packages say where each one appears.
+  assert.doesNotMatch(preview.slice(0, preview.indexOf('id="offers-title"')), /<a /);
+  for (const words of [/Presenting partner/, /From \$3,000/, /On this page:/]) assert.match(preview, words);
+});

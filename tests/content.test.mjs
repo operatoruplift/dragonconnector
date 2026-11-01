@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
-import { FAQS, FORMATS, GATES, INTEGRATIONS, JUDGING, PARTNER_OFFERS, PRIZES, SPONSORS, TRACKS } from '../public/src/data/event.js';
+import { EXAMPLE_SPONSORS, FAQS, FORMATS, GATES, INTEGRATIONS, JUDGING, PACKAGES, PRIZES, SPONSORS, TRACKS } from '../public/src/data/event.js';
 import { DOCS, GUIDES, MAP_ZONES, REQUIREMENTS } from '../public/src/data/content.js';
 import { ROLES, SAMPLE_PROFILES } from '../public/src/data/people.js';
 import { QUESTS } from '../public/src/lib/game.js';
@@ -53,7 +53,12 @@ test('the app names no sponsor or prospect, never says "apply now", and keeps re
   assert.doesNotMatch(appText, /apply now/i);
   assert.equal(GATES.registration.open, false);
   assert.equal(INTEGRATIONS.registrationUrl, null);
-  for (const offer of PARTNER_OFFERS) assert.ok(offer.title && offer.funds.length);
+  // The five suggested packages each have one place on the Sponsors page.
+  assert.deepEqual(PACKAGES.map((pack) => pack.id), ['presenting', 'track', 'challenge', 'in-kind', 'community']);
+  for (const pack of PACKAGES) assert.ok(pack.name && pack.contribution && pack.placement && pack.funds.length, pack.id);
+  // Preview mode's placeholder brands are plainly placeholders, and every package has at least one.
+  for (const example of EXAMPLE_SPONSORS) assert.match(example.name, /^Your /);
+  for (const pack of PACKAGES) assert.ok(EXAMPLE_SPONSORS.some((example) => example.package === pack.id), pack.id);
   assert.ok(FAQS.some((faq) => /not confirmed|It is a proposal/.test(faq.a)));
 });
 

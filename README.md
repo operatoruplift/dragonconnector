@@ -15,7 +15,7 @@
 <img src="https://img.shields.io/badge/PWA-installable%2C_works_offline-EBC76E?style=flat-square&labelColor=0B0B0B" alt="PWA: installable, works offline">
 <img src="https://img.shields.io/badge/backend-Supabase-3ECF8E?style=flat-square&logo=supabase&logoColor=white&labelColor=0B0B0B" alt="Backend: Supabase">
 <img src="https://img.shields.io/badge/build-none%2C_no_npm_dependencies-9A7624?style=flat-square&labelColor=0B0B0B" alt="No build step and no npm dependencies">
-<img src="https://img.shields.io/badge/tests-51_node%3Atest-339933?style=flat-square&logo=nodedotjs&logoColor=white&labelColor=0B0B0B" alt="51 node:test tests">
+<img src="https://img.shields.io/badge/tests-52_node%3Atest-339933?style=flat-square&logo=nodedotjs&logoColor=white&labelColor=0B0B0B" alt="52 node:test tests">
 <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-6F6163?style=flat-square&labelColor=0B0B0B" alt="License: MIT"></a>
 
 <h3>Every step from the waitlist to your demo is a quest.</h3>
@@ -43,7 +43,7 @@
 
 <p align="center"><sub>Captured from a local build on 31 October 2026 with the demo builder from <code>scripts/render-assets.cjs</code>, connected to the in-memory Supabase from <code>tests/fake-supabase.mjs</code>. Nothing was sent to the live project.</sub></p>
 
-**This is the participant app for Dragon Connector · Da Nang / 001, a proposed Solana Mobile and AI hackathon in Da Nang, Vietnam: an installable, gamified web app that works offline.** Every step of the journey is a quest that earns XP, from the waitlist to registration, onboarding, check-in, finding teammates, messaging and submitting a project. Live services run on Supabase: the waitlist, accounts, builder profiles, messages, teams, submissions and check-in. The event is in planning. Dates, the venue, funding and prizes are proposals, and registration is not open. The app says so wherever it matters, and every form says where its data goes.
+**This is the participant app for Dragon Connector · Da Nang / 001, a proposed mobile and AI hackathon in Da Nang, Vietnam: an installable, gamified web app that works offline.** Every step of the journey is a quest that earns XP, from the waitlist to registration, onboarding, check-in, finding teammates, messaging and submitting a project. Live services run on Supabase: the waitlist, accounts, builder profiles, messages, teams, submissions and check-in. The event is in planning. Dates, the venue, funding and prizes are proposals, and registration is not open. The app says so wherever it matters, and every form says where its data goes.
 
 Its facts come from the proposal at [dragonconnector.vercel.app](https://dragonconnector.vercel.app) (source: `operatoruplift/da-nang-hackathon-proposal`, a private repository), as revised on 29 October 2026, and it wears the event's identity, Dragon Connector Brand System v1.0, with the edition line **DA NANG / 001** and the tagline **BUILD. SHIP. CONNECT.** Built by Matt ([RVAClassic](https://x.com/rvaclassic), [Operator Uplift](https://operatoruplift.com)), Lead Executive Producer and Organizer of the proposed event, on 30 October 2026, and connected to Supabase on 31 October.
 
@@ -136,7 +136,7 @@ The other 14 quests reward the rest of the app, such as building your profile, a
   </tr>
   <tr valign="top">
     <td><b>Preview mode</b></td>
-    <td>Settings unlocks registration, check-in and submission on the device for demos. A Preview badge shows while it is on. The preview check-in code is <code>DRAGON-001</code>. Preview check-ins and submissions are never sent to the organizers.</td>
+    <td>Settings unlocks registration, check-in and submission on the device for demos, and fills the Sponsors page with labelled placeholder brands that show where each sponsor package appears. A Preview badge shows while it is on. The preview check-in code is <code>DRAGON-001</code>. Preview check-ins and submissions are never sent to the organizers.</td>
   </tr>
   <tr valign="top">
     <td><b>Sample profiles</b></td>
@@ -144,7 +144,7 @@ The other 14 quests reward the rest of the app, such as building your profile, a
   </tr>
   <tr valign="top">
     <td><b>No sponsors, no prospects</b></td>
-    <td><code>SPONSORS</code> in <a href="public/src/data/event.js"><code>public/src/data/event.js</code></a> is empty. Add only organizations that have agreed in writing to be named. The app never lists the proposal's prospects.</td>
+    <td><code>SPONSORS</code> in <a href="public/src/data/event.js"><code>public/src/data/event.js</code></a> is empty. Add only organizations that have agreed in writing to be named, each with the <code>package</code> it agreed to: the Sponsors page gives every one of the proposal's five packages its own placement, from the "Presented by" banner for the presenting partner to the community partners list. Placeholder brands for Preview mode live in <code>EXAMPLE_SPONSORS</code> and never mix with real sponsors. The app never lists the proposal's prospects.</td>
   </tr>
   <tr valign="top">
     <td><b>Planned prizes</b></td>
@@ -194,7 +194,7 @@ The tests enforce these rules: no prospect names, no "apply now", no screen clai
   <tr valign="top">
     <td width="33%"><b>Prerequisites</b><br><sub>Node 20 or newer for the tests, and Python 3 for <code>npm start</code> (or any static file server pointed at <code>public/</code>). There are no dependencies to install.</sub></td>
     <td width="33%"><b>Read first</b><br><sub><a href="#honest-by-design">Honest by design</a> before changing any wording, and <a href="#live-services">Live services</a> before touching data: a local copy talks to the live project.</sub></td>
-    <td width="33%"><b>What the checks prove</b><br><sub>51 <code>node:test</code> cases: the quest engine, matching, validation, the Guide and escaping, the proposal's schedules and prizes, every link and screen, the PWA files, and the live services against an in-memory Supabase.</sub></td>
+    <td width="33%"><b>What the checks prove</b><br><sub>52 <code>node:test</code> cases: the quest engine, matching, validation, the Guide and escaping, the proposal's schedules and prizes, every link and screen, the PWA files, and the live services against an in-memory Supabase.</sub></td>
   </tr>
 </table>
 
@@ -340,7 +340,7 @@ The Vercel project `dragonconnectorapp` deploys `main` to https://dragonconnecto
 | `public/sw.js`, `public/precache.js` | The service worker and its generated file list |
 | `supabase/migrations/` | The database: tables, row-level security policies and functions, in the order they were applied |
 | `scripts/` | `build-precache.mjs` (the cache list) and `render-assets.cjs` (icons and install screenshots) |
-| `tests/` | The 51 `node:test` cases, and `fake-supabase.mjs`, an in-memory stand-in for the parts of supabase-js the app uses |
+| `tests/` | The 52 `node:test` cases, and `fake-supabase.mjs`, an in-memory stand-in for the parts of supabase-js the app uses |
 | `docs/readme/` | The images in this README |
 
 </details>
