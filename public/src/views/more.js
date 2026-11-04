@@ -1,6 +1,7 @@
 import { html } from '../lib/html.js';
 import { icon } from '../lib/icons.js';
 import { head } from './common.js';
+import { EVENT } from '../data/event.js';
 
 const GROUPS = [
   { title: 'Journey', items: [
@@ -30,6 +31,7 @@ export default {
     return html`<section class="view">
       ${head('Dragon Connector', 'Everything else', 'Every section of the app in one place.')}
       ${GROUPS.map((group) => html`<section class="stack"><h2>${group.title}</h2><div class="tiles">${group.items.map(([route, name, title, detail]) => html`<a class="tile" href="#/${route}">${icon(name)}<strong>${title}</strong><span>${detail}</span></a>`)}</div></section>`)}
+      <section class="stack"><h2>Follow ${EVENT.handle}</h2><p class="muted">Track reveals, sponsors and the venue are announced here first.</p><div class="row">${EVENT.social.map((item) => html`<a class="btn small" href="${item.url}" target="_blank" rel="noopener noreferrer">${item.name} ${icon('external')}</a>`)}</div></section>
     </section>`;
   },
 };

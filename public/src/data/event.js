@@ -17,6 +17,13 @@ export const EVENT = {
   timezone: 'Asia/Ho_Chi_Minh',
   timezoneLabel: 'ICT · UTC+7',
   siteUrl: 'https://dragonconnector.vercel.app',
+  handle: '@dragonconnector',
+  social: [
+    { name: 'Instagram', url: 'https://www.instagram.com/dragonconnector/' },
+    { name: 'TikTok', url: 'https://www.tiktok.com/@dragonconnector' },
+    { name: 'Facebook', url: 'https://www.facebook.com/dragonconnector' },
+    { name: 'X', url: 'https://x.com/dragonconnector' },
+  ],
   rulesUrl: 'https://dragonconnector.vercel.app/rules/',
   sponsorsUrl: 'https://dragonconnector.vercel.app/sponsors/',
   contentUpdated: '4 November 2026',

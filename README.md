@@ -15,7 +15,7 @@
 <img src="https://img.shields.io/badge/PWA-installable%2C_works_offline-EBC76E?style=flat-square&labelColor=0B0B0B" alt="PWA: installable, works offline">
 <img src="https://img.shields.io/badge/backend-Supabase-3ECF8E?style=flat-square&logo=supabase&logoColor=white&labelColor=0B0B0B" alt="Backend: Supabase">
 <img src="https://img.shields.io/badge/build-none%2C_no_npm_dependencies-9A7624?style=flat-square&labelColor=0B0B0B" alt="No build step and no npm dependencies">
-<img src="https://img.shields.io/badge/tests-54_node%3Atest-339933?style=flat-square&logo=nodedotjs&logoColor=white&labelColor=0B0B0B" alt="54 node:test tests">
+<img src="https://img.shields.io/badge/tests-55_node%3Atest-339933?style=flat-square&logo=nodedotjs&logoColor=white&labelColor=0B0B0B" alt="55 node:test tests">
 <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-6F6163?style=flat-square&labelColor=0B0B0B" alt="License: MIT"></a>
 
 <h3>Every step from the waitlist to your demo is a quest.</h3>
@@ -106,7 +106,7 @@ Home shows the journey as a path, with the next step in gold. Each step is a que
   </tr>
 </table>
 
-The other 14 quests reward the rest of the app, such as building your profile, asking the Guide a question or reading every guide. **Explore** holds guides, docs (a summary of the official rules, the code of conduct, privacy and the FAQ), the sponsor tiers, the one-day schedule with saved sessions, quests and personal tasks, the requirements checklist, an illustrative venue map, and the prize categories with the judging rubric.
+The other 14 quests reward the rest of the app, such as building your profile, asking the Guide a question or reading every guide. **Explore** holds guides, docs (a summary of the official rules, the code of conduct, privacy and the FAQ), the sponsor tiers, the one-day schedule with saved sessions, quests and personal tasks, the requirements checklist, an illustrative venue map, and the prize categories with the judging rubric. **More** also links the [@dragonconnector](https://x.com/dragonconnector) accounts on Instagram, TikTok, Facebook and X.
 
 <p align="center"><sub>Static HTML · CSS · JavaScript modules with no framework and no build step · Supabase (Postgres with row-level security, anonymous sign-ins, realtime) through supabase-js 2.118.0, vendored · local storage · service worker and web app manifest · qrcode-generator 2.0.4, vendored · Oxanium, Space Grotesk and IBM Plex Mono, self-hosted, the last two with Vietnamese subsets · node:test · Vercel</sub></p>
 
@@ -199,7 +199,7 @@ The tests enforce these rules: no prospect names, no "apply now", no screen clai
   <tr valign="top">
     <td width="33%"><b>Prerequisites</b><br><sub>Node 20 or newer for the tests, and Python 3 for <code>npm start</code> (or any static file server pointed at <code>public/</code>). There are no dependencies to install.</sub></td>
     <td width="33%"><b>Read first</b><br><sub><a href="#honest-by-design">Honest by design</a> before changing any wording, and <a href="#live-services">Live services</a> before touching data: a local copy talks to the live project.</sub></td>
-    <td width="33%"><b>What the checks prove</b><br><sub>54 <code>node:test</code> cases: the quest engine, matching, validation, the Guide and escaping, the event's schedule, tiers and prize policy, every link and screen, the PWA files, and the live services against an in-memory Supabase.</sub></td>
+    <td width="33%"><b>What the checks prove</b><br><sub>55 <code>node:test</code> cases: the quest engine, matching, validation, the Guide and escaping, the event's schedule, tiers and prize policy, every link and screen, the PWA files, and the live services against an in-memory Supabase.</sub></td>
   </tr>
 </table>
 
@@ -348,7 +348,7 @@ The Vercel project `dragonconnectorapp` deploys `main` to https://dragonconnecto
 | `public/sw.js`, `public/precache.js` | The service worker and its generated file list |
 | `supabase/migrations/` | The database: tables, row-level security policies and functions, in the order they were applied |
 | `scripts/` | `build-precache.mjs` (the cache list) and `render-assets.cjs` (icons and install screenshots) |
-| `tests/` | The 54 `node:test` cases, and `fake-supabase.mjs`, an in-memory stand-in for the parts of supabase-js the app uses |
+| `tests/` | The 55 `node:test` cases, and `fake-supabase.mjs`, an in-memory stand-in for the parts of supabase-js the app uses |
 | `docs/readme/` | The images in this README |
 
 </details>

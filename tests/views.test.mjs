@@ -211,3 +211,17 @@ test('teams stop at 4 people: members and pending invitations fill the seats', a
   assert.equal(teamSeats({ remote: true, members: [{}, {}, {}, {}] }), 4);
   assert.equal(teamSeats(null), 0);
 });
+
+test('the More screen and the About doc link the @dragonconnector accounts, and nothing loops', async () => {
+  const { EVENT } = await import('../public/src/data/event.js');
+  const { readFileSync } = await import('node:fs');
+  assert.equal(EVENT.handle, '@dragonconnector');
+  assert.deepEqual(EVENT.social.map((item) => item.name), ['Instagram', 'TikTok', 'Facebook', 'X']);
+  const more = String(views.more.render(fresh(), [], ctx(before)));
+  for (const item of EVENT.social) {
+    assert.match(item.url, /^https:\/\/(www\.)?(instagram\.com\/dragonconnector\/|tiktok\.com\/@dragonconnector|facebook\.com\/dragonconnector|x\.com\/dragonconnector)$/);
+    assert.ok(more.includes(`href="${item.url}" target="_blank" rel="noopener noreferrer"`), item.name);
+  }
+  assert.ok(String(views.docs.render(fresh(), ['about'], ctx(before))).includes(EVENT.social[0].url));
+  assert.doesNotMatch(readFileSync(new URL('../public/styles/app.css', import.meta.url), 'utf8'), /infinite/, 'no looping animation');
+});

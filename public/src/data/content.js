@@ -190,6 +190,8 @@ export const DOCS = [
       { p: `Organizer: ${EVENT.organizer}.` },
       { p: EVENT.independence },
       { links: [{ label: 'The event website', url: EVENT.siteUrl }, { label: 'Official rules', url: EVENT.rulesUrl }] },
+      { p: `Follow ${EVENT.handle} for track reveals, sponsors and the venue.` },
+      { links: EVENT.social.map((item) => ({ label: item.name, url: item.url })) },
     ],
   },
 ];
