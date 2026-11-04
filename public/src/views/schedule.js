@@ -19,12 +19,12 @@ export default {
     const upcoming = day.sessions.find((session) => instant(day.date, session.start) > now);
     const sessions = day.sessions.filter((session) => !view.mine || state.bookmarks.includes(session.id));
     return html`<section class="view">
-      ${head('Explore', 'Schedule', `The proposed programme. All times are ${EVENT.timezoneLabel}. Meals and production are planned scope, subject to budget and delivery confirmation.`)}
+      ${head('Explore', 'Schedule', `The day, from check-in to awards. All times are ${EVENT.timezoneLabel}.`)}
       <div class="card">
-        <div class="card-head"><div class="segmented" role="group" aria-label="Format">${Object.values(FORMATS).map((item) => html`<button type="button" data-action="format" data-id="${item.id}" aria-pressed="${item.id === format.id}">${item.short}</button>`)}</div>${questTag(state, 'plan')}</div>
+        <div class="card-head"><p class="eyebrow">One day · Da Nang</p>${questTag(state, 'plan')}</div>
         <h2>${format.dateLabel}</h2>
-        <p class="muted">${format.note} ${format.buildLabel}. Onboarding ${format.onboarding}.</p>
-        <span class="pill">Proposed · not confirmed</span>
+        <p class="muted">${format.note} ${format.buildLabel}, and lunch is included.</p>
+        <span class="pill">Venue confirmed with registration</span>
       </div>
       <div class="row">
         ${format.days.length > 1 ? html`<div class="segmented" role="tablist" aria-label="Day">${format.days.map((item, index) => html`<button type="button" role="tab" data-action="day" data-index="${index}" aria-selected="${index === dayIndex}">${item.label.split(' · ')[0]}${index === today ? ' · today' : ''}</button>`)}</div>` : ''}
@@ -43,7 +43,6 @@ export default {
     </section>`;
   },
   actions: {
-    format(button, event, ctx) { view.day = 0; ctx.store.update((draft) => { draft.format = button.dataset.id; }); },
     day(button, event, ctx) { view.day = Number(button.dataset.index); ctx.rerender(); },
     mine(button, event, ctx) { view.mine = !view.mine; ctx.rerender(); },
     bookmark(button, event, ctx) {

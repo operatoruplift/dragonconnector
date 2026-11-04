@@ -14,8 +14,8 @@ export function seedThreads() {
       readOnly: true,
       unread: 3,
       messages: [
-        { id: 'a1', from: 'organizers', at: posted, text: `${EVENT.name} · ${EVENT.edition} is in planning. Dates, venue, funding and prizes are proposals until we confirm them here.` },
-        { id: 'a2', from: 'organizers', at: posted + 60000, text: `Proposed formats: Option A on ${FORMATS.A.dateLabel} (one day), or Option B on ${FORMATS.B.dateLabel} (two daytime sessions). Proposed venue: ${EVENT.venue.name}, ${EVENT.venue.city}.` },
+        { id: 'a1', from: 'organizers', at: posted, text: `${EVENT.name} · ${EVENT.edition} is a free, one-day hackathon for mobile apps on Solana, on ${FORMATS.A.dateLabel} in ${EVENT.venue.city}. Teams of up to 4, lunch included.` },
+        { id: 'a2', from: 'organizers', at: posted + 60000, text: `Planned venue: ${EVENT.venue.name}, ${EVENT.venue.city}, confirmed when registration opens. Code freezes at 16:30 and the finalist demos start at 18:00. ${EVENT.prizePolicy}` },
         { id: 'a3', from: 'organizers', at: posted + 120000, text: 'Registration is not open. Join the waitlist and pre-register in the app so your details are ready.' },
       ],
     },

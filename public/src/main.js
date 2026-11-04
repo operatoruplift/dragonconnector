@@ -8,6 +8,7 @@ import { levelFor, xpOf } from './lib/game.js';
 import { celebrate, startTour, toast } from './lib/ui.js';
 import { seedThreads } from './data/threads.js';
 import { EVENT, INTEGRATIONS } from './data/event.js';
+import { startAnalytics } from './lib/analytics.js';
 import home from './views/home.js';
 import waitlist from './views/waitlist.js';
 import register from './views/register.js';
@@ -305,7 +306,7 @@ if (!store.get().welcomed) {
     <img src="brand/dragon-connector-logo-stacked.svg" alt="" width="636" height="444">
     <p class="eyebrow">${EVENT.edition} · ${EVENT.tagline}</p>
     <h2 id="welcome-title">Welcome, builder</h2>
-    <ul><li>Every step from the waitlist to your demo is a quest that earns XP.</li><li>Find teammates, message them and plan your build.</li><li>The event is in planning: dates, venue and prizes are proposals, and registration is not open yet.</li></ul>
+    <ul><li>Every step from the waitlist to your demo is a quest that earns XP.</li><li>Find teammates, message them and plan your build.</li><li>${EVENT.name} is on ${EVENT.dateLabel} in Da Nang. Join the waitlist now: registration opens soon.</li></ul>
     <div class="form-actions"><button type="button" class="btn primary" data-welcome="tour">Take the tour</button><button type="button" class="btn ghost" data-welcome="skip">Explore on my own</button></div>
   </div>`);
   document.body.append(welcome);
@@ -347,3 +348,6 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     location.reload();
   });
 }
+
+// Count page views on the live address only (lib/analytics.js).
+startAnalytics();

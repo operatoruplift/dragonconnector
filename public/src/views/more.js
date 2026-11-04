@@ -10,7 +10,7 @@ const GROUPS = [
     ['submit', 'upload', 'Submit', 'Ship before code freeze'],
   ] },
   { title: 'Explore', items: [
-    ['schedule', 'calendar', 'Schedule', 'The proposed programme'],
+    ['schedule', 'calendar', 'Schedule', 'The day, hour by hour'],
     ['guides', 'book', 'Guides', 'Tracks, teams and demos'],
     ['docs', 'doc', 'Docs', 'Rules, conduct and FAQ'],
     ['requirements', 'checklist', 'Requirements', 'What to bring'],

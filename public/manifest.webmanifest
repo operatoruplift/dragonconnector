@@ -2,7 +2,7 @@
   "id": "/",
   "name": "Dragon Connector · Da Nang / 001",
   "short_name": "Dragon Connector",
-  "description": "Your quest log for Dragon Connector, a proposed Solana Mobile and AI hackathon in Da Nang.",
+  "description": "Your quest log for Dragon Connector, a free one-day hackathon for mobile apps on Solana in Da Nang.",
   "lang": "en",
   "start_url": "./#/",
   "scope": "./",

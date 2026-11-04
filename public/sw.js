@@ -26,6 +26,7 @@ self.addEventListener('fetch', (event) => {
   if (request.method !== 'GET') return;
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
+  if (url.pathname.startsWith('/_vercel/')) return; // analytics goes straight to the network
 
   // The app shell: every navigation within the app is the same page with a different #route.
   if (request.mode === 'navigate' && (url.pathname === SCOPE || url.pathname === `${SCOPE}index.html`)) {

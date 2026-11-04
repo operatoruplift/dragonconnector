@@ -15,7 +15,6 @@ export function profileFields(profile) {
     ${options('tracks', TRACKS.map((track) => ({ id: track.id, label: track.title, detail: track.description })), profile.tracks, { type: 'checkbox', legend: 'Tracks you are interested in' })}
     ${options('lookingFor', LOOKING_FOR, profile.lookingFor, { legend: 'What you are looking for' })}
     ${options('languages', LANGUAGES.map((language) => ({ id: language, label: language })), profile.languages, { type: 'checkbox', legend: 'Languages you work in' })}
-    ${options('formats', Object.values(FORMATS).map((format) => ({ id: format.id, label: format.label, detail: format.dateLabel })), profile.formats, { type: 'checkbox', legend: 'Formats you could attend', hint: 'Both formats are proposed; pick any you could make.' })}
     ${field('bio', 'Short bio', html`<textarea id="f-bio" name="bio" maxlength="280" aria-describedby="f-bio-hint f-bio-error">${profile.bio}</textarea>`, { hint: 'One or two sentences about what you like to build. Up to 280 characters.' })}
     ${field('github', 'GitHub or portfolio link (optional)', html`<input class="input" id="f-github" name="github" type="url" inputmode="url" placeholder="https://github.com/you" value="${profile.github}" aria-describedby="f-github-error">`)}`;
 }
@@ -31,7 +30,7 @@ export function readProfile(form, previous = {}) {
     tracks: [].concat(data.tracks ?? []),
     lookingFor: data.lookingFor ?? '',
     languages: [].concat(data.languages ?? []),
-    formats: [].concat(data.formats ?? []),
+    formats: ['A'],
     bio: String(data.bio ?? '').trim(),
     github: String(data.github ?? '').trim(),
   };

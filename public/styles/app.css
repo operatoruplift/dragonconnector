@@ -388,3 +388,6 @@ details.card[open] > summary::after { content: '−'; }
 .sponsor-chip .logo-slot { width: 52px; height: 36px; padding: 2px 4px; font-size: 0.5rem; }
 .card.package { gap: 6px; }
 .card.package .eyebrow, .card.package h3, .card.package .small-print { margin: 0; }
+.prize-list { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.prize-list li { display: grid; gap: 2px; padding: 10px 12px; border: 1px solid var(--line); border-left: 3px solid var(--gold); border-radius: var(--radius-small); background: var(--panel-raised); }
+.prize-list span { color: var(--muted); font-size: 0.9rem; }

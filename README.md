@@ -1,21 +1,21 @@
 <div align="center">
 
-<img src="docs/readme/banner.png" alt="Dragon Connector, the participant app for Da Nang / 001, an installable PWA. Every step is a quest. An installable companion for a proposed Solana Mobile and AI hackathon in Da Nang. It works offline and syncs to an anonymous account when it can. 21 quests worth 1,400 XP, a QR check-in pass, live messages and teams, works offline, at dragonconnectorapp.vercel.app. Status: event in planning. Beside the copy, three phones running the app: the quest log at 390 of 1,400 XP, the home screen at level 3, Builder, and Messages, with the organizers' announcements and the Dragon Guide." width="100%">
+<img src="docs/readme/banner.png" alt="Dragon Connector, the participant app for Da Nang / 001, an installable PWA. Every step is a quest. The installable companion for a free, one-day hackathon for mobile apps on Solana in Da Nang on Saturday 19 December 2026. It works offline and syncs when it can. 21 quests worth 1,400 XP, a QR check-in pass, live messages and teams, works offline, at dragonconnectorapp.vercel.app. Status: waitlist open. Beside the copy, three phones running the app: sample teammate profiles, the home screen at level 3 with the date card, and the Dragon Guide answering when the event is." width="100%">
 
 <br><br>
 
 <a href="https://dragonconnectorapp.vercel.app"><img src="https://img.shields.io/badge/Open_the_app-D4AF37?style=for-the-badge" alt="Open the app" height="36"></a>&nbsp;&nbsp;
 <a href="https://dragonconnectorapp.vercel.app/#/settings"><img src="https://img.shields.io/badge/Try_Preview_mode-242424?style=for-the-badge" alt="Try Preview mode" height="36"></a>&nbsp;&nbsp;
-<a href="https://dragonconnector.vercel.app"><img src="https://img.shields.io/badge/Read_the_proposal-3A3A36?style=for-the-badge" alt="Read the event proposal" height="36"></a>
+<a href="https://dragonconnector.vercel.app"><img src="https://img.shields.io/badge/Visit_the_event_site-3A3A36?style=for-the-badge" alt="Visit the event site" height="36"></a>
 
 <br><br>
 
 <a href="https://dragonconnectorapp.vercel.app"><img src="https://img.shields.io/website?url=https%3A%2F%2Fdragonconnectorapp.vercel.app&label=app&up_message=live&down_message=down&up_color=34d399&labelColor=0B0B0B&style=flat-square" alt="App status"></a>
-<img src="https://img.shields.io/badge/event-in_planning-D4AF37?style=flat-square&labelColor=0B0B0B" alt="Event: in planning">
+<img src="https://img.shields.io/badge/event-Saturday_19_December_2026-D4AF37?style=flat-square&labelColor=0B0B0B" alt="Event: Saturday 19 December 2026">
 <img src="https://img.shields.io/badge/PWA-installable%2C_works_offline-EBC76E?style=flat-square&labelColor=0B0B0B" alt="PWA: installable, works offline">
 <img src="https://img.shields.io/badge/backend-Supabase-3ECF8E?style=flat-square&logo=supabase&logoColor=white&labelColor=0B0B0B" alt="Backend: Supabase">
 <img src="https://img.shields.io/badge/build-none%2C_no_npm_dependencies-9A7624?style=flat-square&labelColor=0B0B0B" alt="No build step and no npm dependencies">
-<img src="https://img.shields.io/badge/tests-52_node%3Atest-339933?style=flat-square&logo=nodedotjs&logoColor=white&labelColor=0B0B0B" alt="52 node:test tests">
+<img src="https://img.shields.io/badge/tests-54_node%3Atest-339933?style=flat-square&logo=nodedotjs&logoColor=white&labelColor=0B0B0B" alt="54 node:test tests">
 <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-6F6163?style=flat-square&labelColor=0B0B0B" alt="License: MIT"></a>
 
 <h3>Every step from the waitlist to your demo is a quest.</h3>
@@ -36,16 +36,13 @@
 
 <br>
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/readme/screens-dark.png">
-  <img src="docs/readme/screens-light.png" alt="Four phone screens of the app with a demo builder, Alex Tran. 01, follow the path: seven steps from the waitlist to your demo, with the next one in gold; the waitlist, pre-registration and tour are done, and check-in opens on event day. 02, pre-register: five steps, checked as you go, saved on your device and to your account; the saved pre-registration lists Alex's details and says they are saved on this device and to the Dragon Connector account. 03, carry your pass: a QR pass that opens offline, with the code DC-7KQ4-M2XP and a note that check-in opens at the venue on event day; self check-in opens on event day. 04, find your crew: builders who chose to be found, ranked with the reasons, and samples are labelled; no builders have shown their profile yet, and Aiko S., a product designer, matches at 72 and Khoa N., a Solana developer, at 69, both labelled as sample profiles." width="100%">
-</picture>
+<img src="docs/readme/screens.png" alt="Four phone screens of the app with a fictional builder, An Nguyen. 01, level up: the home screen at level 3, Builder, with 415 XP, 7 of 21 quests and 3 of 10 badges, and the date card: Saturday 19 December 2026, free, lunch included, one day from 08:00 to 20:00 in Da Nang. 02, find your crew: sample profiles of mobile developers with match scores of 78 and 72 and the reasons, each labelled as a sample profile. 03, ask the Guide: the Dragon Guide answers that Dragon Connector is on Saturday 19 December 2026, from 08:00 to 20:00, with a link to the schedule. 04, carry your pass: a QR check-in pass with the code DC-7KQ4-M2XP, marked as a preview until event day, and self check-in with a venue code." width="100%">
 
-<p align="center"><sub>Captured from a local build on 31 October 2026 with the demo builder from <code>scripts/render-assets.cjs</code>, connected to the in-memory Supabase from <code>tests/fake-supabase.mjs</code>. Nothing was sent to the live project.</sub></p>
+<p align="center"><sub>Captured from a local build on 4 November 2026 with a fictional builder, connected to the in-memory Supabase from <code>tests/fake-supabase.mjs</code>. Nothing was sent to the live project.</sub></p>
 
-**This is the participant app for Dragon Connector · Da Nang / 001, a proposed mobile and AI hackathon in Da Nang, Vietnam: an installable, gamified web app that works offline.** Every step of the journey is a quest that earns XP, from the waitlist to registration, onboarding, check-in, finding teammates, messaging and submitting a project. Live services run on Supabase: the waitlist, accounts, builder profiles, messages, teams, submissions and check-in. The event is in planning. Dates, the venue, funding and prizes are proposals, and registration is not open. The app says so wherever it matters, and every form says where its data goes.
+**This is the participant app for Dragon Connector · Da Nang / 001, a free one-day hackathon for mobile apps on Solana in Da Nang, Vietnam, on Saturday 19 December 2026: an installable, gamified web app that works offline.** Every step of the journey is a quest that earns XP, from the waitlist to registration, onboarding, check-in, finding teammates, messaging and submitting a project. Live services run on Supabase: the waitlist, accounts, builder profiles, messages, teams, submissions and check-in. The waitlist is open and registration opens soon. Teams have up to 4 people, lunch is included, projects are judged from public GitHub repositories, and every prize is paid in VND or goods, never in crypto. Dragon Connector is an independent event; it is not run or endorsed by Solana Mobile. The app says so wherever it matters, and every form says where its data goes.
 
-Its facts come from the proposal at [dragonconnector.vercel.app](https://dragonconnector.vercel.app) (source: `operatoruplift/da-nang-hackathon-proposal`, a private repository), as revised on 29 October 2026, and it wears the event's identity, Dragon Connector Brand System v1.0, with the edition line **DA NANG / 001** and the tagline **BUILD. SHIP. CONNECT.** Built by Matt ([RVAClassic](https://x.com/rvaclassic), [Operator Uplift](https://operatoruplift.com)), Lead Executive Producer and Organizer of the proposed event, on 30 October 2026, and connected to Supabase on 31 October.
+Its facts match the event site at [dragonconnector.vercel.app](https://dragonconnector.vercel.app) (source: `operatoruplift/da-nang-hackathon-proposal`, a private repository) as of 4 November 2026, and it wears the event's identity, Dragon Connector Brand System v1.0, with the edition line **DA NANG / 001** and the tagline **BUILD. SHIP. CONNECT.** Built by Matt ([RVAClassic](https://x.com/rvaclassic), [Operator Uplift](https://operatoruplift.com)), the event's organizer, on 30 October 2026, and connected to Supabase on 31 October.
 
 <br>
 
@@ -109,7 +106,7 @@ Home shows the journey as a path, with the next step in gold. Each step is a que
   </tr>
 </table>
 
-The other 14 quests reward the rest of the app, such as building your profile, asking the Guide a question or reading every guide. **Explore** holds guides, docs (draft rules, code of conduct, privacy, FAQ), sponsors and the partner programme, the schedule for both proposed formats with saved sessions, quests and personal tasks, the requirements checklist, an illustrative venue map, and the planned prize pool with the judging rubric.
+The other 14 quests reward the rest of the app, such as building your profile, asking the Guide a question or reading every guide. **Explore** holds guides, docs (a summary of the official rules, the code of conduct, privacy and the FAQ), the sponsor tiers, the one-day schedule with saved sessions, quests and personal tasks, the requirements checklist, an illustrative venue map, and the prize categories with the judging rubric.
 
 <p align="center"><sub>Static HTML · CSS · JavaScript modules with no framework and no build step · Supabase (Postgres with row-level security, anonymous sign-ins, realtime) through supabase-js 2.118.0, vendored · local storage · service worker and web app manifest · qrcode-generator 2.0.4, vendored · Oxanium, Space Grotesk and IBM Plex Mono, self-hosted, the last two with Vietnamese subsets · node:test · Vercel</sub></p>
 
@@ -144,15 +141,23 @@ The other 14 quests reward the rest of the app, such as building your profile, a
   </tr>
   <tr valign="top">
     <td><b>No sponsors, no prospects</b></td>
-    <td><code>SPONSORS</code> in <a href="public/src/data/event.js"><code>public/src/data/event.js</code></a> is empty. Add only organizations that have agreed in writing to be named, each with the <code>package</code> it agreed to: the Sponsors page gives every one of the proposal's five packages its own placement, from the "Presented by" banner for the presenting partner to the community partners list. Placeholder brands for Preview mode live in <code>EXAMPLE_SPONSORS</code> and never mix with real sponsors. The app never lists the proposal's prospects.</td>
+    <td><code>SPONSORS</code> in <a href="public/src/data/event.js"><code>public/src/data/event.js</code></a> is empty. Add only organizations that have agreed in writing to be named, each with the <code>package</code> (tier) it agreed to: the Sponsors page gives each of the four tiers its own placement, from the "Presented by" banner for the Dragon sponsor to the in-kind partners row. Placeholder brands for Preview mode live in <code>EXAMPLE_SPONSORS</code> and never mix with real sponsors. The app never lists prospects.</td>
   </tr>
   <tr valign="top">
-    <td><b>Planned prizes</b></td>
-    <td>The pool shows the proposal's planned allocations ($800, $1,500 or $3,000 by funding scenario) as planned, not funded.</td>
+    <td><b>Prizes, plainly</b></td>
+    <td>The app lists the prize categories (grand, track and named prizes) and says nothing is funded until sponsors commit. Every prize is paid in VND by bank transfer or in goods, never in crypto, and prizes over VND 20 million carry 10% personal income tax, which the payer withholds.</td>
+  </tr>
+  <tr valign="top">
+    <td><b>Independent</b></td>
+    <td>The app says Dragon Connector is an independent event, not run or endorsed by Solana Mobile, and no track or prize carries that name.</td>
+  </tr>
+  <tr valign="top">
+    <td><b>Counted, not tracked</b></td>
+    <td>Vercel Web Analytics counts page views without cookies and only on the live address (<a href="public/src/lib/analytics.js"><code>public/src/lib/analytics.js</code></a>). The privacy doc says so.</td>
   </tr>
 </table>
 
-The tests enforce these rules: no prospect names, no "apply now", no screen claiming registration is open while it is closed, every sample profile labelled, and all user input escaped.
+The tests enforce these rules: no prospect names, no "apply now", no screen claiming registration is open while it is closed, no "Solana Mobile" track, fast-track or crypto prize, every sample profile labelled, teams capped at 4, and all user input escaped.
 
 <br>
 
@@ -170,13 +175,13 @@ The tests enforce these rules: no prospect names, no "apply now", no screen clai
     <td><a href="#live-services">Live services</a></td>
   </tr>
   <tr valign="top">
-    <td align="center"><img src="https://img.shields.io/badge/PROPOSAL-D4AF37?style=for-the-badge" alt="Proposal"></td>
-    <td>The event itself. Dragon Connector · Da Nang / 001 is proposed for Sunday 13 December 2026 (one day) or Saturday 12 and Sunday 13 December 2026 (two daytime sessions) at Swinburne University Vietnam, a proposed venue whose booking is not confirmed. Dates, the venue, funding and prizes are proposals.</td>
-    <td><a href="https://dragonconnector.vercel.app">The proposal</a></td>
+    <td align="center"><img src="https://img.shields.io/badge/DATE_SET-D4AF37?style=for-the-badge" alt="Date set"></td>
+    <td>The event itself. Dragon Connector · Da Nang / 001 is on Saturday 19 December 2026, from 08:00 to 20:00: 6 hours of building, code freeze at 16:30 and demos at 18:00. The planned venue is Swinburne University Vietnam, with the booking being confirmed. Sponsor tiers and prizes are on the event site.</td>
+    <td><a href="https://dragonconnector.vercel.app">The event site</a></td>
   </tr>
   <tr valign="top">
     <td align="center"><img src="https://img.shields.io/badge/CLOSED-9A7624?style=for-the-badge" alt="Closed"></td>
-    <td>Registration, check-in and submission. Registration is not open, and check-in and submissions open on event day. The organizers open each one with a switch in the database. Until then, Preview mode unlocks all three on one device behind a Preview badge, and nothing done in Preview reaches the organizers.</td>
+    <td>Registration, check-in and submission. Registration opens soon, and check-in and submissions open on event day. The organizers open each one with a switch in the database. Until then, Preview mode unlocks all three on one device behind a Preview badge, and nothing done in Preview reaches the organizers.</td>
     <td><a href="#honest-by-design">Honest by design</a></td>
   </tr>
   <tr valign="top">
@@ -194,7 +199,7 @@ The tests enforce these rules: no prospect names, no "apply now", no screen clai
   <tr valign="top">
     <td width="33%"><b>Prerequisites</b><br><sub>Node 20 or newer for the tests, and Python 3 for <code>npm start</code> (or any static file server pointed at <code>public/</code>). There are no dependencies to install.</sub></td>
     <td width="33%"><b>Read first</b><br><sub><a href="#honest-by-design">Honest by design</a> before changing any wording, and <a href="#live-services">Live services</a> before touching data: a local copy talks to the live project.</sub></td>
-    <td width="33%"><b>What the checks prove</b><br><sub>52 <code>node:test</code> cases: the quest engine, matching, validation, the Guide and escaping, the proposal's schedules and prizes, every link and screen, the PWA files, and the live services against an in-memory Supabase.</sub></td>
+    <td width="33%"><b>What the checks prove</b><br><sub>54 <code>node:test</code> cases: the quest engine, matching, validation, the Guide and escaping, the event's schedule, tiers and prize policy, every link and screen, the PWA files, and the live services against an in-memory Supabase.</sub></td>
   </tr>
 </table>
 
@@ -216,7 +221,8 @@ npm test    # node --test tests/*.test.mjs, the same command Vercel runs as its 
 
 The tests cover the quest engine, the store, matching, validation, the Dragon Guide and HTML escaping. They also check that:
 
-- the schedules and prizes match the proposal (405 and 795 build minutes; $800, $1,500 and $3,000);
+- the schedule is one day, Saturday 19 December 2026, with 360 build minutes, code freeze at 16:30 and demos at 18:00, and the sponsor tiers and prize policy match the event site;
+- the event is independent: no "Solana Mobile" track, no fast-track prize and no crypto payouts, and teams stop at 4;
 - every in-app link leads somewhere, and the PWA manifest and icons are valid;
 - every screen renders for a new and a busy builder, in every connection state, without turning anything another builder wrote into markup.
 
@@ -230,8 +236,9 @@ The live services are tested against an in-memory Supabase ([`tests/fake-supabas
 
 Edit [`public/src/data/event.js`](public/src/data/event.js):
 
-- **Dates and programme:** `FORMATS`.
+- **The date and programme:** `EVENT` and `FORMATS` (one format, `A`).
 - **Tracks, judging and prizes:** `TRACKS`, `JUDGING` and `PRIZES`.
+- **Sponsor tiers:** `PACKAGES`, with the same tiers and amounts as the event site.
 - **FAQ:** `FAQS`.
 - **Opening a step:** the organizers' switches in the database decide (see [Live services](#live-services), under "Run the event from the dashboard"). `GATES` holds the fallback the app uses before it has heard from the server.
 - **An external registration page:** `INTEGRATIONS.registrationUrl`, if registration moves elsewhere. Once registration is open, the registration screen links to it.
@@ -246,7 +253,7 @@ Some tests pin today's state on purpose: the fallback `GATES.registration.open` 
 
 The project is `ondistgfpmodesjrharp` (https://ondistgfpmodesjrharp.supabase.co), hosted in the United States (Ohio). `INTEGRATIONS.supabase` in [`public/src/data/event.js`](public/src/data/event.js) holds its URL and anon key. The anon key is public by design: row-level security decides what it can reach. Never put a service_role or secret key in the app; a test fails if one appears. To use another project, change `INTEGRATIONS.supabase` and the `connect-src` of the security policy in [`vercel.json`](vercel.json) together (the tests require both to name the same project), then apply the migrations there.
 
-Builders use anonymous accounts, so an account is a browser: there is no password, and clearing the browser's data loses access to it. The device keeps the source of truth for what a builder types (profile, pre-registration, submission and waitlist entry) and syncs a copy. The server is the source of truth for check-in, conversations and teams. The client library ([`public/src/vendor/supabase.js`](public/src/vendor/supabase.js), supabase-js 2.118.0) loads after the first render, so the app never waits for it.
+Builders use anonymous accounts, so an account is a browser: there is no password, and clearing the browser's data loses access to it. The device keeps the source of truth for what a builder types (profile, pre-registration, submission and waitlist entry) and syncs a copy. The server is the source of truth for check-in, conversations and teams, and it holds teams to 4 people, counting pending invitations. The client library ([`public/src/vendor/supabase.js`](public/src/vendor/supabase.js), supabase-js 2.118.0) loads after the first render, so the app never waits for it.
 
 ### One-time settings in the Supabase dashboard
 
@@ -260,6 +267,7 @@ Builders use anonymous accounts, so an account is a browser: there is no passwor
 
 Organizers use the Table Editor or the SQL editor. Both bypass row-level security.
 
+- **Sponsor enquiries:** the `sponsor_inquiries` table, filled by the event site's "Become a sponsor" form through `submit_sponsor_inquiry`. No client can read it.
 - **Waitlist, pre-registrations, submissions, check-ins:** the `waitlist`, `registrations`, `submissions` and `check_ins` tables. A pass code in `registrations.pass_code` matches the QR code a builder shows at the desk (`DC001:` followed by the pass code).
 - **Post an announcement.** It reaches open apps at once. A future `published_at` schedules it.
 
@@ -321,7 +329,7 @@ npm run assets     # icons from the brand SVGs, install screenshots from a demo 
 
 ## Deploy
 
-The Vercel project `dragonconnectorapp` deploys `main` to https://dragonconnectorapp.vercel.app, a public test address until the app moves to its own domain. It serves `public/` as a static site; [`vercel.json`](vercel.json) runs the tests as the build step and sets a strict Content Security Policy: everything loads from the app's own origin, connections go only to it and the Supabase project, nothing can frame it, and camera, microphone and geolocation are switched off. The page also asks search engines not to index it (`noindex,nofollow`).
+The Vercel project `dragonconnectorapp` deploys `main` to https://dragonconnectorapp.vercel.app, a public test address until the app moves to its own domain. It serves `public/` as a static site; [`vercel.json`](vercel.json) runs the tests as the build step and sets a strict Content Security Policy: everything loads from the app's own origin, connections go only to it and the Supabase project, nothing can frame it, and camera, microphone and geolocation are switched off. The page also asks search engines not to index it (`noindex,nofollow`), and carries a link-preview image (`public/og.png`, rendered by the event site's `site-src/render_previews.cjs`). Web Analytics has to be switched on in the Vercel project (Analytics → Enable) before `/_vercel/insights/script.js` exists; until then the app's request for it fails quietly.
 
 <details>
 <summary><b>Repository layout</b></summary>
@@ -340,7 +348,7 @@ The Vercel project `dragonconnectorapp` deploys `main` to https://dragonconnecto
 | `public/sw.js`, `public/precache.js` | The service worker and its generated file list |
 | `supabase/migrations/` | The database: tables, row-level security policies and functions, in the order they were applied |
 | `scripts/` | `build-precache.mjs` (the cache list) and `render-assets.cjs` (icons and install screenshots) |
-| `tests/` | The 52 `node:test` cases, and `fake-supabase.mjs`, an in-memory stand-in for the parts of supabase-js the app uses |
+| `tests/` | The 54 `node:test` cases, and `fake-supabase.mjs`, an in-memory stand-in for the parts of supabase-js the app uses |
 | `docs/readme/` | The images in this README |
 
 </details>

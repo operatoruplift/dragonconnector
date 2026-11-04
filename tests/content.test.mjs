@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
-import { EXAMPLE_SPONSORS, FAQS, FORMATS, GATES, INTEGRATIONS, JUDGING, PACKAGES, PRIZES, SPONSORS, TRACKS } from '../public/src/data/event.js';
+import { EVENT, EXAMPLE_SPONSORS, FAQS, FORMATS, GATES, INTEGRATIONS, JUDGING, PACKAGES, PRIZES, SPONSORS, TRACKS } from '../public/src/data/event.js';
 import { DOCS, GUIDES, MAP_ZONES, REQUIREMENTS } from '../public/src/data/content.js';
 import { ROLES, SAMPLE_PROFILES } from '../public/src/data/people.js';
 import { QUESTS } from '../public/src/lib/game.js';
@@ -13,7 +13,7 @@ const sources = (dir = 'src') => readdirSync(new URL(`${dir}/`, root), { withFil
 const appText = [...sources().filter((file) => file.endsWith('.js') && !file.includes('vendor/')), 'index.html', 'manifest.webmanifest'].map((file) => readFileSync(new URL(file, root), 'utf8')).join('\n');
 const ROUTE_NAMES = ['', 'home', 'waitlist', 'register', 'profile', 'checkin', 'team', 'inbox', 'submit', 'quests', 'schedule', 'guides', 'docs', 'requirements', 'map', 'prizes', 'sponsors', 'settings', 'more'];
 
-test('the schedules match the proposal: ordered sessions and 405 / 795 build minutes', () => {
+test('the schedule is one day: ordered sessions, 6 hours of building, code freeze at 16:30 and demos at 18:00', () => {
   for (const format of Object.values(FORMATS)) {
     assert.deepEqual(format.days.map((day) => day.date), format.dates);
     let build = 0;
@@ -28,22 +28,28 @@ test('the schedules match the proposal: ordered sessions and 405 / 795 build min
     }
     assert.equal(build, format.buildMinutes, format.id);
   }
-  assert.equal(FORMATS.A.buildMinutes, 405);
-  assert.equal(FORMATS.B.buildMinutes, 795);
+  assert.deepEqual(Object.keys(FORMATS), ['A'], 'one date, one format');
+  assert.equal(FORMATS.A.buildMinutes, 360);
+  const sessions = FORMATS.A.days[0].sessions;
+  assert.ok(sessions.some((session) => session.start === '16:30' && /code freeze/i.test(session.title)));
+  assert.ok(sessions.some((session) => session.start === '18:00' && session.type === 'demo'));
   const ids = Object.values(FORMATS).flatMap((format) => format.days.flatMap((day) => day.sessions.map((session) => session.id)));
   assert.equal(new Set(ids).size, ids.length);
-  assert.equal(FORMATS.A.dateLabel, 'Sunday 13 December 2026');
-  assert.equal(new Date('2026-12-13T12:00:00+07:00').getUTCDay(), 0, '13 December 2026 is a Sunday');
+  assert.equal(FORMATS.A.dateLabel, 'Saturday 19 December 2026');
+  assert.equal(new Date(`${FORMATS.A.dates[0]}T12:00:00+07:00`).getUTCDay(), 6, '19 December 2026 is a Saturday');
 });
 
-test('prizes, judging and tracks match the proposal, and nothing claims money that is not there', () => {
-  assert.deepEqual(PRIZES.scenarios.map((scenario) => scenario.usd), [800, 1500, 3000]);
+test('prizes come from the sponsor tiers, are paid in VND or goods, and nothing claims money that is not there', () => {
+  assert.deepEqual(PRIZES.categories.map((item) => item.id), ['grand', 'track', 'named']);
   assert.equal(PRIZES.cashReceivedUsd, 0);
   assert.equal(JUDGING.rubric.reduce((sum, item) => sum + item.points, 0), 100);
   assert.equal(JUDGING.slot.reduce((sum, part) => sum + part.minutes, 0), JUDGING.slotMinutes);
   assert.equal(JUDGING.finalists, 10);
   assert.deepEqual(TRACKS.map((track) => track.id), ['mobile', 'ai', 'university']);
-  assert.ok(PRIZES.notes.some((note) => /not funded/.test(note)));
+  assert.ok(PRIZES.notes.some((note) => /nothing is funded yet/.test(note)));
+  assert.ok(PRIZES.notes.some((note) => /in VND by bank transfer, or in goods\. Never in crypto/.test(note)));
+  assert.ok(PRIZES.notes.some((note) => /over VND 20 million carry 10% personal income tax, which the payer withholds/.test(note)));
+  assert.deepEqual(TRACKS.map((track) => track.title), ['Consumer mobile', 'AI on mobile', 'First-time builders']);
 });
 
 test('the app names no sponsor or prospect, never says "apply now", and keeps registration closed', () => {
@@ -53,13 +59,16 @@ test('the app names no sponsor or prospect, never says "apply now", and keeps re
   assert.doesNotMatch(appText, /apply now/i);
   assert.equal(GATES.registration.open, false);
   assert.equal(INTEGRATIONS.registrationUrl, null);
-  // The five suggested packages each have one place on the Sponsors page.
-  assert.deepEqual(PACKAGES.map((pack) => pack.id), ['presenting', 'track', 'challenge', 'in-kind', 'community']);
+  // The four sponsor tiers each have one place on the Sponsors page.
+  assert.deepEqual(PACKAGES.map((pack) => pack.id), ['dragon', 'track', 'prize', 'inkind']);
+  assert.deepEqual(PACKAGES.map((pack) => pack.contribution.split(' · ')[0]), ['$3,000', '$1,500', '$500', 'Goods or services']);
   for (const pack of PACKAGES) assert.ok(pack.name && pack.contribution && pack.placement && pack.funds.length, pack.id);
   // Preview mode's placeholder brands are plainly placeholders, and every package has at least one.
   for (const example of EXAMPLE_SPONSORS) assert.match(example.name, /^Your /);
   for (const pack of PACKAGES) assert.ok(EXAMPLE_SPONSORS.some((example) => example.package === pack.id), pack.id);
-  assert.ok(FAQS.some((faq) => /not confirmed|It is a proposal/.test(faq.a)));
+  // The FAQ covers the basics participants ask first.
+  const faq = FAQS.map((item) => `${item.q} ${item.a}`).join(' ');
+  for (const words of [/free to attend/, /lunch is included/, /Up to 4 people/, /public GitHub repository/, /in VND by bank transfer, or in goods\. Never in crypto/i, /not run or endorsed by Solana Mobile/, /guardian/]) assert.match(faq, words);
 });
 
 test('live services use the public key of one Supabase project, and the security policy allows only that project', () => {
@@ -120,4 +129,15 @@ test('every in-app link and quest route leads somewhere real', () => {
     if (slug && name === 'docs') assert.ok(DOCS.some((doc) => doc.slug === slug), target);
     if (slug && name === 'inbox') assert.ok(['guide', 'announcements', 'team'].includes(slug), target);
   }
+});
+
+test('the event is independent: no "Solana Mobile" track, no fast-track prize and no crypto payouts', () => {
+  assert.match(EVENT.independence, /independent event\. It is not run or endorsed by Solana Mobile\./);
+  for (const track of TRACKS) assert.doesNotMatch(track.title, /Solana Mobile/);
+  // "Solana Mobile" appears only in the independence line, its FAQ and links to its developer docs.
+  for (const [match] of appText.matchAll(/[^.\n`]*Solana Mobile[^.\n`]*/g)) {
+    assert.match(match, /not run or endorsed by Solana Mobile|Is this a Solana Mobile event|Solana Mobile developer docs/, match);
+  }
+  assert.doesNotMatch(appText, /fast-track(?! is)|USDC|USDT|USDG|paid in (SOL|crypto|tokens)/i);
+  assert.equal(EVENT.teamMax, 4);
 });

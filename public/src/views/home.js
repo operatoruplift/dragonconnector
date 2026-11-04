@@ -18,7 +18,7 @@ export const JOURNEY = [
 ];
 
 const EXPLORE = [
-  { route: 'schedule', icon: 'calendar', title: 'Schedule', detail: 'The proposed programme', quest: 'plan' },
+  { route: 'schedule', icon: 'calendar', title: 'Schedule', detail: 'The day, hour by hour', quest: 'plan' },
   { route: 'quests', icon: 'quest', title: 'Quests & tasks', detail: 'Every XP reward in one list' },
   { route: 'guides', icon: 'book', title: 'Guides', detail: 'Tracks, teams and demos', quest: 'all-guides' },
   { route: 'docs', icon: 'doc', title: 'Docs', detail: 'Rules, conduct and FAQ', quest: 'rules' },
@@ -76,10 +76,10 @@ export default {
 
       <div class="grid cols-2">
         <div class="card">
-          <div class="card-head"><p class="eyebrow">Proposed date</p><span class="pill">Not confirmed</span></div>
+          <div class="card-head"><p class="eyebrow">The date</p><span class="pill">Free · lunch included</span></div>
           <h2>${format.dateLabel}</h2>
-          <p class="muted">${until.past ? 'The proposed dates have passed.' : `${until.days} days to go, if the proposal goes ahead.`} ${format.label}. ${EVENT.venue.name}, ${EVENT.venue.city} (proposed).</p>
-          <div class="row"><a class="btn small" href="#/schedule">${icon('calendar')} Schedule</a><a class="btn small ghost" href="#/docs/faq">Is it confirmed?</a></div>
+          <p class="muted">${until.past ? 'The event day has passed.' : `${until.days} days to go.`} One day, 08:00–20:00, in ${EVENT.venue.city}. Planned venue: ${EVENT.venue.name}, confirmed with registration.</p>
+          <div class="row"><a class="btn small" href="#/schedule">${icon('calendar')} Schedule</a><a class="btn small ghost" href="#/docs/faq">Questions</a></div>
         </div>
         ${next ? html`<div class="card accent" data-tour="next">
           <div class="card-head"><p class="eyebrow">Next quest</p><span class="xp">+${next.xp} XP</span></div>

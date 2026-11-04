@@ -40,7 +40,7 @@ export default {
           <div class="qr">${qrSvg(`DC001:${state.passCode}`)}</div>
           <p class="pass-code" aria-label="Pass code ${state.passCode.split('').join(' ')}">${state.passCode}</p>
           <p><strong>${state.profile.name || 'Add your name in Profile'}</strong></p>
-          <p class="small-print">${open ? 'Show this at the check-in desk.' : `This pass is a preview. ${GATES.checkIn.note}${until.past ? '' : ` That is ${until.days} days away, if the proposed dates hold.`}`}</p>
+          <p class="small-print">${open ? 'Show this at the check-in desk.' : `This pass is a preview. ${GATES.checkIn.note}${until.past ? '' : ` That is ${until.days} days away.`}`}</p>
         </div>
         <form data-form="code" class="card" novalidate>
           <div class="card-head"><h2>Self check-in</h2>${questTag(state, 'checkin')}</div>

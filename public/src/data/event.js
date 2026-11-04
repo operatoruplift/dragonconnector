@@ -1,23 +1,30 @@
-// Event facts, taken from the Dragon Connector proposal (operatoruplift/da-nang-hackathon-proposal,
-// dist/proposal.json, revised 1 November 2026). Everything here is a proposal until the organizers
-// confirm it; keep the caveats with the facts when you change them.
+// Event facts, taken from the Dragon Connector website (operatoruplift/da-nang-hackathon-proposal,
+// site-src/event.json and site-src/i18n/en.json, updated 4 November 2026). The venue booking and the
+// sponsors are still to be confirmed; keep those caveats with the facts when you change them.
 
 export const EVENT = {
   name: 'Dragon Connector',
   edition: 'Da Nang / 001',
   tagline: 'Build. Ship. Connect.',
   promise: 'Where builders connect.',
-  status: 'Event in planning',
-  summary: 'A proposed mobile and AI hackathon in Da Nang, Vietnam.',
+  status: 'Registration opens soon',
+  summary: 'A free, one-day hackathon for mobile apps on Solana in Da Nang, Vietnam.',
+  date: '2026-12-19',
+  dateLabel: 'Saturday 19 December 2026',
+  independence: 'Dragon Connector is an independent event. It is not run or endorsed by Solana Mobile.',
+  prizePolicy: 'Every prize is paid in VND or goods, never in crypto. Prizes over VND 20 million carry 10% personal income tax, which the payer withholds.',
+  teamMax: 4,
   timezone: 'Asia/Ho_Chi_Minh',
   timezoneLabel: 'ICT · UTC+7',
-  proposalUrl: 'https://dragonconnector.vercel.app',
-  contentUpdated: '1 November 2026',
+  siteUrl: 'https://dragonconnector.vercel.app',
+  rulesUrl: 'https://dragonconnector.vercel.app/rules/',
+  sponsorsUrl: 'https://dragonconnector.vercel.app/sponsors/',
+  contentUpdated: '4 November 2026',
   organizer: 'Matt Sim, Lead Executive Producer & Organizer',
   venue: {
     name: 'Swinburne University Vietnam',
     city: 'Da Nang',
-    status: 'Proposed venue. The booking, room, address, capacity and access are not confirmed.',
+    status: 'Planned venue. The booking is being confirmed and is announced with registration.',
   },
 };
 
@@ -50,82 +57,41 @@ const session = (format, day, start, end, title, type, detail = '') => ({ id: `$
 export const FORMATS = {
   A: {
     id: 'A',
-    label: 'Option A · one day',
+    label: 'One day',
     short: 'One day',
-    dateLabel: 'Sunday 13 December 2026',
-    dates: ['2026-12-13'],
-    onboarding: '6–12 December',
-    buildLabel: '6h 45m of scheduled building',
-    buildMinutes: 405,
-    codeFreeze: '17:30–18:00',
-    close: '20:30',
-    note: 'A compact, single-day programme with two build sprints and evening demos.',
+    dateLabel: EVENT.dateLabel,
+    dates: [EVENT.date],
+    onboarding: 'the week before',
+    buildLabel: '6 hours of building',
+    buildMinutes: 360,
+    codeFreeze: '16:30',
+    close: '20:00',
+    note: 'One day, from idea to demo. Code freezes at 16:30 so the judges see every project before the finalist demos at 18:00.',
     days: [{
-      date: '2026-12-13',
-      label: 'Sunday 13 December',
+      date: EVENT.date,
+      label: 'Saturday 19 December',
       sessions: [
-        session('A', 1, '08:00', '09:00', 'Arrival and readiness', 'arrival', 'Registration, breakfast and technical checks.'),
-        session('A', 1, '09:00', '09:45', 'Opening and team formation', 'ceremony', 'Rules, team formation and approved partner remarks only.'),
-        session('A', 1, '09:45', '13:00', 'Morning build sprint', 'build', 'Build with mentor support, subject to accepted mentor availability.'),
-        session('A', 1, '13:00', '14:00', 'Lunch', 'meal', 'Optional interviews only with staffing and consent.'),
-        session('A', 1, '14:00', '17:30', 'Afternoon build and pitch preparation', 'build', 'Proposed dinner pickup 17:00–17:30; meal scope and vendor still to agree.'),
-        session('A', 1, '17:30', '18:00', 'Code freeze and upload', 'submission', 'Submit your repository and demo; eligibility review begins.'),
-        session('A', 1, '18:00', '18:15', 'Screening and finalist shortlist', 'judging', 'Up to ten finalists are announced.'),
-        session('A', 1, '18:15', '19:15', 'Finalist demos', 'demo', 'Up to ten slots: 3-minute demo, 2-minute Q&A, 1-minute transition.'),
-        session('A', 1, '19:15', '19:45', 'Deliberation and buffer', 'judging', 'Independent judging and programme buffer.'),
-        session('A', 1, '19:45', '20:30', 'Awards and close', 'ceremony', 'Awards only under funded, agreed terms; approved group photo.'),
+        session('A', 1, '08:00', '09:00', 'Check-in and breakfast', 'arrival', 'Show your pass, find a table and set up.'),
+        session('A', 1, '09:00', '09:30', 'Opening', 'ceremony', 'Rules, tracks and short briefs from the sponsors.'),
+        session('A', 1, '09:30', '12:00', 'Building starts', 'build', 'Solo builders can match into teams in the first half hour.'),
+        session('A', 1, '12:00', '13:00', 'Lunch', 'meal', 'Included for every participant.'),
+        session('A', 1, '13:00', '16:30', 'Building continues', 'build', 'Mentors and sponsors hold office hours at their tables.'),
+        session('A', 1, '16:30', '17:45', 'Code freeze and judging round', 'submission', 'Code freezes at 16:30: submit your public GitHub repository and demo link. Judges then visit every team.'),
+        session('A', 1, '17:45', '18:00', 'Finalists announced', 'judging', 'Up to 10 teams go through to the stage.'),
+        session('A', 1, '18:00', '19:00', 'Finalist demos', 'demo', 'Three minutes of demo and two minutes of questions per team.'),
+        session('A', 1, '19:00', '19:30', 'Judges deliberate', 'judging', 'Try the other projects at the community showcase.'),
+        session('A', 1, '19:30', '20:00', 'Awards and close', 'ceremony', 'Winners announced, group photo, and home by 20:00.'),
       ],
     }],
   },
-  B: {
-    id: 'B',
-    label: 'Option B · two days',
-    short: 'Two days',
-    dateLabel: 'Saturday 12 and Sunday 13 December 2026',
-    dates: ['2026-12-12', '2026-12-13'],
-    onboarding: '6–11 December',
-    buildLabel: '13h 15m of scheduled building',
-    buildMinutes: 795,
-    codeFreeze: 'Day 2, 16:00–16:30',
-    close: '19:00 on day 1, 18:45 on day 2',
-    note: 'Two daytime sessions with more time to integrate and test. The venue closes overnight; accommodation and travel are not included.',
-    days: [
-      {
-        date: '2026-12-12',
-        label: 'Day 1 · Saturday 12 December',
-        sessions: [
-          session('B', 1, '08:30', '09:15', 'Check-in and breakfast', 'arrival'),
-          session('B', 1, '09:15', '10:00', 'Opening, rules and team formation', 'ceremony'),
-          session('B', 1, '10:00', '12:30', 'Build sprint and mentor support', 'build'),
-          session('B', 1, '12:30', '13:15', 'Lunch', 'meal'),
-          session('B', 1, '13:15', '17:45', 'Build sprint and mentor support', 'build'),
-          session('B', 1, '17:45', '18:15', 'Progress checkpoint and next-day briefing', 'checkpoint'),
-          session('B', 1, '18:15', '19:00', 'Dinner and venue close', 'meal'),
-        ],
-      },
-      {
-        date: '2026-12-13',
-        label: 'Day 2 · Sunday 13 December',
-        sessions: [
-          session('B', 2, '08:30', '09:00', 'Breakfast and technical check', 'arrival'),
-          session('B', 2, '09:00', '12:30', 'Build sprint', 'build'),
-          session('B', 2, '12:30', '13:15', 'Lunch', 'meal'),
-          session('B', 2, '13:15', '16:00', 'Final build and pitch preparation', 'build'),
-          session('B', 2, '16:00', '16:30', 'Code freeze and submission upload', 'submission'),
-          session('B', 2, '16:30', '16:45', 'Eligibility screening and shortlist of up to ten finalists', 'judging'),
-          session('B', 2, '16:45', '17:45', 'Finalist demos', 'demo', 'Up to ten slots: 3-minute demo, 2-minute Q&A, 1-minute transition.'),
-          session('B', 2, '17:45', '18:15', 'Judging deliberation', 'judging'),
-          session('B', 2, '18:15', '18:45', 'Awards and close', 'ceremony'),
-        ],
-      },
-    ],
-  },
 };
 
+// Up to three tracks run on the day. Track sponsors name them; a presenting sponsor can set its own
+// theme. The ids are fixed because the database stores them.
 export const TRACKS = [
-  { id: 'mobile', title: 'Solana Mobile', description: 'Practical mobile experiences with a clear user problem and a demonstrable prototype.', output: 'Working mobile demo, repository and integration evidence', eligibility: 'Tooling, device access, exact integration requirements and any partner bounty terms are still to be agreed. Normal dApp Store requirements apply; no publishing fast-track is promised.' },
-  { id: 'ai', title: 'AI × Web3', description: 'Useful AI-assisted or AI-powered workflows with credible on-chain or mobile integration.', output: 'Working AI workflow, technical explanation and demo', eligibility: 'Actual tooling, credits, data rights and partner criteria must be confirmed.' },
-  { id: 'university', title: 'University Builder', description: 'Student teams turning an idea into an explainable working prototype.', output: 'Prototype, problem statement and concise pitch', eligibility: 'University and team eligibility and scoring rules will be published; no university participation is confirmed.' },
+  { id: 'mobile', title: 'Consumer mobile', description: 'Apps people open every day: social, games, collectibles, habits and payments with friends.', output: 'A working app on a phone, a public repository and a demo', eligibility: 'Open to every team. A track sponsor may rename the track and set its challenge before registration opens.' },
+  { id: 'ai', title: 'AI on mobile', description: 'Assistants and agents on the phone that take real actions for the person holding it.', output: 'A working assistant or agent, a public repository and a demo', eligibility: 'Open to every team. API credits are offered only if a sponsor provides them.' },
+  { id: 'university', title: 'First-time builders', description: 'For students and teams at their first hackathon, judged on what they learned and shipped.', output: 'A prototype, a public repository and a short pitch', eligibility: 'For teams where most members are students or at their first hackathon.' },
 ];
 
 export const JUDGING = {
@@ -133,27 +99,28 @@ export const JUDGING = {
   slotMinutes: 6,
   slot: [{ label: 'Demo', minutes: 3 }, { label: 'Q&A', minutes: 2 }, { label: 'Transition', minutes: 1 }],
   rubric: [
-    { label: 'Working mobile / AI prototype', points: 25 },
-    { label: 'UI/UX and consumer readiness', points: 25 },
-    { label: 'Solana / agreed partner integration', points: 25 },
-    { label: 'Pitch and business viability', points: 25 },
+    { label: 'Working prototype', points: 25 },
+    { label: 'User experience', points: 25 },
+    { label: 'Technical depth', points: 25 },
+    { label: 'Pitch and potential', points: 25 },
   ],
-  status: 'Proposed rubric. Evidence standards, track rules, conflicts and tie-breaks will be published before launch. Sponsor bounties may have separate agreed criteria.',
+  status: 'Judges score every project with a public repository at code freeze, then pick the winners after the finalist demos. Sponsored tracks and prizes may add criteria, published before the event.',
 };
 
 export const PRIZES = {
-  // The same planned prize allocation applies to both formats.
-  scenarios: [
-    { tier: 'Lean', usd: 800 },
-    { tier: 'Target', usd: 1500 },
-    { tier: 'Flagship', usd: 3000 },
+  // Prizes come from the sponsor tiers: a grand prize from the Dragon sponsor, track prizes from
+  // track sponsors and named prizes from prize sponsors. Amounts are announced as sponsors commit.
+  categories: [
+    { id: 'grand', title: 'Grand prize', from: 'The Dragon sponsor' },
+    { id: 'track', title: 'Track prizes', from: 'Each track sponsor, for up to 3 tracks' },
+    { id: 'named', title: 'Named prizes', from: 'Prize sponsors, such as Best design' },
   ],
   cashReceivedUsd: 0,
   notes: [
-    'These are planned allocations in the proposal budget, not funded or announced awards.',
-    'No sponsor cash has been received. The final pool depends on the funding scenario the event can secure.',
-    'Prize splits, eligibility, payment responsibility and timing will be published with the rules before launch.',
-    'Partner contributions fund the selected scenario. They do not automatically add to the prize pool.',
+    'Prize amounts are announced as sponsors commit in writing; nothing is funded yet.',
+    'Every prize is paid in VND by bank transfer, or in goods. Never in crypto or tokens.',
+    'Prizes over VND 20 million carry 10% personal income tax, which the payer withholds and declares.',
+    'Prizes are shared equally within a team unless the team says otherwise. The official rules have the details.',
   ],
 };
 
@@ -169,37 +136,36 @@ export const TARGET_NOTE = 'Planning targets, not guaranteed results. Final capa
 // PACKAGES ids and decides where the sponsor appears. Empty until then; prospects are never listed here.
 export const SPONSORS = [];
 
-// The five suggested packages from the proposal (dist/proposal.json, sponsor_packages), and where each
-// appears on the Sponsors page. Suggestions for discussion: nothing is sold or committed.
+// The four sponsor tiers from the website (dragonconnector.vercel.app/sponsors), and where each
+// appears on the Sponsors page. A tier becomes real only once a sponsor agrees in writing.
 export const PACKAGES = [
-  { id: 'presenting', name: 'Presenting partner', contribution: 'From $3,000', placement: 'The top banner: “Presented by”, with a logo, a description and a link.', funds: ['The core event: prizes, food, connectivity and print'] },
-  { id: 'track', name: 'Track partner', contribution: '$1,000–$2,500', placement: 'A featured card with a logo, the track it names, a description and a link.', funds: ['One track’s prizes and judging'] },
-  { id: 'challenge', name: 'Challenge partner', contribution: '$300–$1,000', placement: 'A logo card with its challenge and a link.', funds: ['One challenge prize inside a track'] },
-  { id: 'in-kind', name: 'In-kind partner', contribution: 'Goods or services', placement: 'A logo in the partners row, with what it provides.', funds: ['A delivery need: room and AV, catering, connectivity, apparel or media'] },
-  { id: 'community', name: 'Community partner', contribution: 'Time and reach', placement: 'A name in the community partners list.', funds: ['Outreach, mentor hours and volunteers'] },
+  { id: 'dragon', name: 'Dragon', contribution: '$3,000 · 1 slot', placement: 'The top banner: “Presented by”, with a logo, a description and a link.', funds: ['The day itself: lunch, venue, connectivity and the grand prize'] },
+  { id: 'track', name: 'Track', contribution: '$1,500 · up to 3', placement: 'A featured card with a logo, the track it names, a description and a link.', funds: ['One track’s prizes and judging'] },
+  { id: 'prize', name: 'Prize', contribution: '$500 · up to 6', placement: 'A logo card with its prize and a link.', funds: ['One named prize, paid in full to the winners'] },
+  { id: 'inkind', name: 'In-kind', contribution: 'Goods or services', placement: 'A logo in the partners row, with what it provides.', funds: ['Venue, food and drink, apparel, devices, connectivity or media'] },
 ];
 
 // Placeholder brands that Preview mode shows on the Sponsors page, so organizers can show prospective
-// sponsors where each package appears. They are labelled as examples and never mixed with real sponsors.
+// sponsors where each tier appears. They are labelled as examples and never mixed with real sponsors.
 export const EXAMPLE_SPONSORS = [
-  { name: 'Your brand', package: 'presenting', blurb: 'A line about your company and why it backs Da Nang’s builders, with a link to your page.' },
-  { name: 'Your brand', package: 'track', track: 'Open track', blurb: 'Names the open track and sets its challenge.' },
-  { name: 'Your brand', package: 'track', track: 'Mobile track', blurb: 'Names the mobile track and sets its challenge.' },
-  { name: 'Your brand', package: 'challenge', challenge: 'Connected tourism' },
-  { name: 'Your brand', package: 'challenge', challenge: 'Everyday payments' },
-  { name: 'Your brand', package: 'in-kind', provides: 'Venue' },
-  { name: 'Your brand', package: 'in-kind', provides: 'Food and drink' },
-  { name: 'Your brand', package: 'in-kind', provides: 'Apparel' },
-  { name: 'Your community', package: 'community' },
-  { name: 'Your university', package: 'community' },
-  { name: 'Your media', package: 'community' },
+  { name: 'Your brand', package: 'dragon', blurb: 'A line about your company and why it backs Da Nang’s builders, with a link to your page.' },
+  { name: 'Your brand', package: 'track', track: 'Consumer mobile track', blurb: 'Names the track and sets its challenge.' },
+  { name: 'Your brand', package: 'track', track: 'AI on mobile track', blurb: 'Names the track and sets its challenge.' },
+  { name: 'Your brand', package: 'prize', challenge: 'Best design' },
+  { name: 'Your brand', package: 'prize', challenge: 'Best first-time team' },
+  { name: 'Your brand', package: 'inkind', provides: 'Venue' },
+  { name: 'Your brand', package: 'inkind', provides: 'Food and drink' },
+  { name: 'Your brand', package: 'inkind', provides: 'Apparel' },
 ];
 
 export const FAQS = [
-  { q: 'Is the event confirmed?', a: 'It is a proposal. Dates, format, the Swinburne booking, funds and delivery support still need agreement.' },
-  { q: 'Can people register now?', a: 'Not yet. Registration details will follow a viable delivery decision and published rules. You can join the waitlist and pre-register in this app so your details are ready.' },
-  { q: 'Are prizes guaranteed?', a: 'Prize amounts are planning allowances. Funds, eligibility, payment ownership and every sponsor benefit must be agreed before they are announced.' },
-  { q: 'Are there sponsors?', a: 'Not yet. Organizations are prospects for discussion; no sponsorship, endorsement, credit or service support is confirmed.' },
-  { q: 'Does the two-day format include overnight access?', a: 'No. The venue closes overnight, and accommodation and travel are not included.' },
-  { q: 'Is the planned budget a ticket price?', a: 'No. It is the proposed production budget in USD. Admission terms have not been set.' },
+  { q: 'How much does it cost?', a: 'Nothing. Dragon Connector is free to attend, and lunch is included.' },
+  { q: 'When and where is it?', a: `On ${EVENT.dateLabel}, from 08:00 to 20:00 in Da Nang. The planned venue is Swinburne University Vietnam; the venue is confirmed when registration opens.` },
+  { q: 'Can people register now?', a: 'Not yet. Join the waitlist and pre-register in this app so your details are ready; registration opens here soon and waitlist members hear first.' },
+  { q: 'How big can a team be?', a: 'Up to 4 people. You can also come alone and find teammates here or at the start of the day.' },
+  { q: 'Does our code have to be public?', a: 'Yes. Submit a public GitHub repository by code freeze at 16:30. Judges only score projects they can open, and you keep ownership of your code.' },
+  { q: 'How are prizes paid?', a: 'In VND by bank transfer, or in goods. Never in crypto. Prizes over VND 20 million carry 10% personal income tax, which the payer withholds.' },
+  { q: 'Who can take part?', a: 'Anyone who wants to build, including students and first-timers. Participants under 18 need a parent or guardian’s signed consent.' },
+  { q: 'Is this a Solana Mobile event?', a: 'No. Dragon Connector is independent and is not run or endorsed by Solana Mobile.' },
+  { q: 'Is it overnight?', a: 'No. It is a single day, from 08:00 to 20:00.' },
 ];

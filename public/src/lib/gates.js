@@ -1,5 +1,5 @@
 // Which steps are open. Once the app has heard from the event service, the organizers' switches
-// decide (state.eventSettings); before that, the proposed dates do. Preview mode opens everything
+// decide (state.eventSettings); before that, the event date does. Preview mode opens everything
 // on this device for demonstration.
 import { FORMATS, GATES } from '../data/event.js';
 import { isEventDay } from './time.js';

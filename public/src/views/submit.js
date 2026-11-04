@@ -40,7 +40,7 @@ export default {
     const data = submission.data;
     const open = submissionsOpen(state, ctx.now());
     const format = formatOf(state);
-    const intro = head('Step 07 · Event day', 'Submit your project', `Draft your submission any time. Final submission opens on event day and closes at code freeze (${format.codeFreeze}, proposed).`);
+    const intro = head('Step 07 · Event day', 'Submit your project', `Draft your submission any time. Final submission opens on event day and closes at code freeze (${format.codeFreeze}).`);
     if (submission.status === 'submitted' && params[0] !== 'edit') {
       return html`<section class="view">${intro}
         <div class="card accent">

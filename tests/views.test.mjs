@@ -11,7 +11,7 @@ const views = Object.fromEntries(await Promise.all(['home', 'waitlist', 'registe
   .map(async (name) => [name, (await import(`../public/src/views/${name}.js`)).default])));
 
 const before = Date.parse('2026-10-30T10:00:00+07:00');
-const eventDay = Date.parse('2026-12-13T10:00:00+07:00');
+const eventDay = Date.parse('2026-12-19T10:00:00+07:00');
 const ctx = (now) => ({ now: () => now, canInstall: () => false, isIos: () => false });
 const HOSTILE = '<img src=x onerror=alert(1)>';
 
@@ -186,8 +186,28 @@ test('the Sponsors page shows example placements only in Preview mode, labelled 
   assert.match(preview, /<strong>Example placements\.<\/strong>/);
   assert.match(preview, /None of them is a sponsor/);
   assert.doesNotMatch(preview, /To be announced/);
-  for (const words of [/Presented by/, /Track partners/, /Challenge partners/, /In-kind partners/, /Community partners/, /Your logo/, /Open track/]) assert.match(preview, words);
+  for (const words of [/Presented by/, /Track sponsors/, /Prize sponsors/, /In-kind partners/, /Your logo/, /Consumer mobile track/, /Best design/]) assert.match(preview, words);
   // Placeholders link nowhere, and the packages say where each one appears.
   assert.doesNotMatch(preview.slice(0, preview.indexOf('id="offers-title"')), /<a /);
-  for (const words of [/Presenting partner/, /From \$3,000/, /On this page:/]) assert.match(preview, words);
+  for (const words of [/Dragon/, /\$3,000 · 1 slot/, /On this page:/]) assert.match(preview, words);
+});
+
+test('teams stop at 4 people: members and pending invitations fill the seats', async () => {
+  const { teamSeats } = await import('../public/src/views/team.js');
+  const { EVENT } = await import('../public/src/data/event.js');
+  assert.equal(EVENT.teamMax, 4);
+  const state = fresh();
+  const others = SAMPLE_PROFILES.slice(0, 3).map((profile) => profile.id);
+  state.team = { name: 'Crew', track: 'mobile', openRoles: [], invites: others.slice(0, 2), createdAt: before };
+  assert.equal(teamSeats(state.team), 3);
+  let out = String(views.team.render(state, [], ctx(before)));
+  assert.match(out, /data-action="invite"/, 'a seat is still free');
+  assert.doesNotMatch(out, /Team full/);
+  state.team.invites = others;
+  assert.equal(teamSeats(state.team), 4);
+  out = String(views.team.render(state, [], ctx(before)));
+  assert.doesNotMatch(out, /data-action="invite"/, 'no invitations once the team is full');
+  assert.match(out, /Team full \(4\)/);
+  assert.equal(teamSeats({ remote: true, members: [{}, {}, {}, {}] }), 4);
+  assert.equal(teamSeats(null), 0);
 });

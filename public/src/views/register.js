@@ -11,10 +11,6 @@ const EXPERIENCE = [
   { id: 'some', label: 'One to three hackathons' },
   { id: 'many', label: 'Four or more' },
 ];
-const FORMAT_CHOICES = [
-  ...Object.values(FORMATS).map((format) => ({ id: format.id, label: format.label, detail: format.dateLabel })),
-  { id: 'either', label: 'Either format', detail: 'I can attend whichever is confirmed' },
-];
 const MEDIA = [{ id: 'yes', label: 'Yes, I agree to appear in approved event photos and video' }, { id: 'no', label: 'No, please keep me out of event media' }];
 
 function stepFields(step, data, profile) {
@@ -27,7 +23,6 @@ function stepFields(step, data, profile) {
   if (step === 1) return profileFields(profile);
   if (step === 2) {
     return html`
-      ${options('format', FORMAT_CHOICES, data.format, { legend: 'Which format could you attend?', hint: 'Both formats are proposals; the organizers will confirm one.' })}
       ${options('experience', EXPERIENCE, data.experience, { legend: 'Hackathon experience' })}
       ${field('dietary', 'Dietary needs (optional)', html`<input class="input" id="f-dietary" name="dietary" maxlength="200" value="${data.dietary ?? ''}">`)}
       ${field('access', 'Access needs (optional)', html`<input class="input" id="f-access" name="access" maxlength="200" value="${data.access ?? ''}">`, { hint: 'Anything that would help you take part fully.' })}`;
@@ -40,12 +35,11 @@ function stepFields(step, data, profile) {
         ? html`Send my pre-registration to the Dragon Connector organizers. It is stored in their database to prepare registration, I will confirm my details when registration opens, and I can delete them in Settings. <a href="#/docs/privacy">How your data is kept</a>`
         : 'I understand my pre-registration stays on this device until the official registration page exists, and that I will need to confirm my details there.'}</span></label><p class="error" data-error-for="data" hidden></p></div>`;
   }
-  const format = FORMAT_CHOICES.find((choice) => choice.id === data.format);
   return html`<dl class="summary-list">
     <div><dt>Name</dt><dd>${data.name}</dd></div><div><dt>Email</dt><dd>${data.email}</dd></div>${data.phone ? html`<div><dt>Phone</dt><dd>${data.phone}</dd></div>` : ''}
     <div><dt>Role</dt><dd>${roleLabel(profile.role)}</dd></div><div><dt>Skills</dt><dd>${profile.skills.join(', ')}</dd></div>
     <div><dt>Tracks</dt><dd>${profile.tracks.map(trackTitle).join(', ')}</dd></div>
-    <div><dt>Format</dt><dd>${format?.label ?? ''}</dd></div><div><dt>Experience</dt><dd>${EXPERIENCE.find((item) => item.id === data.experience)?.label ?? ''}</dd></div>
+    <div><dt>Date</dt><dd>${FORMATS.A.dateLabel}</dd></div><div><dt>Experience</dt><dd>${EXPERIENCE.find((item) => item.id === data.experience)?.label ?? ''}</dd></div>
     ${data.dietary ? html`<div><dt>Dietary</dt><dd>${data.dietary}</dd></div>` : ''}${data.access ? html`<div><dt>Access</dt><dd>${data.access}</dd></div>` : ''}
     <div><dt>Media</dt><dd>${data.media === 'yes' ? 'Agrees to appear' : 'Keep out of media'}</dd></div>
   </dl>`;
@@ -56,7 +50,7 @@ function readStep(step, form, state) {
   if (step === 1) return { profile: readProfile(form, state.profile), data: state.registration.data };
   const merged = { ...state.registration.data };
   if (step === 0) Object.assign(merged, { name: (data.name ?? '').trim(), email: (data.email ?? '').trim(), phone: (data.phone ?? '').trim() });
-  if (step === 2) Object.assign(merged, { format: data.format ?? '', experience: data.experience ?? '', dietary: (data.dietary ?? '').trim(), access: (data.access ?? '').trim() });
+  if (step === 2) Object.assign(merged, { format: 'A', experience: data.experience ?? '', dietary: (data.dietary ?? '').trim(), access: (data.access ?? '').trim() });
   if (step === 3) Object.assign(merged, { conduct: Boolean(data.conduct), media: data.media ?? '', data: Boolean(data.data) });
   return { profile: state.profile, data: merged };
 }

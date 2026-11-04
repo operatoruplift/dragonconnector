@@ -3,7 +3,7 @@ import { icon } from '../lib/icons.js';
 import { profileComplete } from '../lib/game.js';
 import { rankMatches } from '../lib/match.js';
 import { isWebUrl } from '../lib/validate.js';
-import { TRACKS } from '../data/event.js';
+import { EVENT, TRACKS } from '../data/event.js';
 import { ROLES, SAMPLE_PROFILES } from '../data/people.js';
 import { avatar, back, canGoLive, connectCard, head, liveMode, questTag, roleLabel, trackTitle } from './common.js';
 
@@ -22,17 +22,26 @@ function visible(matches) {
     && (!query || [profile.name, profile.bio, ...profile.skills].join(' ').toLowerCase().includes(query)));
 }
 
-/** Whether this person can be invited to your team: 'open', 'invited', 'member' or null. */
+/** Seats taken in your team: members (you included) and pending invitations. */
+export function teamSeats(team) {
+  if (!team) return 0;
+  if (team.remote) return Math.max(1, team.members?.length ?? 1);
+  return 1 + (team.invites?.length ?? 0);
+}
+
+/** Whether this person can be invited to your team: 'open', 'invited', 'member', 'full' or null. */
 function inviteState(state, profile) {
   const team = state.team;
   if (!team) return null;
+  const full = teamSeats(team) >= EVENT.teamMax;
   if (profile.sample) {
     if (team.remote) return null; // sample profiles cannot join a live team
-    return team.invites?.includes(profile.id) ? 'invited' : 'open';
+    if (team.invites?.includes(profile.id)) return 'invited';
+    return full ? 'full' : 'open';
   }
   if (!team.remote || !team.owner) return null;
   const member = team.members?.find((item) => item.id === profile.id);
-  if (!member) return 'open';
+  if (!member) return full ? 'full' : 'open';
   return member.status === 'joined' ? 'member' : 'invited';
 }
 
@@ -53,6 +62,7 @@ function personCard(state, match, { detail = false } = {}) {
       ${invite === 'open' ? html`<button type="button" class="btn small" data-action="invite" data-id="${profile.id}">Invite to team</button>` : ''}
       ${invite === 'invited' ? html`<button type="button" class="btn small" disabled>Invited</button>` : ''}
       ${invite === 'member' ? html`<span class="pill done">${icon('check')} On your team</span>` : ''}
+      ${invite === 'full' ? html`<button type="button" class="btn small" disabled>Team full (${EVENT.teamMax})</button>` : ''}
       ${detail ? '' : html`<a class="btn small ghost" href="#/team/${profile.id}">View</a>`}
     </div>
   </article>`;
@@ -206,6 +216,10 @@ export default {
     async invite(button, event, ctx) {
       const person = byId(ctx.store.get(), button.dataset.id);
       if (!person) return;
+      if (teamSeats(ctx.store.get().team) >= EVENT.teamMax) {
+        ctx.toast(`Teams have up to ${EVENT.teamMax} people, so this team is full.`, { title: 'Team full' });
+        return;
+      }
       if (person.sample) {
         ctx.store.update((draft) => {
           draft.team.invites = [...new Set([...(draft.team.invites ?? []), person.id])];

@@ -30,9 +30,10 @@ test('every table has row-level security, and every function pins its search pat
   for (const [, name, header] of functions) assert.match(header, /set search_path = ''/, name);
 });
 
-test('signed-out visitors can only join the waitlist and read the public settings and announcements', () => {
+test('signed-out visitors can only join the waitlist, send a sponsor enquiry and read the public settings and announcements', () => {
   const grants = [...sql.matchAll(/^grant [^;]+;/gm)].map(([grant]) => grant).filter((grant) => /\banon\b/.test(grant));
-  assert.deepEqual(grants, ['grant execute on function public.join_waitlist(text, text, text, text) to anon, authenticated;']);
+  assert.deepEqual(grants, ['grant execute on function public.join_waitlist(text, text, text, text) to anon, authenticated;', 'grant execute on function public.submit_sponsor_inquiry(text, text, text, text, text, text, text) to anon, authenticated;']);
+  assert.match(sql, /alter table public\.sponsor_inquiries enable row level security;\nrevoke all on public\.sponsor_inquiries from anon, authenticated;/, 'enquiries are never readable by clients');
   const policies = [...sql.matchAll(/create policy "[^"]+" on public\.(\w+) for (\w+) to anon/g)].map(([, table, action]) => `${table}:${action}`);
   assert.deepEqual(policies.sort(), ['announcements:select', 'event_settings:select']);
 });

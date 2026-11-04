@@ -106,8 +106,8 @@ test('the Dragon Guide answers from event data and keeps the caveats', () => {
   assert.equal(ask('When is code freeze?').topic, 'submit');
   assert.equal(ask('my email is available').topic, 'fallback', 'no substring matches');
   assert.equal(ask('Who are the judges?').topic, 'judging', 'plurals match');
-  assert.match(ask('What are the prizes?').text, /not funded/);
-  assert.match(ask('When is it?').text, /proposed, not confirmed/);
+  assert.match(ask('What are the prizes?').text, /paid in VND or goods, never in crypto/);
+  assert.match(ask('When is it?').text, /Saturday 19 December 2026, from 08:00 to 20:00/);
   assert.match(ask('Can I register?').text, /not open/);
   assert.doesNotMatch(ask('Can I register?').text, /device/, 'pre-registrations sync to the account now');
   assert.match(ask('Any sponsors?').text, /No sponsor is confirmed/);

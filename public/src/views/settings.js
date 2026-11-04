@@ -49,11 +49,6 @@ export default {
         <label class="option"><input type="checkbox" data-action="preview" ${state.preview ? 'checked' : ''}><span><strong>Preview closed steps</strong><small>Shows a Preview badge at the top while it is on.</small></span></label>
       </div>
       <div class="card">
-        <h2>Event format</h2>
-        <p class="muted">Both formats are proposed. Choose the one you want the schedule, countdown and deadlines to follow.</p>
-        <div class="segmented" role="group" aria-label="Event format">${Object.values(FORMATS).map((format) => html`<button type="button" data-action="format" data-id="${format.id}" aria-pressed="${state.format === format.id}">${format.label}</button>`)}</div>
-      </div>
-      <div class="card">
         <h2>The tour</h2>
         <p class="muted">A quick walk through the app's main parts.</p>
         <div class="row"><button type="button" class="btn" data-action="start-tour">${icon('guide')} Replay the tour</button></div>
@@ -65,9 +60,9 @@ export default {
       </div>
       <div class="card">
         <h2>About</h2>
-        <p class="muted">${EVENT.name} app ${APP_VERSION} · content updated ${EVENT.contentUpdated}. ${EVENT.status}: dates, venue, funding and prizes are proposals.</p>
+        <p class="muted">${EVENT.name} app ${APP_VERSION} · content updated ${EVENT.contentUpdated}. ${EVENT.status}. ${EVENT.independence}</p>
         <p class="small-print">${SERVICES ? `Live services: Supabase, hosted in ${INTEGRATIONS.supabase.region}, through supabase-js (MIT License). ` : ''}Fonts: Oxanium, Space Grotesk and IBM Plex Mono under the SIL Open Font License. QR codes: qrcode-generator by Kazuhiko Arase, MIT License. "QR Code" is a registered trademark of DENSO WAVE INCORPORATED.</p>
-        <div class="row"><a class="btn small" href="${EVENT.proposalUrl}" target="_blank" rel="noopener noreferrer">Read the proposal ${icon('external')}</a></div>
+        <div class="row"><a class="btn small" href="${EVENT.siteUrl}" target="_blank" rel="noopener noreferrer">Visit the event site ${icon('external')}</a></div>
       </div>
     </section>`;
   },
@@ -76,7 +71,6 @@ export default {
       ctx.store.update((draft) => { draft.preview = !draft.preview; });
       ctx.toast(ctx.store.get().preview ? 'Closed steps are unlocked on this device.' : 'Closed steps are locked again.', { title: ctx.store.get().preview ? 'Preview on' : 'Preview off' });
     },
-    format(button, event, ctx) { ctx.store.update((draft) => { draft.format = button.dataset.id; }); },
     async reset(button, event, ctx) {
       const services = Boolean(ctx.backend?.configured);
       if (!confirm(services
