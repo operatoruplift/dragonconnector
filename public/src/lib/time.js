@@ -20,6 +20,9 @@ export function eventWindow(format) {
 
 export const isEventDay = (now, format) => format.dates.includes(ictDate(now));
 
+/** The last day of the event, when code freezes and final submissions are due. */
+export const isFinalDay = (now, format) => ictDate(now) === format.dates.at(-1);
+
 export function countdown(now, target) {
   const ms = target - now;
   if (ms <= 0) return { past: true, days: 0, hours: 0, minutes: 0 };

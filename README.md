@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/readme/banner.png" alt="Dragon Connector, the participant app for Da Nang / 001, an installable PWA. Every step is a quest. The installable companion for a free, one-day hackathon for mobile apps on Solana in Da Nang on Saturday 19 December 2026. It works offline and syncs when it can. 21 quests worth 1,400 XP, a QR check-in pass, live messages and teams, works offline, at dragonconnector.com/app. Status: waitlist open. Beside the copy, three phones running the app: sample teammate profiles, the home screen at level 3 with the date card, and the Dragon Guide answering when the event is." width="100%">
+<img src="docs/readme/banner.png" alt="Dragon Connector, the participant app for Da Nang / 001, an installable PWA. Every step is a quest. The installable companion for a free, two-day hackathon for mobile apps on Solana in Da Nang on Saturday 12 and Sunday 13 December 2026. It works offline and syncs when it can. 21 quests worth 1,400 XP, a QR check-in pass, live messages and teams, works offline, at dragonconnector.com/app. Status: waitlist open. Beside the copy, three phones running the app: sample teammate profiles, the home screen at level 3 with the date card, and the Dragon Guide answering when the event is." width="100%">
 
 <br><br>
 
@@ -11,11 +11,11 @@
 <br><br>
 
 <a href="https://dragonconnector.com/app/"><img src="https://img.shields.io/website?url=https%3A%2F%2Fdragonconnector.com%2Fapp%2F&label=app&up_message=live&down_message=down&up_color=34d399&labelColor=0B0B0B&style=flat-square" alt="App status"></a>
-<img src="https://img.shields.io/badge/event-Saturday_19_December_2026-D4AF37?style=flat-square&labelColor=0B0B0B" alt="Event: Saturday 19 December 2026">
+<img src="https://img.shields.io/badge/event-Saturday_12_and_Sunday_13_December_2026-D4AF37?style=flat-square&labelColor=0B0B0B" alt="Event: Saturday 12 and Sunday 13 December 2026">
 <img src="https://img.shields.io/badge/PWA-installable%2C_works_offline-EBC76E?style=flat-square&labelColor=0B0B0B" alt="PWA: installable, works offline">
 <img src="https://img.shields.io/badge/backend-Supabase-3ECF8E?style=flat-square&logo=supabase&logoColor=white&labelColor=0B0B0B" alt="Backend: Supabase">
 <img src="https://img.shields.io/badge/build-none%2C_no_npm_dependencies-9A7624?style=flat-square&labelColor=0B0B0B" alt="No build step and no npm dependencies">
-<img src="https://img.shields.io/badge/tests-55_node%3Atest-339933?style=flat-square&logo=nodedotjs&logoColor=white&labelColor=0B0B0B" alt="55 node:test tests">
+<img src="https://img.shields.io/badge/tests-58_node%3Atest-339933?style=flat-square&logo=nodedotjs&logoColor=white&labelColor=0B0B0B" alt="58 node:test tests">
 <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-6F6163?style=flat-square&labelColor=0B0B0B" alt="License: MIT"></a>
 
 <h3>Every step from the waitlist to your demo is a quest.</h3>
@@ -36,11 +36,11 @@
 
 <br>
 
-<img src="docs/readme/screens.png" alt="Four phone screens of the app with a fictional builder, An Nguyen. 01, level up: the home screen at level 3, Builder, with 415 XP, 7 of 21 quests and 3 of 10 badges, and the date card: Saturday 19 December 2026, free, lunch included, one day from 08:00 to 20:00 in Da Nang. 02, find your crew: sample profiles of mobile developers with match scores of 78 and 72 and the reasons, each labelled as a sample profile. 03, ask the Guide: the Dragon Guide answers that Dragon Connector is on Saturday 19 December 2026, from 08:00 to 20:00, with a link to the schedule. 04, carry your pass: a QR check-in pass with the code DC-7KQ4-M2XP, marked as a preview until event day, and self check-in with a venue code." width="100%">
+<img src="docs/readme/screens.png" alt="Four phone screens of the app with a fictional builder, An Nguyen. 01, level up: the home screen at level 3, Builder, with 415 XP, 7 of 21 quests and 3 of 10 badges, and the date card: Saturday 12 and Sunday 13 December 2026, free, meals included, two days in Da Nang, 08:30–19:00 on Saturday and 08:30–18:45 on Sunday. 02, find your crew: sample profiles of mobile developers with match scores of 78 and 72 and the reasons, each labelled as a sample profile. 03, ask the Guide: the Dragon Guide answers that Dragon Connector is on Saturday 12 and Sunday 13 December 2026, 08:30–19:00 on Saturday and 08:30–18:45 on Sunday, with a link to the schedule. 04, carry your pass: a QR check-in pass with the code DC-7KQ4-M2XP, marked as a preview until check-in opens on Saturday 12 December, and self check-in with a venue code." width="100%">
 
 <p align="center"><sub>Captured from a local build on 4 November 2026 with a fictional builder, connected to the in-memory Supabase from <code>tests/fake-supabase.mjs</code>. Nothing was sent to the live project.</sub></p>
 
-**This is the participant app for Dragon Connector · Da Nang / 001, a free one-day hackathon for mobile apps on Solana in Da Nang, Vietnam, on Saturday 19 December 2026: an installable, gamified web app that works offline.** Every step of the journey is a quest that earns XP, from the waitlist to registration, onboarding, check-in, finding teammates, messaging and submitting a project. Live services run on Supabase: the waitlist, accounts, builder profiles, messages, teams, submissions and check-in. The waitlist is open and registration opens soon. Teams have up to 4 people, lunch is included, projects are judged from public GitHub repositories, and every prize is paid in VND or goods, never in crypto. Dragon Connector is an independent event; it is not run or endorsed by Solana Mobile. The app says so wherever it matters, and every form says where its data goes.
+**This is the participant app for Dragon Connector · Da Nang / 001, a free two-day hackathon for mobile apps on Solana in Da Nang, Vietnam, on Saturday 12 and Sunday 13 December 2026: an installable, gamified web app that works offline.** Every step of the journey is a quest that earns XP, from the waitlist to registration, onboarding, check-in, finding teammates, messaging and submitting a project. Live services run on Supabase: the waitlist, accounts, builder profiles, messages, teams, submissions and check-in. The waitlist is open and registration opens soon. Teams have up to 4 people, meals are included, projects are judged from public GitHub repositories, and every prize is paid in VND or goods, never in crypto. Dragon Connector is an independent event; it is not run or endorsed by Solana Mobile. The app says so wherever it matters, and every form says where its data goes.
 
 Its facts match the event site at [dragonconnector.com](https://dragonconnector.com) (source: `operatoruplift/da-nang-hackathon-proposal`, a private repository) as of 4 November 2026, and it wears the event's identity, Dragon Connector Brand System v1.0, with the edition line **DA NANG / 001** and the tagline **BUILD. SHIP. CONNECT.** Built by Matt ([RVAClassic](https://x.com/rvaclassic), [Operator Uplift](https://operatoruplift.com)), the event's organizer, on 30 October 2026, and connected to Supabase on 31 October.
 
@@ -86,7 +86,7 @@ Home shows the journey as a path, with the next step in gold. Each step is a que
   </tr>
   <tr valign="top">
     <td><b>4. Check-in</b></td>
-    <td>A personal QR pass, plus self check-in with the venue code on event day.</td>
+    <td>A personal QR pass, plus self check-in with the venue code at the event.</td>
     <td>+200</td>
   </tr>
   <tr valign="top">
@@ -106,7 +106,7 @@ Home shows the journey as a path, with the next step in gold. Each step is a que
   </tr>
 </table>
 
-The other 14 quests reward the rest of the app, such as building your profile, asking the Guide a question or reading every guide. **Explore** holds guides, docs (a summary of the official rules, the code of conduct, privacy and the FAQ), the sponsor tiers, the one-day schedule with saved sessions, quests and personal tasks, the requirements checklist, an illustrative venue map, and the prize categories with the judging rubric. **More** also links the [@dragonconnector](https://x.com/dragonconnector) accounts on Instagram, TikTok, Facebook and X.
+The other 14 quests reward the rest of the app, such as building your profile, asking the Guide a question or reading every guide. **Explore** holds guides, docs (a summary of the official rules, the code of conduct, privacy and the FAQ), the sponsor tiers, the two-day schedule with saved sessions, quests and personal tasks, the requirements checklist, an illustrative venue map, and the prize categories with the judging rubric. **More** also links the [@dragonconnector](https://x.com/dragonconnector) accounts on Instagram, TikTok, Facebook and X.
 
 <p align="center"><sub>Static HTML · CSS · JavaScript modules with no framework and no build step · Supabase (Postgres with row-level security, anonymous sign-ins, realtime) through supabase-js 2.118.0, vendored · local storage · service worker and web app manifest · qrcode-generator 2.0.4, vendored · Oxanium, Space Grotesk and IBM Plex Mono, self-hosted, the last two with Vietnamese subsets · node:test · Vercel</sub></p>
 
@@ -176,12 +176,12 @@ The tests enforce these rules: no prospect names, no "apply now", no screen clai
   </tr>
   <tr valign="top">
     <td align="center"><img src="https://img.shields.io/badge/DATE_SET-D4AF37?style=for-the-badge" alt="Date set"></td>
-    <td>The event itself. Dragon Connector · Da Nang / 001 is on Saturday 19 December 2026, from 08:00 to 20:00: 6 hours of building, code freeze at 16:30 and demos at 18:00. The planned venue is Swinburne University Vietnam, with the booking being confirmed. Sponsor tiers and prizes are on the event site.</td>
+    <td>The event itself. Dragon Connector · Da Nang / 001 is on Saturday 12 and Sunday 13 December 2026, in the daytime only: 08:30–19:00 on Saturday and 08:30–18:45 on Sunday, with 13 hours 15 minutes of building. Code freezes at 16:00 on Sunday, submissions close at 16:30 and the finalist demos start at 16:45. The planned venue is Swinburne University Vietnam, with the booking being confirmed. Sponsor tiers and prizes are on the event site.</td>
     <td><a href="https://dragonconnector.com">The event site</a></td>
   </tr>
   <tr valign="top">
     <td align="center"><img src="https://img.shields.io/badge/CLOSED-9A7624?style=for-the-badge" alt="Closed"></td>
-    <td>Registration, check-in and submission. Registration opens soon, and check-in and submissions open on event day. The organizers open each one with a switch in the database. Until then, Preview mode unlocks all three on one device behind a Preview badge, and nothing done in Preview reaches the organizers.</td>
+    <td>Registration, check-in and submission. Registration opens soon. Check-in opens on Saturday 12 December, and submissions on Sunday 13 December. The organizers open each one with a switch in the database. Until then, Preview mode unlocks all three on one device behind a Preview badge, and nothing done in Preview reaches the organizers.</td>
     <td><a href="#honest-by-design">Honest by design</a></td>
   </tr>
 </table>
@@ -194,7 +194,7 @@ The tests enforce these rules: no prospect names, no "apply now", no screen clai
   <tr valign="top">
     <td width="33%"><b>Prerequisites</b><br><sub>Node 20 or newer for the tests, and Python 3 for <code>npm start</code> (or any static file server pointed at <code>public/</code>). There are no dependencies to install.</sub></td>
     <td width="33%"><b>Read first</b><br><sub><a href="#honest-by-design">Honest by design</a> before changing any wording, and <a href="#live-services">Live services</a> before touching data: a local copy talks to the live project.</sub></td>
-    <td width="33%"><b>What the checks prove</b><br><sub>55 <code>node:test</code> cases: the quest engine, matching, validation, the Guide and escaping, the event's schedule, tiers and prize policy, every link and screen, the PWA files, and the live services against an in-memory Supabase.</sub></td>
+    <td width="33%"><b>What the checks prove</b><br><sub>58 <code>node:test</code> cases: the quest engine, matching, validation, the Guide and escaping, the event's schedule, tiers and prize policy, every link and screen, the PWA files, and the live services against an in-memory Supabase.</sub></td>
   </tr>
 </table>
 
@@ -216,7 +216,7 @@ npm test    # node --test tests/*.test.mjs, the same command Vercel runs as its 
 
 The tests cover the quest engine, the store, matching, validation, the Dragon Guide and HTML escaping. They also check that:
 
-- the schedule is one day, Saturday 19 December 2026, with 360 build minutes, code freeze at 16:30 and demos at 18:00, and the sponsor tiers and prize policy match the event site;
+- the schedule is two days, Saturday 12 and Sunday 13 December 2026, daytime only, with 795 build minutes, code freeze at 16:00 on Sunday, submissions closing at 16:30 and demos at 16:45, and the sponsor tiers and prize policy match the event site;
 - the event is independent: no "Solana Mobile" track, no fast-track prize and no crypto payouts, and teams stop at 4;
 - every in-app link leads somewhere, and the PWA manifest and icons are valid;
 - every screen renders for a new and a busy builder, in every connection state, without turning anything another builder wrote into markup.
@@ -231,7 +231,7 @@ The live services are tested against an in-memory Supabase ([`tests/fake-supabas
 
 Edit [`public/src/data/event.js`](public/src/data/event.js):
 
-- **The date and programme:** `EVENT` and `FORMATS` (one format, `A`).
+- **The dates and programme:** `EVENT` and `FORMATS` (one format, `A`, with a day for each date).
 - **Tracks, judging and prizes:** `TRACKS`, `JUDGING` and `PRIZES`.
 - **Sponsor tiers:** `PACKAGES`, with the same tiers and amounts as the event site.
 - **FAQ:** `FAQS`.
@@ -253,7 +253,7 @@ Builders use anonymous accounts, so an account is a browser: there is no passwor
 ### One-time settings in the Supabase dashboard
 
 - **Allow anonymous sign-ins:** Authentication → Sign In / Providers. Until this is on, the waitlist still works but accounts cannot be created. The app says "Accounts are not switched on yet" and keeps everything else on the device.
-- **Rate limit for anonymous sign-ins:** Authentication → Rate Limits. Raise it before event day. The default allows about 30 new accounts per hour from one IP address, and a venue's Wi-Fi often shares one.
+- **Rate limit for anonymous sign-ins:** Authentication → Rate Limits. Raise it before the event. The default allows about 30 new accounts per hour from one IP address, and a venue's Wi-Fi often shares one.
 - Consider CAPTCHA protection (Authentication → Attack Protection) if the app is promoted widely.
 
 <details>
@@ -267,7 +267,7 @@ Organizers use the Table Editor or the SQL editor. Both bypass row-level securit
 - **Post an announcement.** It reaches open apps at once. A future `published_at` schedules it.
 
   ```sql
-  insert into announcements (body) values ('Doors open at 08:00.');
+  insert into announcements (body) values ('Doors open at 08:30.');
   ```
 
 - **Reply to a builder who asked the organizers.** Find the conversation in `conversations` (kind `organizers`, `pair_key` is `organizers:` followed by their account id). Set `from_organizers`, or the app shows the reply as from a former member.
@@ -343,7 +343,7 @@ The Vercel project `dragonconnectorapp` deploys `main` to https://dragonconnecto
 | `public/sw.js`, `public/precache.js` | The service worker and its generated file list |
 | `supabase/migrations/` | The database: tables, row-level security policies and functions, in the order they were applied |
 | `scripts/` | `build-precache.mjs` (the cache list) and `render-assets.cjs` (icons and install screenshots) |
-| `tests/` | The 55 `node:test` cases, and `fake-supabase.mjs`, an in-memory stand-in for the parts of supabase-js the app uses |
+| `tests/` | The 58 `node:test` cases, and `fake-supabase.mjs`, an in-memory stand-in for the parts of supabase-js the app uses |
 | `docs/readme/` | The images in this README |
 
 </details>

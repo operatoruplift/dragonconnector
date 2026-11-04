@@ -18,7 +18,7 @@ function stepFields(step, data, profile) {
     return html`
       ${field('name', 'Full name', html`<input class="input" id="f-name" name="name" autocomplete="name" maxlength="60" value="${data.name ?? profile.name}">`)}
       ${field('email', 'Email', html`<input class="input" id="f-email" name="email" type="email" inputmode="email" autocomplete="email" value="${data.email ?? profile.email}">`)}
-      ${field('phone', 'Phone (optional)', html`<input class="input" id="f-phone" name="phone" type="tel" autocomplete="tel" value="${data.phone ?? ''}">`, { hint: 'Only used to reach you on event day, once registration is real.' })}`;
+      ${field('phone', 'Phone (optional)', html`<input class="input" id="f-phone" name="phone" type="tel" autocomplete="tel" value="${data.phone ?? ''}">`, { hint: 'Only used to reach you during the event, once registration is real.' })}`;
   }
   if (step === 1) return profileFields(profile);
   if (step === 2) {
@@ -39,7 +39,7 @@ function stepFields(step, data, profile) {
     <div><dt>Name</dt><dd>${data.name}</dd></div><div><dt>Email</dt><dd>${data.email}</dd></div>${data.phone ? html`<div><dt>Phone</dt><dd>${data.phone}</dd></div>` : ''}
     <div><dt>Role</dt><dd>${roleLabel(profile.role)}</dd></div><div><dt>Skills</dt><dd>${profile.skills.join(', ')}</dd></div>
     <div><dt>Tracks</dt><dd>${profile.tracks.map(trackTitle).join(', ')}</dd></div>
-    <div><dt>Date</dt><dd>${FORMATS.A.dateLabel}</dd></div><div><dt>Experience</dt><dd>${EXPERIENCE.find((item) => item.id === data.experience)?.label ?? ''}</dd></div>
+    <div><dt>Dates</dt><dd>${FORMATS.A.dateLabel}</dd></div><div><dt>Experience</dt><dd>${EXPERIENCE.find((item) => item.id === data.experience)?.label ?? ''}</dd></div>
     ${data.dietary ? html`<div><dt>Dietary</dt><dd>${data.dietary}</dd></div>` : ''}${data.access ? html`<div><dt>Access</dt><dd>${data.access}</dd></div>` : ''}
     <div><dt>Media</dt><dd>${data.media === 'yes' ? 'Agrees to appear' : 'Keep out of media'}</dd></div>
   </dl>`;

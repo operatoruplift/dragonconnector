@@ -31,7 +31,7 @@ export default {
     const until = countdown(ctx.now(), eventWindow(format).start);
     const checked = state.checkIn;
     return html`<section class="view">
-      ${head('Step 04 · Event day', 'Check in', 'Show your pass at the check-in desk, or enter the venue code to check yourself in.')}
+      ${head('Step 04 · At the event', 'Check in', 'Show your pass at the check-in desk, or enter the venue code to check yourself in.')}
       ${previewNotice(state)}
       ${checked ? html`<div class="card accent"><div class="row"><span class="done-mark">${icon('check')}</span><div class="stack" style="gap:4px"><h2>You are checked in</h2><p class="muted">${new Date(checked.at).toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' })}${checked.preview ? ' · preview' : ''}</p></div><span class="spacer"></span>${questTag(state, 'checkin')}</div><div class="row"><a class="btn primary" href="#/team">Find your team ${icon('arrow')}</a><a class="btn" href="#/map">Venue map</a></div></div>` : ''}
       <div class="grid cols-2">

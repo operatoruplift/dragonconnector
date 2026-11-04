@@ -6,7 +6,8 @@ import { EVENT, FORMATS } from '../data/event.js';
 import { head, questTag } from './common.js';
 
 const TYPES = { arrival: 'Arrival', ceremony: 'Ceremony', build: 'Build', meal: 'Meal', submission: 'Submission', judging: 'Judging', demo: 'Demos', checkpoint: 'Checkpoint' };
-const view = { day: 0, mine: false };
+// The day shown: the one the person picked, else today during the event, else the first day.
+const view = { day: null, mine: false };
 
 export default {
   title: () => 'Schedule',
@@ -14,16 +15,16 @@ export default {
     const format = formatOf(state);
     const now = ctx.now();
     const today = format.days.findIndex((day) => day.date === ictDate(now));
-    const dayIndex = Math.min(view.day, format.days.length - 1);
+    const dayIndex = Math.min(view.day ?? Math.max(today, 0), format.days.length - 1);
     const day = format.days[dayIndex];
     const upcoming = day.sessions.find((session) => instant(day.date, session.start) > now);
     const sessions = day.sessions.filter((session) => !view.mine || state.bookmarks.includes(session.id));
     return html`<section class="view">
-      ${head('Explore', 'Schedule', `The day, from check-in to awards. All times are ${EVENT.timezoneLabel}.`)}
+      ${head('Explore', 'Schedule', `Both days, from check-in to awards. All times are ${EVENT.timezoneLabel}.`)}
       <div class="card">
-        <div class="card-head"><p class="eyebrow">One day · Da Nang</p>${questTag(state, 'plan')}</div>
+        <div class="card-head"><p class="eyebrow">${format.short} · ${EVENT.venue.city}</p>${questTag(state, 'plan')}</div>
         <h2>${format.dateLabel}</h2>
-        <p class="muted">${format.note} ${format.buildLabel}, and lunch is included.</p>
+        <p class="muted">${format.note} ${format.buildLabel} in all. Breakfast and lunch are included on both days, and dinner on Saturday.</p>
         <span class="pill">Venue confirmed with registration</span>
       </div>
       <div class="row">

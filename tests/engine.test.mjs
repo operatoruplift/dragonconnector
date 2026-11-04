@@ -52,13 +52,13 @@ test('the store saves on this device, survives bad storage and reports events', 
   let renders = 0;
   const store = createStore({ storage, now: () => 42, onEvent: (event) => seen.push(event.type) });
   store.subscribe(() => { renders += 1; });
-  store.update((state) => { state.bookmarks.push('A1-0800'); }, { quiet: true });
+  store.update((state) => { state.bookmarks.push('A1-0830'); }, { quiet: true });
   assert.equal(renders, 0, 'quiet updates do not re-render');
   store.update((state) => { state.waitlist = { name: 'An' }; });
   assert.equal(renders, 1);
   assert.deepEqual(seen, ['quest', 'badge']);
   const saved = JSON.parse(storage.data.get(STORAGE_KEY));
-  assert.deepEqual(saved.bookmarks, ['A1-0800']);
+  assert.deepEqual(saved.bookmarks, ['A1-0830']);
   assert.equal(createStore({ storage }).get().quests.waitlist, 42, 'a new session reads the saved state');
 
   storage.setItem(STORAGE_KEY, '{not json');
@@ -107,7 +107,11 @@ test('the Dragon Guide answers from event data and keeps the caveats', () => {
   assert.equal(ask('my email is available').topic, 'fallback', 'no substring matches');
   assert.equal(ask('Who are the judges?').topic, 'judging', 'plurals match');
   assert.match(ask('What are the prizes?').text, /paid in VND or goods, never in crypto/);
-  assert.match(ask('When is it?').text, /Saturday 19 December 2026, from 08:00 to 20:00/);
+  assert.match(ask('When is it?').text, /Saturday 12 and Sunday 13 December 2026: 08:30–19:00 on Saturday and 08:30–18:45 on Sunday/);
+  assert.match(ask('When is code freeze?').text, /16:00 on Sunday 13 December, and submissions close at 16:30/);
+  assert.match(ask('Is it overnight?').text, /daytime only: the venue closes at 19:00 on Saturday and 18:45 on Sunday/);
+  assert.match(ask('is lunch provided').text, /Breakfast and lunch are included on both days, and dinner on Saturday/);
+  assert.match(ask('What is the schedule?').text, /Code freezes at 16:00 on Sunday, submissions close at 16:30 and the finalist demos start at 16:45/);
   assert.match(ask('Can I register?').text, /not open/);
   assert.doesNotMatch(ask('Can I register?').text, /device/, 'pre-registrations sync to the account now');
   assert.match(ask('Any sponsors?').text, /No sponsor is confirmed/);
@@ -115,6 +119,7 @@ test('the Dragon Guide answers from event data and keeps the caveats', () => {
     'hello': 'hello', 'which date?': 'dates', 'where is the venue': 'venue', 'find a teammate': 'team', 'how do I check in': 'checkin',
     'the agenda': 'schedule', 'which track': 'tracks', 'what should I bring': 'bring', 'is lunch provided': 'food',
     'is there a hotel': 'overnight', 'is there a fee': 'cost', 'how do levels work': 'xp',
+    'can we keep working in the evening': 'overnight', 'what happens on sunday': 'dates', 'is it on a weekend': 'dates',
   };
   for (const [question, topic] of Object.entries(cases)) assert.equal(answer(question).topic, topic, question);
   for (const link of ['register', 'submit', 'prizes'].flatMap((word) => answer(word).links ?? [])) assert.ok(link.route && link.label);

@@ -11,7 +11,10 @@ const views = Object.fromEntries(await Promise.all(['home', 'waitlist', 'registe
   .map(async (name) => [name, (await import(`../public/src/views/${name}.js`)).default])));
 
 const before = Date.parse('2026-10-30T10:00:00+07:00');
-const eventDay = Date.parse('2026-12-19T10:00:00+07:00');
+// The event runs on Saturday 12 and Sunday 13 December 2026, Vietnam time.
+const eventDay = Date.parse('2026-12-12T10:00:00+07:00');
+const sunday = Date.parse('2026-12-13T10:00:00+07:00');
+const after = Date.parse('2026-12-14T10:00:00+07:00');
 const ctx = (now) => ({ now: () => now, canInstall: () => false, isIos: () => false });
 const HOSTILE = '<img src=x onerror=alert(1)>';
 
@@ -33,7 +36,7 @@ function busy() {
   state.submission = { status: 'submitted', data: { name: HOSTILE, tagline: HOSTILE, track: 'mobile', description: HOSTILE, stack: [HOSTILE], repo: 'https://github.com/x/y', video: '', live: '', checks: [] }, updatedAt: before, submittedAt: before };
   state.tasks = [{ id: '1', text: HOSTILE, done: true }];
   state.checkIn = { at: eventDay, method: 'code', preview: false };
-  state.bookmarks = ['A1-0800', 'A1-0945', 'A1-1400'];
+  state.bookmarks = ['A1-0830', 'A1-1745', 'A2-1645'];
   state.guidesRead = GUIDES.map((guide) => guide.slug);
   applyProgress(state, before);
   return state;
@@ -45,9 +48,9 @@ const pages = [
   ['guides'], ...GUIDES.map((guide) => ['guides', guide.slug]), ['docs'], ...DOCS.map((doc) => ['docs', doc.slug]), ['requirements'], ['map'], ['prizes'], ['sponsors'], ['settings'], ['more'],
 ];
 
-test('every screen renders for a new and a busy builder, before and on event day', () => {
+test('every screen renders for a new and a busy builder, before, during and after the event', () => {
   for (const make of [fresh, busy]) {
-    for (const now of [before, eventDay]) {
+    for (const now of [before, eventDay, sunday, after]) {
       for (const [name, ...params] of pages) {
         const state = make();
         const out = String(views[name].render(state, params, ctx(now)));
@@ -77,11 +80,16 @@ test('while registration is closed, no screen says it is open or asks people to 
   }
 });
 
-test('gated steps stay closed before event day unless preview mode is on', () => {
+test('gated steps stay closed before the event unless preview mode is on', () => {
   const state = fresh();
   assert.equal(checkInOpen(state, before), false);
   assert.equal(submissionsOpen(state, before), false);
-  assert.equal(checkInOpen(state, eventDay), true);
+  assert.equal(checkInOpen(state, eventDay), true, 'check-in opens on Saturday');
+  assert.equal(checkInOpen(state, sunday), true, 'and stays open on Sunday');
+  assert.equal(submissionsOpen(state, eventDay), false, 'final submission opens on Sunday, not Saturday');
+  assert.equal(submissionsOpen(state, sunday), true);
+  assert.equal(checkInOpen(state, after), false);
+  assert.equal(submissionsOpen(state, after), false);
   const checkin = String(views.checkin.render(state, [], ctx(before)));
   assert.match(checkin, /<button class="btn primary" type="submit" disabled>/);
   state.preview = true;
@@ -90,6 +98,28 @@ test('gated steps stay closed before event day unless preview mode is on', () =>
   const register = String(views.register.render(fresh(), [], ctx(before)));
   assert.match(register, /Pre-register/);
   assert.doesNotMatch(register, /Complete registration/);
+});
+
+test('Home counts down to 08:30 on Saturday 12 December, Vietnam time, and the schedule opens on the current day', async () => {
+  const { FORMATS } = await import('../public/src/data/event.js');
+  const { countdown, eventWindow } = await import('../public/src/lib/time.js');
+  const { start, end } = eventWindow(FORMATS.A);
+  assert.equal(new Date(start).toISOString(), '2026-12-12T01:30:00.000Z', '08:30 ICT on Saturday');
+  assert.equal(new Date(end).toISOString(), '2026-12-13T11:45:00.000Z', '18:45 ICT on Sunday');
+  assert.equal(countdown(before, start).days, 42);
+  const home = (now) => String(views.home.render(fresh(), [], ctx(now)));
+  assert.match(home(before), /<h2>Saturday 12 and Sunday 13 December 2026<\/h2>/);
+  assert.match(home(before), /42 days to go\. Two days in Da Nang, 08:30–19:00 on Saturday and 08:30–18:45 on Sunday\./);
+  assert.match(home(before), /Opens Saturday 12 December/);
+  assert.match(home(before), /Opens Sunday 13 December/);
+  for (const now of [eventDay, sunday]) assert.match(home(now), /The event is under way\./);
+  assert.match(home(after), /The event has ended\./);
+  const schedule = (now) => String(views.schedule.render(fresh(), [], ctx(now)));
+  assert.match(schedule(before), /<h2>Day 1 · Saturday 12 December<\/h2>/);
+  assert.match(schedule(eventDay), /Day 1 · today/);
+  assert.match(schedule(sunday), /<h2>Day 2 · Sunday 13 December<\/h2>/);
+  assert.match(schedule(sunday), /Day 2 · today/);
+  assert.match(String(views.submit.render(fresh(), [], ctx(before))), /Final submission opens on Sunday 13 December and closes at 16:30\. Code freezes at 16:00\./);
 });
 
 test('sample profiles are always labelled as samples where they appear', () => {
@@ -124,7 +154,7 @@ const livePages = [...pages, ['team', 'b-1'], ['inbox', 'c-conv-1'], ['inbox', '
 
 test('connected screens render in every connection state, and nothing other builders write becomes markup', () => {
   for (const status of ['connecting', 'ready', 'live', 'guest', 'offline']) {
-    for (const now of [before, eventDay]) {
+    for (const now of [before, eventDay, sunday]) {
       for (const [name, ...params] of livePages) {
         const out = String(views[name].render(connected(), params, live(now, status)));
         const where = `${status}: ${name}/${params.join('/')}`;

@@ -9,11 +9,11 @@ export const GUIDES = [
     minutes: 2,
     summary: 'How the app works, from the waitlist to your demo.',
     body: [
-      { p: `${EVENT.name} · ${EVENT.edition} is a free, one-day hackathon for mobile apps on Solana, on ${FORMATS.A.dateLabel} in Da Nang. This app turns every stage into a quest: each step you complete earns XP and moves you up a level.` },
+      { p: `${EVENT.name} · ${EVENT.edition} is a free, two-day hackathon for mobile apps on Solana, on ${FORMATS.A.dateLabel} in Da Nang. This app turns every stage into a quest: each step you complete earns XP and moves you up a level.` },
       { h: 'The journey' },
-      { list: ['Join the waitlist to show your interest.', 'Build your profile so teammates can find you.', 'Pre-register now, then complete registration when the official page opens.', 'Check in at the venue on event day.', 'Find teammates, message them and form a team.', 'Submit your project before code freeze.'] },
+      { list: ['Join the waitlist to show your interest.', 'Build your profile so teammates can find you.', 'Pre-register now, then complete registration when the official page opens.', 'Check in at the venue on Saturday 12 December.', 'Find teammates, message them and form a team.', `Submit your project by ${FORMATS.A.submissionsClose} on Sunday 13 December.`] },
       { h: 'What is confirmed' },
-      { p: `The date is ${FORMATS.A.dateLabel}. The venue is confirmed when registration opens, and prizes are announced as sponsors commit. ${EVENT.independence} The privacy doc explains where your details are kept.` },
+      { p: `The dates are ${FORMATS.A.dateLabel}. The venue is confirmed when registration opens, and prizes are announced as sponsors commit. ${EVENT.independence} The privacy doc explains where your details are kept.` },
     ],
   },
   {
@@ -43,7 +43,7 @@ export const GUIDES = [
     slug: 'ai-web3',
     title: 'AI on mobile: ideas that ship',
     minutes: 2,
-    summary: 'Scope an assistant or agent you can finish in a day, with a real action at its end.',
+    summary: 'Scope an assistant or agent you can finish in two days, with a real action at its end.',
     body: [
       { p: 'The AI on mobile track is for assistants and agents on the phone that take real actions for the person holding it.' },
       { h: 'Scope it for the build time' },
@@ -78,11 +78,11 @@ export const GUIDES = [
     slug: 'judging',
     title: 'How judging works',
     minutes: 2,
-    summary: 'The 100-point criteria, the judging round after code freeze and the finalist demos.',
+    summary: 'The 100-point criteria, the shortlist after code freeze and the finalist demos.',
     body: [
       { p: 'Judges score each eligible project out of 100:' },
       { list: JUDGING.rubric.map((item) => `${item.points} points: ${item.label}`) },
-      { p: `Code freezes at ${FORMATS.A.codeFreeze}. Judges then visit every team, and up to ${JUDGING.finalists} finalists go through to the demos at 18:00. Each finalist has a ${JUDGING.slotMinutes}-minute slot: ${JUDGING.slot.map((part) => `${part.minutes} minute${part.minutes > 1 ? 's' : ''} of ${part.label === 'Transition' ? 'handover' : part.label === 'Q&A' ? 'questions' : 'demo'}`).join(', ')}.` },
+      { p: `Code freezes at ${FORMATS.A.codeFreeze} on Sunday, and submissions close at ${FORMATS.A.submissionsClose}. Judges then finish screening every submission, and up to ${JUDGING.finalists} finalists go through to the demos at ${FORMATS.A.demos}. Each finalist has a ${JUDGING.slotMinutes}-minute slot: ${JUDGING.slot.map((part) => `${part.minutes} minute${part.minutes > 1 ? 's' : ''} of ${part.label === 'Transition' ? 'changeover' : part.label === 'Q&A' ? 'questions' : 'demo'}`).join(', ')}.` },
       { p: JUDGING.status },
       { p: 'A submission does not guarantee a stage slot.' },
     ],
@@ -102,11 +102,11 @@ export const GUIDES = [
     slug: 'submitting',
     title: 'Submitting your project',
     minutes: 2,
-    summary: 'What to prepare and when code freeze is.',
+    summary: 'What to prepare, and when code freezes and submissions close.',
     body: [
-      { p: `Submit before code freeze at ${FORMATS.A.codeFreeze} on ${FORMATS.A.dateLabel} (${EVENT.timezoneLabel}). Late submissions are not judged.` },
+      { p: `Code freezes at ${FORMATS.A.codeFreeze} on Sunday 13 December (${EVENT.timezoneLabel}). Submit your project in the app by ${FORMATS.A.submissionsClose}. Late submissions are not judged.` },
       { list: ['Project name and a one-line tagline', 'Your track', 'A clear description: the problem, who it is for and what works today', 'A public GitHub repository link, with the libraries and templates you used listed in the README', 'A demo video link, if you have one', 'Your team members (up to 4)'] },
-      { p: 'You can draft your submission in the app at any time. Final submission opens on event day.' },
+      { p: 'You can draft your submission in the app at any time. Final submission opens on Sunday 13 December.' },
     ],
   },
 ];
@@ -121,8 +121,8 @@ export const DOCS = [
       { list: [
         'Entry is free and open to everyone. Participants under 18 need a parent or guardian’s signed consent before check-in.',
         `Teams have 1 to ${EVENT.teamMax} members, and a person can be in one team only.`,
-        'Build on the day, from 09:30. Open-source libraries, templates and AI tools are fine if your README lists them.',
-        `Submit before code freeze at ${FORMATS.A.codeFreeze} with a public GitHub repository and a demo link. Late or private submissions are not judged.`,
+        'Build during the event, from 10:00 on Saturday. Working off site in the evening is optional. Open-source libraries, templates and AI tools are fine if your README lists them.',
+        `Code freezes at ${FORMATS.A.codeFreeze} on Sunday. Submit a public GitHub repository and a demo link in the app by ${FORMATS.A.submissionsClose}. Late or private submissions are not judged.`,
         `Judges score on four criteria worth 25 points each; up to ${JUDGING.finalists} finalists demo on stage.`,
         'Every prize is paid in VND or goods, never in crypto. Prizes over VND 20 million carry 10% personal income tax, which the payer withholds.',
         'You own what you build. The organizer and sponsors may show your project name, description, screenshots, demo and repository link to report on the event.',
@@ -218,8 +218,8 @@ export const REQUIREMENTS = [
 export const SUBMISSION_REQUIREMENTS = [
   'A public GitHub repository link the judges can open',
   'A working demo of your prototype',
-  'Submission before code freeze at 16:30',
-  'Finalists present at 18:00 in a six-minute slot: 3-minute demo, 2-minute Q&A, 1-minute handover',
+  `Code frozen at ${FORMATS.A.codeFreeze} on Sunday and submitted in the app by ${FORMATS.A.submissionsClose}`,
+  `Finalists present from ${FORMATS.A.demos} on Sunday in a six-minute slot: 3-minute demo, 2-minute Q&A, 1-minute changeover`,
 ];
 
 // An illustrative floor plan built from the stations in the event's crew plan. The real layout
@@ -229,6 +229,6 @@ export const MAP_ZONES = [
   { id: 'stage', label: 'Main stage', lines: ['Main stage'], detail: 'Opening, finalist demos and awards. AV and stage crew are based here.', x: 200, y: 20, w: 400, h: 90 },
   { id: 'floor', label: 'Build floor', lines: ['Build floor'], detail: 'Team tables. Wi-Fi, power and AV are still to be sized and tested.', x: 200, y: 140, w: 400, h: 230 },
   { id: 'tech', label: 'Technical desk', lines: ['Tech', 'desk'], detail: 'Help with the network, power and demo displays.', x: 20, y: 20, w: 150, h: 120 },
-  { id: 'food', label: 'Food & hydration', lines: ['Food &', 'water'], detail: 'Meals within the agreed scope, and water throughout the day.', x: 630, y: 20, w: 150, h: 170 },
+  { id: 'food', label: 'Food & hydration', lines: ['Food &', 'water'], detail: 'Breakfast and lunch on both days, dinner on Saturday, and water throughout.', x: 630, y: 20, w: 150, h: 170 },
   { id: 'media', label: 'Media & judging', lines: ['Media &', 'judging'], detail: 'Consented media capture and judge support.', x: 630, y: 220, w: 150, h: 150 },
 ];

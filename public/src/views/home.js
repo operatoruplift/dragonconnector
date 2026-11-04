@@ -11,14 +11,14 @@ export const JOURNEY = [
   { id: 'waitlist', title: 'Join the waitlist', detail: 'Show your interest and hear first.', route: 'waitlist', quest: 'waitlist' },
   { id: 'register', title: 'Pre-register', detail: 'Get your details ready for registration.', route: 'register', quest: 'register' },
   { id: 'onboard', title: 'Onboard and take the tour', detail: 'Learn the app and build your profile.', action: 'start-tour', quest: 'tour' },
-  { id: 'checkin', title: 'Check in on event day', detail: 'Show your pass at the venue.', route: 'checkin', quest: 'checkin', gate: 'checkin' },
+  { id: 'checkin', title: 'Check in at the venue', detail: 'Show your pass from 08:30 on Saturday.', route: 'checkin', quest: 'checkin', gate: 'checkin', opens: 'Opens Saturday 12 December' },
   { id: 'team', title: 'Find teammates', detail: 'Match on skills, tracks and goals.', route: 'team', quest: 'team' },
   { id: 'connect', title: 'Message your crew', detail: 'Send an intro and plan together.', route: 'inbox', quest: 'intro' },
-  { id: 'submit', title: 'Submit your project', detail: 'Ship before code freeze.', route: 'submit', quest: 'submit', gate: 'submit' },
+  { id: 'submit', title: 'Submit your project', detail: 'Ship before code freeze.', route: 'submit', quest: 'submit', gate: 'submit', opens: 'Opens Sunday 13 December' },
 ];
 
 const EXPLORE = [
-  { route: 'schedule', icon: 'calendar', title: 'Schedule', detail: 'The day, hour by hour', quest: 'plan' },
+  { route: 'schedule', icon: 'calendar', title: 'Schedule', detail: 'Both days, hour by hour', quest: 'plan' },
   { route: 'quests', icon: 'quest', title: 'Quests & tasks', detail: 'Every XP reward in one list' },
   { route: 'guides', icon: 'book', title: 'Guides', detail: 'Tracks, teams and demos', quest: 'all-guides' },
   { route: 'docs', icon: 'doc', title: 'Docs', detail: 'Rules, conduct and FAQ', quest: 'rules' },
@@ -39,7 +39,7 @@ function journeyStep(state, step, current, ctx) {
   return html`<li class="step ${status}">
     <span class="node">${done ? icon('check') : locked ? icon('lock') : String(JOURNEY.indexOf(step) + 1).padStart(2, '0')}</span>
     <div class="step-body">
-      <div class="row"><span class="step-title">${step.title}</span>${done ? html`<span class="pill done">Done</span>` : html`<span class="xp">+${quest.xp} XP</span>`}${locked ? html`<span class="pill">Opens on event day</span>` : ''}</div>
+      <div class="row"><span class="step-title">${step.title}</span>${done ? html`<span class="pill done">Done</span>` : html`<span class="xp">+${quest.xp} XP</span>`}${locked ? html`<span class="pill">${step.opens}</span>` : ''}</div>
       <p class="muted">${step.detail}</p>
       <div class="row">${cta}</div>
     </div>
@@ -52,7 +52,8 @@ export default {
     const xp = xpOf(state);
     const level = levelFor(xp);
     const format = formatOf(state);
-    const until = countdown(ctx.now(), eventWindow(format).start);
+    const when = eventWindow(format);
+    const until = countdown(ctx.now(), when.start);
     const done = QUESTS.filter((quest) => state.quests[quest.id]).length;
     const badges = earnedBadges(state);
     const current = JOURNEY.find((step) => !state.quests[step.quest])?.id;
@@ -76,9 +77,9 @@ export default {
 
       <div class="grid cols-2">
         <div class="card">
-          <div class="card-head"><p class="eyebrow">The date</p><span class="pill">Free · lunch included</span></div>
+          <div class="card-head"><p class="eyebrow">The dates</p><span class="pill">Free · meals included</span></div>
           <h2>${format.dateLabel}</h2>
-          <p class="muted">${until.past ? 'The event day has passed.' : `${until.days} days to go.`} One day, 08:00–20:00, in ${EVENT.venue.city}. Planned venue: ${EVENT.venue.name}, confirmed with registration.</p>
+          <p class="muted">${!until.past ? `${until.days} days to go.` : ctx.now() < when.end ? 'The event is under way.' : 'The event has ended.'} Two days in ${EVENT.venue.city}, ${format.hours}. Planned venue: ${EVENT.venue.name}, confirmed with registration.</p>
           <div class="row"><a class="btn small" href="#/schedule">${icon('calendar')} Schedule</a><a class="btn small ghost" href="#/docs/faq">Questions</a></div>
         </div>
         ${next ? html`<div class="card accent" data-tour="next">

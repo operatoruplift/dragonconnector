@@ -12,7 +12,7 @@ export const LEVELS = [
   { name: 'Dragon', min: 1350 },
 ];
 
-export const PHASES = ['Get in', 'Find your crew', 'Prepare', 'Event day'];
+export const PHASES = ['Get in', 'Find your crew', 'Prepare', 'At the event'];
 
 const sentByMe = (thread) => thread?.messages?.some((message) => message.from === 'me');
 const requirementIds = REQUIREMENTS.flatMap((group) => group.items.map((item) => item.id));
@@ -40,9 +40,9 @@ export const QUESTS = [
   { id: 'sponsors', phase: 'Prepare', title: 'Meet the partner programme', xp: 20, route: 'sponsors', done: (s) => Boolean(s.visited.sponsors) },
   { id: 'rules', phase: 'Prepare', title: 'Read the draft rules', xp: 20, route: 'docs/rules', done: (s) => Boolean(s.visited['docs/rules']) },
   { id: 'task', phase: 'Prepare', title: 'Complete a task of your own', xp: 20, route: 'quests', done: (s) => s.tasks.some((task) => task.done) },
-  { id: 'checkin', phase: 'Event day', title: 'Check in at the venue', xp: 200, route: 'checkin', done: (s) => Boolean(s.checkIn) },
-  { id: 'draft', phase: 'Event day', title: 'Start your submission', xp: 50, route: 'submit', done: (s) => s.submission.status !== 'empty' },
-  { id: 'submit', phase: 'Event day', title: 'Submit your project', xp: 250, route: 'submit', done: (s) => s.submission.status === 'submitted' },
+  { id: 'checkin', phase: 'At the event', title: 'Check in at the venue', xp: 200, route: 'checkin', done: (s) => Boolean(s.checkIn) },
+  { id: 'draft', phase: 'At the event', title: 'Start your submission', xp: 50, route: 'submit', done: (s) => s.submission.status !== 'empty' },
+  { id: 'submit', phase: 'At the event', title: 'Submit your project', xp: 250, route: 'submit', done: (s) => s.submission.status === 'submitted' },
 ];
 
 export const MAX_XP = QUESTS.reduce((sum, quest) => sum + quest.xp, 0);
@@ -90,4 +90,4 @@ export function applyProgress(draft, now) {
   return events;
 }
 
-export const nextQuest = (state) => QUESTS.find((quest) => !state.quests[quest.id] && quest.phase !== 'Event day') ?? QUESTS.find((quest) => !state.quests[quest.id]) ?? null;
+export const nextQuest = (state) => QUESTS.find((quest) => !state.quests[quest.id] && quest.phase !== 'At the event') ?? QUESTS.find((quest) => !state.quests[quest.id]) ?? null;

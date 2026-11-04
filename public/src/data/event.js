@@ -8,9 +8,9 @@ export const EVENT = {
   tagline: 'Build. Ship. Connect.',
   promise: 'Where builders connect.',
   status: 'Registration opens soon',
-  summary: 'A free, one-day hackathon for mobile apps on Solana in Da Nang, Vietnam.',
-  date: '2026-12-19',
-  dateLabel: 'Saturday 19 December 2026',
+  summary: 'A free, two-day hackathon for mobile apps on Solana in Da Nang, Vietnam.',
+  dates: ['2026-12-12', '2026-12-13'],
+  dateLabel: 'Saturday 12 and Sunday 13 December 2026',
   independence: 'Dragon Connector is an independent event. It is not run or endorsed by Solana Mobile.',
   prizePolicy: 'Every prize is paid in VND or goods, never in crypto. Prizes over VND 20 million carry 10% personal income tax, which the payer withholds.',
   teamMax: 4,
@@ -41,8 +41,8 @@ export const EVENT = {
 // steps on this device for demonstration only.
 export const GATES = {
   registration: { open: false, note: 'Registration is not open. Pre-register now so your details are ready when it opens.' },
-  checkIn: { note: 'Check-in opens at the venue on event day.' },
-  submissions: { note: 'Submissions open on event day and close at code freeze.' },
+  checkIn: { note: 'Check-in opens at the venue at 08:30 on Saturday 12 December.' },
+  submissions: { note: 'Submissions open on Sunday 13 December and close at 16:30.' },
 };
 
 // Live services. Without supabase, the app keeps everything on the device and says so.
@@ -65,36 +65,53 @@ const session = (format, day, start, end, title, type, detail = '') => ({ id: `$
 export const FORMATS = {
   A: {
     id: 'A',
-    label: 'One day',
-    short: 'One day',
+    label: 'Two days',
+    short: 'Two days',
     dateLabel: EVENT.dateLabel,
-    dates: [EVENT.date],
+    dates: EVENT.dates,
     onboarding: 'the week before',
-    buildLabel: '6 hours of building',
-    buildMinutes: 360,
-    codeFreeze: '16:30',
-    close: '20:00',
-    note: 'One day, from idea to demo. Code freezes at 16:30 so the judges see every project before the finalist demos at 18:00.',
-    days: [{
-      date: EVENT.date,
-      label: 'Saturday 19 December',
-      sessions: [
-        session('A', 1, '08:00', '09:00', 'Check-in and breakfast', 'arrival', 'Show your pass, find a table and set up.'),
-        session('A', 1, '09:00', '09:30', 'Opening', 'ceremony', 'Rules, tracks and short briefs from the sponsors.'),
-        session('A', 1, '09:30', '12:00', 'Building starts', 'build', 'Solo builders can match into teams in the first half hour.'),
-        session('A', 1, '12:00', '13:00', 'Lunch', 'meal', 'Included for every participant.'),
-        session('A', 1, '13:00', '16:30', 'Building continues', 'build', 'Mentors and sponsors hold office hours at their tables.'),
-        session('A', 1, '16:30', '17:45', 'Code freeze and judging round', 'submission', 'Code freezes at 16:30: submit your public GitHub repository and demo link. Judges then visit every team.'),
-        session('A', 1, '17:45', '18:00', 'Finalists announced', 'judging', 'Up to 10 teams go through to the stage.'),
-        session('A', 1, '18:00', '19:00', 'Finalist demos', 'demo', 'Three minutes of demo and two minutes of questions per team.'),
-        session('A', 1, '19:00', '19:30', 'Judges deliberate', 'judging', 'Try the other projects at the community showcase.'),
-        session('A', 1, '19:30', '20:00', 'Awards and close', 'ceremony', 'Winners announced, group photo, and home by 20:00.'),
-      ],
-    }],
+    buildLabel: '13 hours 15 minutes of building',
+    buildMinutes: 795,
+    hours: '08:30–19:00 on Saturday and 08:30–18:45 on Sunday',
+    codeFreeze: '16:00',
+    submissionsClose: '16:30',
+    demos: '16:45',
+    close: '19:00 on Saturday and 18:45 on Sunday',
+    note: 'Two days, from idea to demo, with no overnight building on site. Code freezes at 16:00 on Sunday so the judges see every project before the finalist demos at 16:45.',
+    days: [
+      {
+        date: EVENT.dates[0],
+        label: 'Day 1 · Saturday 12 December',
+        sessions: [
+          session('A', 1, '08:30', '09:15', 'Check-in and breakfast', 'arrival', 'Show your pass, find a table and set up.'),
+          session('A', 1, '09:15', '10:00', 'Opening, rules and team formation', 'ceremony', 'The tracks, the rules and a short brief from each sponsor. Solo builders match into teams.'),
+          session('A', 1, '10:00', '12:30', 'Build sprint', 'build', 'Mentors walk the room and sponsors hold office hours.'),
+          session('A', 1, '12:30', '13:15', 'Lunch', 'meal', 'Included for every participant.'),
+          session('A', 1, '13:15', '17:45', 'Build sprint', 'build', 'Mentors and sponsors keep their office hours.'),
+          session('A', 1, '17:45', '18:15', 'Progress checkpoint', 'checkpoint', 'Each team shows where it stands and gets the brief for Sunday.'),
+          session('A', 1, '18:15', '19:00', 'Dinner and venue close', 'meal', 'Dinner is included. The venue closes at 19:00; there is no overnight building on site.'),
+        ],
+      },
+      {
+        date: EVENT.dates[1],
+        label: 'Day 2 · Sunday 13 December',
+        sessions: [
+          session('A', 2, '08:30', '09:00', 'Breakfast and technical check', 'arrival', 'Doors reopen at 08:30. Check your demo setup early.'),
+          session('A', 2, '09:00', '12:30', 'Build sprint', 'build', 'The last full sprint, with mentors on hand.'),
+          session('A', 2, '12:30', '13:15', 'Lunch', 'meal', 'Included for every participant.'),
+          session('A', 2, '13:15', '16:00', 'Final build and pitch preparation', 'build', 'Finish the build and rehearse a three-minute demo.'),
+          session('A', 2, '16:00', '16:30', 'Code freeze and submissions', 'submission', 'Code freezes at 16:00. Submit your public GitHub repository and demo link in the app by 16:30.'),
+          session('A', 2, '16:30', '16:45', 'Shortlist', 'judging', 'Judges finish screening every submission and name up to ten finalists.'),
+          session('A', 2, '16:45', '17:45', 'Finalist demos', 'demo', 'Up to ten finalists: a 3-minute demo, 2 minutes of questions and a minute to change over.'),
+          session('A', 2, '17:45', '18:15', 'Judging deliberation', 'judging', 'The judges pick the winners.'),
+          session('A', 2, '18:15', '18:45', 'Awards and close', 'ceremony', 'Winners announced, group photo, and home by 18:45.'),
+        ],
+      },
+    ],
   },
 };
 
-// Up to three tracks run on the day. Track sponsors name them; a presenting sponsor can set its own
+// Up to three tracks run at the event. Track sponsors name them; a presenting sponsor can set its own
 // theme. The ids are fixed because the database stores them.
 export const TRACKS = [
   { id: 'mobile', title: 'Consumer mobile', description: 'Apps people open every day: social, games, collectibles, habits and payments with friends.', output: 'A working app on a phone, a public repository and a demo', eligibility: 'Open to every team. A track sponsor may rename the track and set its challenge before registration opens.' },
@@ -147,7 +164,7 @@ export const SPONSORS = [];
 // The four sponsor tiers from the website (dragonconnector.com/sponsors), and where each
 // appears on the Sponsors page. A tier becomes real only once a sponsor agrees in writing.
 export const PACKAGES = [
-  { id: 'dragon', name: 'Dragon', contribution: '$3,000 · 1 slot', placement: 'The top banner: “Presented by”, with a logo, a description and a link.', funds: ['The day itself: lunch, venue, connectivity and the grand prize'] },
+  { id: 'dragon', name: 'Dragon', contribution: '$3,000 · 1 slot', placement: 'The top banner: “Presented by”, with a logo, a description and a link.', funds: ['The event itself: meals, venue, connectivity and the grand prize'] },
   { id: 'track', name: 'Track', contribution: '$1,500 · up to 3', placement: 'A featured card with a logo, the track it names, a description and a link.', funds: ['One track’s prizes and judging'] },
   { id: 'prize', name: 'Prize', contribution: '$500 · up to 6', placement: 'A logo card with its prize and a link.', funds: ['One named prize, paid in full to the winners'] },
   { id: 'inkind', name: 'In-kind', contribution: 'Goods or services', placement: 'A logo in the partners row, with what it provides.', funds: ['Venue, food and drink, apparel, devices, connectivity or media'] },
@@ -167,13 +184,13 @@ export const EXAMPLE_SPONSORS = [
 ];
 
 export const FAQS = [
-  { q: 'How much does it cost?', a: 'Nothing. Dragon Connector is free to attend, and lunch is included.' },
-  { q: 'When and where is it?', a: `On ${EVENT.dateLabel}, from 08:00 to 20:00 in Da Nang. The planned venue is Swinburne University Vietnam; the venue is confirmed when registration opens.` },
+  { q: 'How much does it cost?', a: 'Nothing. Dragon Connector is free to attend, and meals are included: breakfast and lunch on both days, and dinner on Saturday.' },
+  { q: 'When and where is it?', a: `On ${EVENT.dateLabel} in Da Nang: ${FORMATS.A.hours}. The planned venue is Swinburne University Vietnam; the venue is confirmed when registration opens.` },
   { q: 'Can people register now?', a: 'Not yet. Join the waitlist and pre-register in this app so your details are ready; registration opens here soon and waitlist members hear first.' },
-  { q: 'How big can a team be?', a: 'Up to 4 people. You can also come alone and find teammates here or at the start of the day.' },
-  { q: 'Does our code have to be public?', a: 'Yes. Submit a public GitHub repository by code freeze at 16:30. Judges only score projects they can open, and you keep ownership of your code.' },
+  { q: 'How big can a team be?', a: 'Up to 4 people. You can also come alone and find teammates here or at team formation on Saturday morning.' },
+  { q: 'Does our code have to be public?', a: `Yes. Code freezes at ${FORMATS.A.codeFreeze} on Sunday, and you submit a public GitHub repository in the app by ${FORMATS.A.submissionsClose}. Judges only score projects they can open, and you keep ownership of your code.` },
   { q: 'How are prizes paid?', a: 'In VND by bank transfer, or in goods. Never in crypto. Prizes over VND 20 million carry 10% personal income tax, which the payer withholds.' },
   { q: 'Who can take part?', a: 'Anyone who wants to build, including students and first-timers. Participants under 18 need a parent or guardian’s signed consent.' },
   { q: 'Is this a Solana Mobile event?', a: 'No. Dragon Connector is independent and is not run or endorsed by Solana Mobile.' },
-  { q: 'Is it overnight?', a: 'No. It is a single day, from 08:00 to 20:00.' },
+  { q: 'Is it overnight?', a: `No. Both days are daytime only: the venue closes at ${FORMATS.A.close}, and there is no overnight building on site. Accommodation and travel are not included. Working off site in the evening is optional.` },
 ];

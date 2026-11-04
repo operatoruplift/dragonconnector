@@ -13,7 +13,7 @@ const sources = (dir = 'src') => readdirSync(new URL(`${dir}/`, root), { withFil
 const appText = [...sources().filter((file) => file.endsWith('.js') && !file.includes('vendor/')), 'index.html', 'manifest.webmanifest'].map((file) => readFileSync(new URL(file, root), 'utf8')).join('\n');
 const ROUTE_NAMES = ['', 'home', 'waitlist', 'register', 'profile', 'checkin', 'team', 'inbox', 'submit', 'quests', 'schedule', 'guides', 'docs', 'requirements', 'map', 'prizes', 'sponsors', 'settings', 'more'];
 
-test('the schedule is one day: ordered sessions, 6 hours of building, code freeze at 16:30 and demos at 18:00', () => {
+test('the schedule is two days: ordered sessions, 795 build minutes, code freeze at 16:00 on Sunday and demos at 16:45', () => {
   for (const format of Object.values(FORMATS)) {
     assert.deepEqual(format.days.map((day) => day.date), format.dates);
     let build = 0;
@@ -28,15 +28,41 @@ test('the schedule is one day: ordered sessions, 6 hours of building, code freez
     }
     assert.equal(build, format.buildMinutes, format.id);
   }
-  assert.deepEqual(Object.keys(FORMATS), ['A'], 'one date, one format');
-  assert.equal(FORMATS.A.buildMinutes, 360);
-  const sessions = FORMATS.A.days[0].sessions;
-  assert.ok(sessions.some((session) => session.start === '16:30' && /code freeze/i.test(session.title)));
-  assert.ok(sessions.some((session) => session.start === '18:00' && session.type === 'demo'));
+  assert.deepEqual(Object.keys(FORMATS), ['A'], 'one format, with no choice between formats');
+  assert.equal(FORMATS.A.buildMinutes, 795);
   const ids = Object.values(FORMATS).flatMap((format) => format.days.flatMap((day) => day.sessions.map((session) => session.id)));
   assert.equal(new Set(ids).size, ids.length);
-  assert.equal(FORMATS.A.dateLabel, 'Saturday 19 December 2026');
-  assert.equal(new Date(`${FORMATS.A.dates[0]}T12:00:00+07:00`).getUTCDay(), 6, '19 December 2026 is a Saturday');
+  // Saturday 12 and Sunday 13 December 2026.
+  assert.equal(FORMATS.A.dateLabel, 'Saturday 12 and Sunday 13 December 2026');
+  assert.deepEqual(FORMATS.A.dates, ['2026-12-12', '2026-12-13']);
+  assert.deepEqual(FORMATS.A.dates.map((date) => new Date(`${date}T12:00:00+07:00`).getUTCDay()), [6, 0], '12 December 2026 is a Saturday and 13 December a Sunday');
+  const [saturday, sunday] = FORMATS.A.days;
+  assert.deepEqual(FORMATS.A.days.map((day) => day.label), ['Day 1 · Saturday 12 December', 'Day 2 · Sunday 13 December']);
+  // Daytime only: doors at 08:30, and the venue closes at 19:00 on Saturday and 18:45 on Sunday.
+  assert.deepEqual(FORMATS.A.days.map((day) => [day.sessions[0].start, day.sessions.at(-1).end]), [['08:30', '19:00'], ['08:30', '18:45']]);
+  assert.equal(FORMATS.A.hours, '08:30–19:00 on Saturday and 08:30–18:45 on Sunday');
+  assert.equal(FORMATS.A.close, '19:00 on Saturday and 18:45 on Sunday');
+  // Breakfast and lunch on both days, and dinner on Saturday.
+  const meals = (day) => day.sessions.filter((session) => /breakfast|lunch|dinner/i.test(session.title)).map((session) => session.title);
+  assert.deepEqual(meals(saturday), ['Check-in and breakfast', 'Lunch', 'Dinner and venue close']);
+  assert.deepEqual(meals(sunday), ['Breakfast and technical check', 'Lunch']);
+  // Everything is due on Sunday: code freeze at 16:00, submissions by 16:30, finalist demos 16:45–17:45, awards 18:15–18:45.
+  assert.ok(!saturday.sessions.some((session) => ['submission', 'demo'].includes(session.type)), 'nothing is due on Saturday');
+  const freeze = sunday.sessions.find((session) => session.type === 'submission');
+  assert.match(freeze.title, /code freeze/i);
+  assert.deepEqual([freeze.start, freeze.end], ['16:00', '16:30']);
+  assert.deepEqual([FORMATS.A.codeFreeze, FORMATS.A.submissionsClose], [freeze.start, freeze.end]);
+  const demos = sunday.sessions.find((session) => session.type === 'demo');
+  assert.deepEqual([demos.start, demos.end], ['16:45', '17:45']);
+  assert.equal(FORMATS.A.demos, demos.start);
+  assert.equal(toMinutes(demos.end) - toMinutes(demos.start), JUDGING.finalists * JUDGING.slotMinutes, 'ten six-minute slots');
+  assert.deepEqual([sunday.sessions.at(-1).title, sunday.sessions.at(-1).start], ['Awards and close', '18:15']);
+});
+
+test('nothing in the app still says one day, 19 December, 08:00, 18:00 or 20:00', () => {
+  assert.doesNotMatch(appText, /19 December|2026-12-19|one-day|\bone day\b|single day|\b(08|18|20):00\b/i);
+  // 16:30 is now only the Sunday submission deadline and the start of the shortlist.
+  for (const [line] of appText.matchAll(/[^\n]*16:30[^\n]*/g)) assert.match(line, /submission|shortlist/i, line);
 });
 
 test('prizes come from the sponsor tiers, are paid in VND or goods, and nothing claims money that is not there', () => {
@@ -68,7 +94,7 @@ test('the app names no sponsor or prospect, never says "apply now", and keeps re
   for (const pack of PACKAGES) assert.ok(EXAMPLE_SPONSORS.some((example) => example.package === pack.id), pack.id);
   // The FAQ covers the basics participants ask first.
   const faq = FAQS.map((item) => `${item.q} ${item.a}`).join(' ');
-  for (const words of [/free to attend/, /lunch is included/, /Up to 4 people/, /public GitHub repository/, /in VND by bank transfer, or in goods\. Never in crypto/i, /not run or endorsed by Solana Mobile/, /guardian/]) assert.match(faq, words);
+  for (const words of [/free to attend/, /breakfast and lunch on both days, and dinner on Saturday/, /Up to 4 people/, /public GitHub repository/, /in VND by bank transfer, or in goods\. Never in crypto/i, /not run or endorsed by Solana Mobile/, /guardian/, /daytime only/]) assert.match(faq, words);
 });
 
 test('live services use the public key of one Supabase project, and the security policy allows only that project', () => {

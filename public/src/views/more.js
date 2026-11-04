@@ -7,11 +7,11 @@ const GROUPS = [
   { title: 'Journey', items: [
     ['waitlist', 'list', 'Waitlist', 'Show your interest'],
     ['register', 'pen', 'Pre-register', 'Get your details ready'],
-    ['checkin', 'scan', 'Check-in', 'Your pass for event day'],
+    ['checkin', 'scan', 'Check-in', 'Your pass for the event'],
     ['submit', 'upload', 'Submit', 'Ship before code freeze'],
   ] },
   { title: 'Explore', items: [
-    ['schedule', 'calendar', 'Schedule', 'The day, hour by hour'],
+    ['schedule', 'calendar', 'Schedule', 'Both days, hour by hour'],
     ['guides', 'book', 'Guides', 'Tracks, teams and demos'],
     ['docs', 'doc', 'Docs', 'Rules, conduct and FAQ'],
     ['requirements', 'checklist', 'Requirements', 'What to bring'],
