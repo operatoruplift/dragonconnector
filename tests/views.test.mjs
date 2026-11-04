@@ -225,3 +225,21 @@ test('the More screen and the About doc link the @dragonconnector accounts, and 
   assert.ok(String(views.docs.render(fresh(), ['about'], ctx(before))).includes(EVENT.social[0].url));
   assert.doesNotMatch(readFileSync(new URL('../public/styles/app.css', import.meta.url), 'utf8'), /infinite/, 'no looping animation');
 });
+
+test('the app lives at dragonconnector.com/app/, and only its old address moves there', async () => {
+  const { readFileSync } = await import('node:fs');
+  const read = (path) => readFileSync(new URL(`../public/${path}`, import.meta.url), 'utf8');
+  const { EVENT } = await import('../public/src/data/event.js');
+  assert.equal(EVENT.siteUrl, 'https://dragonconnector.com');
+  assert.equal(EVENT.appUrl, `${EVENT.siteUrl}/app/`);
+  const index = read('index.html');
+  assert.ok(index.includes(`<link rel="canonical" href="${EVENT.appUrl}">`));
+  assert.ok(index.includes(`<meta property="og:image" content="${EVENT.appUrl}og.png">`));
+  assert.ok(index.indexOf('src/moved.js') < index.indexOf('src/main.js'), 'the move runs before the app starts');
+  const moved = read('src/moved.js');
+  const visit = (hostname, hash) => { let target = null; new Function('location', moved)({ hostname, hash, replace: (url) => { target = url; } }); return target; };
+  assert.equal(visit('dragonconnectorapp.vercel.app', '#/team'), 'https://dragonconnector.com/app/#/team');
+  assert.equal(visit('dragonconnector.com', '#/team'), null, 'served through the rewrite, the app stays put');
+  assert.equal(visit('localhost', ''), null);
+  assert.equal(JSON.parse(read('manifest.webmanifest')).id, './', 'the installed app is identified by its own path');
+});

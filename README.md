@@ -1,16 +1,16 @@
 <div align="center">
 
-<img src="docs/readme/banner.png" alt="Dragon Connector, the participant app for Da Nang / 001, an installable PWA. Every step is a quest. The installable companion for a free, one-day hackathon for mobile apps on Solana in Da Nang on Saturday 19 December 2026. It works offline and syncs when it can. 21 quests worth 1,400 XP, a QR check-in pass, live messages and teams, works offline, at dragonconnectorapp.vercel.app. Status: waitlist open. Beside the copy, three phones running the app: sample teammate profiles, the home screen at level 3 with the date card, and the Dragon Guide answering when the event is." width="100%">
+<img src="docs/readme/banner.png" alt="Dragon Connector, the participant app for Da Nang / 001, an installable PWA. Every step is a quest. The installable companion for a free, one-day hackathon for mobile apps on Solana in Da Nang on Saturday 19 December 2026. It works offline and syncs when it can. 21 quests worth 1,400 XP, a QR check-in pass, live messages and teams, works offline, at dragonconnector.com/app. Status: waitlist open. Beside the copy, three phones running the app: sample teammate profiles, the home screen at level 3 with the date card, and the Dragon Guide answering when the event is." width="100%">
 
 <br><br>
 
-<a href="https://dragonconnectorapp.vercel.app"><img src="https://img.shields.io/badge/Open_the_app-D4AF37?style=for-the-badge" alt="Open the app" height="36"></a>&nbsp;&nbsp;
-<a href="https://dragonconnectorapp.vercel.app/#/settings"><img src="https://img.shields.io/badge/Try_Preview_mode-242424?style=for-the-badge" alt="Try Preview mode" height="36"></a>&nbsp;&nbsp;
-<a href="https://dragonconnector.vercel.app"><img src="https://img.shields.io/badge/Visit_the_event_site-3A3A36?style=for-the-badge" alt="Visit the event site" height="36"></a>
+<a href="https://dragonconnector.com/app/"><img src="https://img.shields.io/badge/Open_the_app-D4AF37?style=for-the-badge" alt="Open the app" height="36"></a>&nbsp;&nbsp;
+<a href="https://dragonconnector.com/app/#/settings"><img src="https://img.shields.io/badge/Try_Preview_mode-242424?style=for-the-badge" alt="Try Preview mode" height="36"></a>&nbsp;&nbsp;
+<a href="https://dragonconnector.com"><img src="https://img.shields.io/badge/Visit_the_event_site-3A3A36?style=for-the-badge" alt="Visit the event site" height="36"></a>
 
 <br><br>
 
-<a href="https://dragonconnectorapp.vercel.app"><img src="https://img.shields.io/website?url=https%3A%2F%2Fdragonconnectorapp.vercel.app&label=app&up_message=live&down_message=down&up_color=34d399&labelColor=0B0B0B&style=flat-square" alt="App status"></a>
+<a href="https://dragonconnector.com/app/"><img src="https://img.shields.io/website?url=https%3A%2F%2Fdragonconnector.com%2Fapp%2F&label=app&up_message=live&down_message=down&up_color=34d399&labelColor=0B0B0B&style=flat-square" alt="App status"></a>
 <img src="https://img.shields.io/badge/event-Saturday_19_December_2026-D4AF37?style=flat-square&labelColor=0B0B0B" alt="Event: Saturday 19 December 2026">
 <img src="https://img.shields.io/badge/PWA-installable%2C_works_offline-EBC76E?style=flat-square&labelColor=0B0B0B" alt="PWA: installable, works offline">
 <img src="https://img.shields.io/badge/backend-Supabase-3ECF8E?style=flat-square&logo=supabase&logoColor=white&labelColor=0B0B0B" alt="Backend: Supabase">
@@ -42,7 +42,7 @@
 
 **This is the participant app for Dragon Connector · Da Nang / 001, a free one-day hackathon for mobile apps on Solana in Da Nang, Vietnam, on Saturday 19 December 2026: an installable, gamified web app that works offline.** Every step of the journey is a quest that earns XP, from the waitlist to registration, onboarding, check-in, finding teammates, messaging and submitting a project. Live services run on Supabase: the waitlist, accounts, builder profiles, messages, teams, submissions and check-in. The waitlist is open and registration opens soon. Teams have up to 4 people, lunch is included, projects are judged from public GitHub repositories, and every prize is paid in VND or goods, never in crypto. Dragon Connector is an independent event; it is not run or endorsed by Solana Mobile. The app says so wherever it matters, and every form says where its data goes.
 
-Its facts match the event site at [dragonconnector.vercel.app](https://dragonconnector.vercel.app) (source: `operatoruplift/da-nang-hackathon-proposal`, a private repository) as of 4 November 2026, and it wears the event's identity, Dragon Connector Brand System v1.0, with the edition line **DA NANG / 001** and the tagline **BUILD. SHIP. CONNECT.** Built by Matt ([RVAClassic](https://x.com/rvaclassic), [Operator Uplift](https://operatoruplift.com)), the event's organizer, on 30 October 2026, and connected to Supabase on 31 October.
+Its facts match the event site at [dragonconnector.com](https://dragonconnector.com) (source: `operatoruplift/da-nang-hackathon-proposal`, a private repository) as of 4 November 2026, and it wears the event's identity, Dragon Connector Brand System v1.0, with the edition line **DA NANG / 001** and the tagline **BUILD. SHIP. CONNECT.** Built by Matt ([RVAClassic](https://x.com/rvaclassic), [Operator Uplift](https://operatoruplift.com)), the event's organizer, on 30 October 2026, and connected to Supabase on 31 October.
 
 <br>
 
@@ -166,7 +166,7 @@ The tests enforce these rules: no prospect names, no "apply now", no screen clai
 <table>
   <tr valign="top">
     <td width="17%" align="center"><img src="https://img.shields.io/badge/LIVE-34d399?style=for-the-badge" alt="Live"></td>
-    <td>The app at <a href="https://dragonconnectorapp.vercel.app">dragonconnectorapp.vercel.app</a>, a public test address until it moves to its own domain. The Vercel project <code>dragonconnectorapp</code> deploys <code>main</code>, with the tests as the build step.</td>
+    <td>The app at <a href="https://dragonconnector.com/app/">dragonconnector.com/app</a>. The event site's Vercel project serves that path from this app's project, <code>dragonconnectorapp</code>, which deploys <code>main</code> with the tests as the build step. Its first address, dragonconnectorapp.vercel.app, sends visitors to the new one.</td>
     <td width="22%"><a href="#deploy">Deploy</a></td>
   </tr>
   <tr valign="top">
@@ -177,17 +177,12 @@ The tests enforce these rules: no prospect names, no "apply now", no screen clai
   <tr valign="top">
     <td align="center"><img src="https://img.shields.io/badge/DATE_SET-D4AF37?style=for-the-badge" alt="Date set"></td>
     <td>The event itself. Dragon Connector · Da Nang / 001 is on Saturday 19 December 2026, from 08:00 to 20:00: 6 hours of building, code freeze at 16:30 and demos at 18:00. The planned venue is Swinburne University Vietnam, with the booking being confirmed. Sponsor tiers and prizes are on the event site.</td>
-    <td><a href="https://dragonconnector.vercel.app">The event site</a></td>
+    <td><a href="https://dragonconnector.com">The event site</a></td>
   </tr>
   <tr valign="top">
     <td align="center"><img src="https://img.shields.io/badge/CLOSED-9A7624?style=for-the-badge" alt="Closed"></td>
     <td>Registration, check-in and submission. Registration opens soon, and check-in and submissions open on event day. The organizers open each one with a switch in the database. Until then, Preview mode unlocks all three on one device behind a Preview badge, and nothing done in Preview reaches the organizers.</td>
     <td><a href="#honest-by-design">Honest by design</a></td>
-  </tr>
-  <tr valign="top">
-    <td align="center"><img src="https://img.shields.io/badge/PLANNED-6F6163?style=for-the-badge" alt="Planned"></td>
-    <td>Its own domain. Until it moves, the app stays at the test address above, and the page asks search engines not to index it.</td>
-    <td><a href="#deploy">Deploy</a></td>
   </tr>
 </table>
 
@@ -329,7 +324,7 @@ npm run assets     # icons from the brand SVGs, install screenshots from a demo 
 
 ## Deploy
 
-The Vercel project `dragonconnectorapp` deploys `main` to https://dragonconnectorapp.vercel.app, a public test address until the app moves to its own domain. It serves `public/` as a static site; [`vercel.json`](vercel.json) runs the tests as the build step and sets a strict Content Security Policy: everything loads from the app's own origin, connections go only to it and the Supabase project, nothing can frame it, and camera, microphone and geolocation are switched off. The page also asks search engines not to index it (`noindex,nofollow`), and carries a link-preview image (`public/og.png`, rendered by the event site's `site-src/render_previews.cjs`). Web Analytics has to be switched on in the Vercel project (Analytics → Enable) before `/_vercel/insights/script.js` exists; until then the app's request for it fails quietly.
+The Vercel project `dragonconnectorapp` deploys `main` to https://dragonconnectorapp.vercel.app, and the event site's project serves it to the public at https://dragonconnector.com/app/ through a rewrite in that site's `vercel.json`. Every path in the app is relative, so it works under `/app/` as it is: the service worker's scope is the folder it is served from, and the manifest's `id`, `start_url` and `scope` are `./`. Visits to the old address move to the new one before the app starts ([`public/src/moved.js`](public/src/moved.js)), keeping the screen in the address. It serves `public/` as a static site; [`vercel.json`](vercel.json) runs the tests as the build step and sets a strict Content Security Policy: everything loads from the app's own origin, connections go only to it and the Supabase project, nothing can frame it, and camera, microphone and geolocation are switched off. The page also asks search engines not to index it (`noindex,nofollow`), and carries a link-preview image (`public/og.png`, rendered by the event site's `site-src/render_previews.cjs`). Web Analytics has to be switched on in the Vercel project (Analytics → Enable) before `/_vercel/insights/script.js` exists; until then the app's request for it fails quietly.
 
 <details>
 <summary><b>Repository layout</b></summary>

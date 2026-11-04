@@ -16,7 +16,8 @@ export const EVENT = {
   teamMax: 4,
   timezone: 'Asia/Ho_Chi_Minh',
   timezoneLabel: 'ICT · UTC+7',
-  siteUrl: 'https://dragonconnector.vercel.app',
+  siteUrl: 'https://dragonconnector.com',
+  appUrl: 'https://dragonconnector.com/app/',
   handle: '@dragonconnector',
   social: [
     { name: 'Instagram', url: 'https://www.instagram.com/dragonconnector/' },
@@ -24,8 +25,8 @@ export const EVENT = {
     { name: 'Facebook', url: 'https://www.facebook.com/dragonconnector' },
     { name: 'X', url: 'https://x.com/dragonconnector' },
   ],
-  rulesUrl: 'https://dragonconnector.vercel.app/rules/',
-  sponsorsUrl: 'https://dragonconnector.vercel.app/sponsors/',
+  rulesUrl: 'https://dragonconnector.com/rules/',
+  sponsorsUrl: 'https://dragonconnector.com/sponsors/',
   contentUpdated: '4 November 2026',
   organizer: 'Matt Sim, Lead Executive Producer & Organizer',
   venue: {
@@ -143,7 +144,7 @@ export const TARGET_NOTE = 'Planning targets, not guaranteed results. Final capa
 // PACKAGES ids and decides where the sponsor appears. Empty until then; prospects are never listed here.
 export const SPONSORS = [];
 
-// The four sponsor tiers from the website (dragonconnector.vercel.app/sponsors), and where each
+// The four sponsor tiers from the website (dragonconnector.com/sponsors), and where each
 // appears on the Sponsors page. A tier becomes real only once a sponsor agrees in writing.
 export const PACKAGES = [
   { id: 'dragon', name: 'Dragon', contribution: '$3,000 · 1 slot', placement: 'The top banner: “Presented by”, with a logo, a description and a link.', funds: ['The day itself: lunch, venue, connectivity and the grand prize'] },

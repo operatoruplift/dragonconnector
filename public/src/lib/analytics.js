@@ -1,6 +1,6 @@
 // Page-view counts with Vercel Web Analytics: no cookies, nothing that identifies a builder, and only
-// on the live address, so local copies and previews are never counted.
-const LIVE_HOSTS = ['dragonconnectorapp.vercel.app'];
+// on the live address (dragonconnector.com/app/), so local copies and previews are never counted.
+const LIVE_HOSTS = ['dragonconnector.com'];
 
 export function startAnalytics(hostname = location.hostname) {
   if (!LIVE_HOSTS.includes(hostname) || document.querySelector('script[data-analytics]')) return false;
