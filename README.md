@@ -267,7 +267,7 @@ Builders use anonymous accounts, so an account is a browser: there is no passwor
 
 ## HQ: run the event
 
-HQ is the private dashboard at [dragonconnector.com/app/hq](https://dragonconnector.com/app/hq/), in [`public/hq/`](public/hq). It has no Supabase account of its own. Each staff member signs in with a personal access code, and every `hq_` function in [`supabase/migrations/20261105120100_hq.sql`](supabase/migrations/20261105120100_hq.sql) checks the session and the role before it reads or changes anything. Codes and session tokens are kept only as SHA-256 hashes; a session lasts 14 days from its last use, and a new code or revoking someone ends their sessions.
+HQ is the private dashboard at [dragonconnector.com/app/hq](https://dragonconnector.com/app/hq/), in [`public/hq/`](public/hq). It has no Supabase account of its own. Each staff member signs in with a personal access code, and every `hq_` function in [`supabase/migrations/20261105114515_hq.sql`](supabase/migrations/20261105114515_hq.sql) checks the session and the role before it reads or changes anything. Codes and session tokens are kept only as SHA-256 hashes; a session lasts 14 days from its last use, and a new code or revoking someone ends their sessions.
 
 | Role | What HQ shows them |
 |---|---|

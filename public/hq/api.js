@@ -1,6 +1,6 @@
 // HQ's connection to the event database. HQ has no Supabase account: it calls the hq_ functions with
 // the public key and its own HQ session token, and every function checks that token and the staff
-// member's role (supabase/migrations/20261105120100_hq.sql). The token stays in this browser until
+// member's role (supabase/migrations/20261105114515_hq.sql). The token stays in this browser until
 // the staff member signs out or the session ends.
 export const SESSION_KEY = 'dragonconnector:hq-session';
 
