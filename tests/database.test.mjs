@@ -30,12 +30,34 @@ test('every table has row-level security, and every function pins its search pat
   for (const [, name, header] of functions) assert.match(header, /set search_path = ''/, name);
 });
 
-test('signed-out visitors can only join the waitlist, send a sponsor enquiry and read the public settings and announcements', () => {
+test('signed-out visitors can only join the waitlist, send a sponsor enquiry, read the public settings and announcements, and sign in to HQ', () => {
   const grants = [...sql.matchAll(/^grant [^;]+;/gm)].map(([grant]) => grant).filter((grant) => /\banon\b/.test(grant));
-  assert.deepEqual(grants, ['grant execute on function public.join_waitlist(text, text, text, text) to anon, authenticated;', 'grant execute on function public.submit_sponsor_inquiry(text, text, text, text, text, text, text) to anon, authenticated;']);
+  const hq = grants.filter((grant) => /public\.hq_/.test(grant));
+  assert.deepEqual(grants.filter((grant) => !hq.includes(grant)), ['grant execute on function public.join_waitlist(text, text, text, text) to anon, authenticated;', 'grant execute on function public.submit_sponsor_inquiry(text, text, text, text, text, text, text) to anon, authenticated;']);
+  assert.equal(hq.length, 1);
+  const granted = [...hq[0].matchAll(/public\.(hq_\w+)\(/g)].map(([, name]) => name);
+  const defined = [...sql.matchAll(/create function public\.(hq_\w+)\(/g)].map(([, name]) => name);
+  assert.deepEqual(granted.sort(), defined.sort(), 'every HQ function is granted once, by name');
+  assert.ok(defined.length >= 15);
+  // Every HQ function but signing in and out starts by checking the HQ session and the role.
+  for (const name of defined.filter((item) => !['hq_sign_in', 'hq_sign_out'].includes(item))) {
+    const body = sql.match(new RegExp(`create function public\\.${name}\\([\\s\\S]*?\\$\\$([\\s\\S]*?)\\$\\$;`))[1];
+    assert.match(body, /^\s*declare\s+me public\.staff := private\.hq_staff\(session, array\['(organizer|judge|crew)'(, '(judge|crew)')*\]\);/, name);
+    const header = sql.match(new RegExp(`create function public\\.${name}\\(([^$]*?)\\$\\$`))[1];
+    assert.match(header, /security definer set search_path = ''/, `${name} runs as the owner with a pinned search path`);
+  }
+  assert.match(sql, /revoke all on public\.staff, public\.staff_sessions, public\.scores from anon, authenticated;/, 'staff, sessions and scores are never readable by clients');
   assert.match(sql, /alter table public\.sponsor_inquiries enable row level security;\nrevoke all on public\.sponsor_inquiries from anon, authenticated;/, 'enquiries are never readable by clients');
   const policies = [...sql.matchAll(/create policy "[^"]+" on public\.(\w+) for (\w+) to anon/g)].map(([, table, action]) => `${table}:${action}`);
   assert.deepEqual(policies.sort(), ['announcements:select', 'event_settings:select']);
+});
+
+test('HQ keeps only hashes of access codes and session tokens', () => {
+  assert.match(sql, /code_hash text not null unique/);
+  assert.match(sql, /token_hash text primary key/);
+  assert.match(sql, /insert into public\.staff_sessions \(token_hash, staff_id\) values \(private\.sha256_hex\(token\), member\.id\)/);
+  assert.match(sql, /extensions\.gen_random_bytes\(32\)/, 'session tokens are 256 random bits');
+  assert.doesNotMatch(sql, /\b(code|token) text not null/, 'no column holds a code or token in the clear');
 });
 
 test('the app only uses tables, columns, functions and arguments the migrations create', () => {

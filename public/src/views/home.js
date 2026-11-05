@@ -1,15 +1,16 @@
 import { html } from '../lib/html.js';
 import { icon } from '../lib/icons.js';
 import { BADGES, QUESTS, earnedBadges, levelFor, nextQuest, xpOf } from '../lib/game.js';
-import { checkInOpen, formatOf, officialRegistrationOpen, submissionsOpen } from '../lib/gates.js';
+import { checkInOpen, formatOf, officialRegistrationOpen, registrationOpen, submissionsOpen } from '../lib/gates.js';
 import { countdown, eventWindow } from '../lib/time.js';
 import { EVENT } from '../data/event.js';
 import { connectCard, liveMode } from './common.js';
 
-// The participant journey, in the order people move through it.
+// The participant journey, in the order people move through it. Getting in is one step: the waitlist
+// until registration opens (or preview mode unlocks it), then registration.
 export const JOURNEY = [
-  { id: 'waitlist', title: 'Join the waitlist', detail: 'Show your interest and hear first.', route: 'waitlist', quest: 'waitlist' },
-  { id: 'register', title: 'Pre-register', detail: 'Get your details ready for registration.', route: 'register', quest: 'register' },
+  { id: 'waitlist', title: 'Join the waitlist', detail: 'Hear first when registration opens. Your details carry over.', route: 'waitlist', quest: 'waitlist', show: (state) => !registrationOpen(state) },
+  { id: 'register', title: 'Register', detail: 'Confirm your place. Your waitlist details are filled in.', route: 'register', quest: 'register', show: (state) => registrationOpen(state) },
   { id: 'onboard', title: 'Onboard and take the tour', detail: 'Learn the app and build your profile.', action: 'start-tour', quest: 'tour' },
   { id: 'checkin', title: 'Check in at the venue', detail: 'Show your pass from 08:30 on Saturday.', route: 'checkin', quest: 'checkin', gate: 'checkin', opens: 'Opens Saturday 12 December' },
   { id: 'team', title: 'Find teammates', detail: 'Match on skills, tracks and goals.', route: 'team', quest: 'team' },
@@ -28,7 +29,9 @@ const EXPLORE = [
   { route: 'sponsors', icon: 'handshake', title: 'Sponsors', detail: 'The partner programme', quest: 'sponsors' },
 ];
 
-function journeyStep(state, step, current, ctx) {
+export const journeyFor = (state) => JOURNEY.filter((step) => step.show?.(state) ?? true);
+
+function journeyStep(state, step, index, current, ctx) {
   const done = Boolean(state.quests[step.quest]);
   const locked = !done && ((step.gate === 'checkin' && !checkInOpen(state, ctx.now())) || (step.gate === 'submit' && !submissionsOpen(state, ctx.now())));
   const status = done ? 'done' : locked ? 'locked' : step.id === current ? 'current' : '';
@@ -37,7 +40,7 @@ function journeyStep(state, step, current, ctx) {
     ? html`<button type="button" class="btn small${status === 'current' ? ' primary' : ''}" data-action="${step.action}">${done ? 'Replay the tour' : 'Start the tour'}</button>`
     : html`<a class="btn small${status === 'current' ? ' primary' : ''}" href="#/${step.route}">${done ? 'Open' : locked ? 'Preview' : 'Go'} ${icon('arrow')}</a>`;
   return html`<li class="step ${status}">
-    <span class="node">${done ? icon('check') : locked ? icon('lock') : String(JOURNEY.indexOf(step) + 1).padStart(2, '0')}</span>
+    <span class="node">${done ? icon('check') : locked ? icon('lock') : String(index + 1).padStart(2, '0')}</span>
     <div class="step-body">
       <div class="row"><span class="step-title">${step.title}</span>${done ? html`<span class="pill done">Done</span>` : html`<span class="xp">+${quest.xp} XP</span>`}${locked ? html`<span class="pill">${step.opens}</span>` : ''}</div>
       <p class="muted">${step.detail}</p>
@@ -56,7 +59,8 @@ export default {
     const until = countdown(ctx.now(), when.start);
     const done = QUESTS.filter((quest) => state.quests[quest.id]).length;
     const badges = earnedBadges(state);
-    const current = JOURNEY.find((step) => !state.quests[step.quest])?.id;
+    const journey = journeyFor(state);
+    const current = journey.find((step) => !state.quests[step.quest])?.id;
     const next = nextQuest(state);
     const name = state.profile.name.trim().split(/\s+/)[0];
     return html`<section class="view">
@@ -90,12 +94,12 @@ export default {
         </div>` : html`<div class="card accent"><p class="eyebrow">All quests complete</p><h2>Legendary.</h2><p class="muted">You have done everything the app can track. See you on the build floor.</p></div>`}
       </div>
 
-      ${officialRegistrationOpen(state) ? '' : html`<p class="notice"><strong>Registration is not open.</strong> Join the waitlist and pre-register so you are ready when it opens.</p>`}
+      ${officialRegistrationOpen(state) ? '' : html`<p class="notice"><strong>Registration is not open yet.</strong> Join the waitlist to hear first when it opens: your details carry over.</p>`}
       ${liveMode(state, ctx) === 'device' ? connectCard() : ''}
 
       <section class="card" aria-labelledby="journey-title" data-tour="journey">
-        <div class="card-head"><h2 id="journey-title">Your journey</h2><span class="small-print">${JOURNEY.filter((step) => state.quests[step.quest]).length} of ${JOURNEY.length} steps</span></div>
-        <ol class="journey">${JOURNEY.map((step) => journeyStep(state, step, current, ctx))}</ol>
+        <div class="card-head"><h2 id="journey-title">Your journey</h2><span class="small-print">${journey.filter((step) => state.quests[step.quest]).length} of ${journey.length} steps</span></div>
+        <ol class="journey">${journey.map((step, index) => journeyStep(state, step, index, current, ctx))}</ol>
       </section>
 
       <section class="stack" aria-labelledby="explore-title">

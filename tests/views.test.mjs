@@ -96,8 +96,52 @@ test('gated steps stay closed before the event unless preview mode is on', () =>
   assert.equal(checkInOpen(state, before), true);
   assert.match(String(views.checkin.render(state, [], ctx(before))), /Preview mode: use DRAGON-001/);
   const register = String(views.register.render(fresh(), [], ctx(before)));
-  assert.match(register, /Pre-register/);
-  assert.doesNotMatch(register, /Complete registration/);
+  assert.match(register, /Registration is not open yet/);
+  assert.match(register, /href="#\/waitlist"/);
+  assert.doesNotMatch(register, /data-form="step"|Complete registration/, 'no form until registration opens');
+});
+
+test('getting in is one step: the waitlist until registration opens, then registration', () => {
+  const journey = (state) => String(views.home.render(state, [], ctx(before))).match(/<ol class="journey">[\s\S]*?<\/ol>/)[0];
+  const more = (state) => String(views.more.render(state, [], ctx(before)));
+  const closed = fresh();
+  assert.match(journey(closed), /Join the waitlist/);
+  assert.doesNotMatch(journey(closed), /href="#\/register"|Pre-register/);
+  assert.match(more(closed), /href="#\/waitlist"/);
+  assert.doesNotMatch(more(closed), /href="#\/register"/);
+
+  const open = fresh();
+  open.eventSettings = { registrationOpen: true, checkInOpen: false, submissionsOpen: false };
+  assert.match(journey(open), /href="#\/register"/);
+  assert.doesNotMatch(journey(open), /Join the waitlist/);
+  assert.match(more(open), /href="#\/register"/);
+  assert.match(String(views.waitlist.render(open, [], ctx(before))), /Register instead/, 'new builders skip the waitlist once registration is open');
+  assert.match(String(views.register.render(open, [], ctx(before))), /data-form="step"/);
+
+  // The form starts from the waitlist entry.
+  const waiting = fresh();
+  waiting.eventSettings = open.eventSettings;
+  waiting.waitlist = { name: 'An Nguyen', email: 'an@example.com', role: 'design', track: 'mobile', joinedAt: before, sent: true };
+  const form = String(views.register.render(waiting, [], ctx(before)));
+  assert.match(form, /value="An Nguyen"/);
+  assert.match(form, /value="an@example\.com"/);
+  for (const page of ['home', 'waitlist', 'register', 'more', 'checkin']) assert.doesNotMatch(String(views[page].render(waiting, [], ctx(before))), /pre-?regist/i, page);
+});
+
+test('a registration made in preview mode stays on the device until registration opens and it is confirmed', async () => {
+  const { registrationPayload } = await import('../public/src/lib/backend.js');
+  const state = fresh();
+  state.preview = true;
+  const form = String(views.register.render(state, [], ctx(before)));
+  assert.match(form, /Registration has not opened yet, so this form stays on this device/);
+  state.registration = { status: 'registered', preview: true, step: 0, data: { name: 'An', email: 'an@example.com', format: 'A', experience: 'some', media: 'no', conduct: true, data: true }, updatedAt: before };
+  assert.equal(registrationPayload(state, 'u-1'), null, 'not sent');
+  assert.match(String(views.register.render(state, [], ctx(before))), /Preview registration/);
+  state.eventSettings = { registrationOpen: true, checkInOpen: false, submissionsOpen: false };
+  assert.match(String(views.register.render(state, [], ctx(before))), /data-action="confirm"/);
+  state.registration.preview = false;
+  assert.equal(registrationPayload(state, 'u-1').status, 'registered');
+  assert.match(String(views.register.render(state, [], ctx(before))), /you are registered/);
 });
 
 test('Home counts down to 08:30 on Saturday 12 December, Vietnam time, and the schedule opens on the current day', async () => {

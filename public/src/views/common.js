@@ -33,7 +33,7 @@ export function syncNote(state, ctx) {
 /** The invitation to connect details saved before accounts existed. */
 export const connectCard = () => html`<div class="card accent">
   <div class="card-head"><h2>Connect your details</h2></div>
-  <p class="muted">You saved details here before Dragon Connector accounts were switched on, so they are on this device only. Connect them to send your waitlist entry, profile, pre-registration, team and submission to your account (Supabase, hosted in ${INTEGRATIONS.supabase?.region ?? 'the cloud'}). Then you can message builders and join teams. <a href="#/docs/privacy">How your data is kept</a>.</p>
+  <p class="muted">You saved details here before Dragon Connector accounts were switched on, so they are on this device only. Connect them to send your waitlist entry, profile, registration, team and submission to your account (Supabase, hosted in ${INTEGRATIONS.supabase?.region ?? 'the cloud'}). Then you can message builders and join teams. <a href="#/docs/privacy">How your data is kept</a>.</p>
   <div class="row"><button type="button" class="btn primary small" data-action="connect-details">Connect my details</button></div>
 </div>`;
 

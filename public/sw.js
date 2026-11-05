@@ -21,12 +21,22 @@ self.addEventListener('message', (event) => {
   if (event.data === 'skip-waiting') self.skipWaiting();
 });
 
+// HQ, the staff dashboard at hq/, is not part of the offline app: its pages, and every file they
+// load (shared ones included), come straight from the network, so staff always see the latest.
+const HQ = `${SCOPE}hq/`;
+async function fromHq(event) {
+  if (!event.clientId) return false;
+  const client = await self.clients.get(event.clientId);
+  return Boolean(client && new URL(client.url).pathname.startsWith(HQ));
+}
+
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   if (request.method !== 'GET') return;
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
   if (url.pathname.startsWith('/_vercel/')) return; // analytics goes straight to the network
+  if (url.pathname.startsWith(HQ)) return;
 
   // The app shell: every navigation within the app is the same page with a different #route.
   if (request.mode === 'navigate' && (url.pathname === SCOPE || url.pathname === `${SCOPE}index.html`)) {
@@ -34,11 +44,15 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  event.respondWith(caches.match(request, { ignoreSearch: true }).then((cached) => cached || fetch(request).then((response) => {
+  event.respondWith((async () => {
+    if (await fromHq(event)) return fetch(request);
+    const cached = await caches.match(request, { ignoreSearch: true });
+    if (cached) return cached;
+    const response = await fetch(request);
     if (response.ok && response.type === 'basic') {
       const copy = response.clone();
       caches.open(CACHE).then((cache) => cache.put(request, copy));
     }
     return response;
-  })));
+  })());
 });

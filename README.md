@@ -15,12 +15,12 @@
 <img src="https://img.shields.io/badge/PWA-installable%2C_works_offline-EBC76E?style=flat-square&labelColor=0B0B0B" alt="PWA: installable, works offline">
 <img src="https://img.shields.io/badge/backend-Supabase-3ECF8E?style=flat-square&logo=supabase&logoColor=white&labelColor=0B0B0B" alt="Backend: Supabase">
 <img src="https://img.shields.io/badge/build-none%2C_no_npm_dependencies-9A7624?style=flat-square&labelColor=0B0B0B" alt="No build step and no npm dependencies">
-<img src="https://img.shields.io/badge/tests-58_node%3Atest-339933?style=flat-square&logo=nodedotjs&logoColor=white&labelColor=0B0B0B" alt="58 node:test tests">
+<img src="https://img.shields.io/badge/tests-75_node%3Atest_%2B_SQL-339933?style=flat-square&logo=nodedotjs&logoColor=white&labelColor=0B0B0B" alt="75 node:test tests and SQL tests">
 <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-6F6163?style=flat-square&labelColor=0B0B0B" alt="License: MIT"></a>
 
 <h3>Every step from the waitlist to your demo is a quest.</h3>
 
-<b>Join</b> &nbsp;→&nbsp; <b>Pre-register</b> &nbsp;→&nbsp; <b>Check in</b> &nbsp;→&nbsp; <b>Team up</b> &nbsp;→&nbsp; <b>Submit</b>
+<b>Join</b> &nbsp;→&nbsp; <b>Register</b> &nbsp;→&nbsp; <b>Check in</b> &nbsp;→&nbsp; <b>Team up</b> &nbsp;→&nbsp; <b>Submit</b>
 
 <br>
 
@@ -29,6 +29,7 @@
 <a href="#status">Status</a> &nbsp;·&nbsp;
 <a href="#run-it-locally">Run it locally</a> &nbsp;·&nbsp;
 <a href="#live-services">Live services</a> &nbsp;·&nbsp;
+<a href="#hq-run-the-event">HQ</a> &nbsp;·&nbsp;
 <a href="#pwa">PWA</a> &nbsp;·&nbsp;
 <a href="#deploy">Deploy</a>
 
@@ -70,43 +71,38 @@ Home shows the journey as a path, with the next step in gold. Each step is a que
     <th width="12%" align="left">XP</th>
   </tr>
   <tr valign="top">
-    <td><b>1. Waitlist</b></td>
-    <td>Name, email, role and track.</td>
-    <td>+50</td>
+    <td><b>1. Waitlist, then registration</b></td>
+    <td>One step to get in. While registration is closed it is the waitlist: name, email, role and track. When the organizers open registration, the step becomes Register: five steps (contact, builder profile, event details, agreements and review), filled in from the waitlist entry, validated as you go and saved as you type.</td>
+    <td>+50<br>+150</td>
   </tr>
   <tr valign="top">
-    <td><b>2. Pre-registration</b></td>
-    <td>Five steps (account, builder profile, event details, agreements and review), validated as you go and saved as you type.</td>
-    <td>+150</td>
-  </tr>
-  <tr valign="top">
-    <td><b>3. Onboarding</b></td>
+    <td><b>2. Onboarding</b></td>
     <td>A first-run welcome and a coach-mark tour of the app. You can replay it from Home or Settings.</td>
     <td>+50</td>
   </tr>
   <tr valign="top">
-    <td><b>4. Check-in</b></td>
-    <td>A personal QR pass, plus self check-in with the venue code at the event.</td>
+    <td><b>3. Check-in</b></td>
+    <td>A personal QR pass that opens the check-in desk in HQ when crew scan it, plus self check-in with the venue code at the event.</td>
     <td>+200</td>
   </tr>
   <tr valign="top">
-    <td><b>5. Teammates and co-founders</b></td>
+    <td><b>4. Teammates and co-founders</b></td>
     <td>Real builders who chose to show their profile, ranked by how well they complement you, with the reasons. Filters, search, intros, live teams and invitations.</td>
     <td>+100</td>
   </tr>
   <tr valign="top">
-    <td><b>6. Messages</b></td>
+    <td><b>5. Messages</b></td>
     <td>Organizer announcements, live direct messages, team chat, a private channel to the organizers, and the Dragon Guide. The Guide answers questions from the event data and keeps the caveats.</td>
     <td>+75</td>
   </tr>
   <tr valign="top">
-    <td><b>7. Submission</b></td>
+    <td><b>6. Submission</b></td>
     <td>Project details, links and confirmations. Drafts save as you type.</td>
     <td>+250</td>
   </tr>
 </table>
 
-The other 14 quests reward the rest of the app, such as building your profile, asking the Guide a question or reading every guide. **Explore** holds guides, docs (a summary of the official rules, the code of conduct, privacy and the FAQ), the sponsor tiers, the two-day schedule with saved sessions, quests and personal tasks, the requirements checklist, an illustrative venue map, and the prize categories with the judging rubric. **More** also links the [@dragonconnector](https://x.com/dragonconnector) accounts on Instagram, TikTok, Facebook and X.
+Registering also counts for the waitlist quest, so builders who arrive after registration opens are not a quest short. The other 14 quests reward the rest of the app, such as building your profile, asking the Guide a question or reading every guide. **Explore** holds guides, docs (a summary of the official rules, the code of conduct, privacy and the FAQ), the sponsor tiers, the two-day schedule with saved sessions, quests and personal tasks, the requirements checklist, an illustrative venue map, and the prize categories with the judging rubric. **More** also links the [@dragonconnector](https://x.com/dragonconnector) accounts on Instagram, TikTok, Facebook and X.
 
 <p align="center"><sub>Static HTML · CSS · JavaScript modules with no framework and no build step · Supabase (Postgres with row-level security, anonymous sign-ins, realtime) through supabase-js 2.118.0, vendored · local storage · service worker and web app manifest · qrcode-generator 2.0.4, vendored · Oxanium, Space Grotesk and IBM Plex Mono, self-hosted, the last two with Vietnamese subsets · node:test · Vercel</sub></p>
 
@@ -133,7 +129,7 @@ The other 14 quests reward the rest of the app, such as building your profile, a
   </tr>
   <tr valign="top">
     <td><b>Preview mode</b></td>
-    <td>Settings unlocks registration, check-in and submission on the device for demos, and fills the Sponsors page with labelled placeholder brands that show where each sponsor package appears. A Preview badge shows while it is on. The preview check-in code is <code>DRAGON-001</code>. Preview check-ins and submissions are never sent to the organizers.</td>
+    <td>Settings unlocks registration, check-in and submission on the device for demos, and fills the Sponsors page with labelled placeholder brands that show where each sponsor package appears. A Preview badge shows while it is on. The preview check-in code is <code>DRAGON-001</code>. Preview registrations, check-ins and submissions are never sent to the organizers; a preview registration waits on the device until registration opens and the builder confirms it.</td>
   </tr>
   <tr valign="top">
     <td><b>Sample profiles</b></td>
@@ -175,13 +171,18 @@ The tests enforce these rules: no prospect names, no "apply now", no screen clai
     <td><a href="#live-services">Live services</a></td>
   </tr>
   <tr valign="top">
+    <td align="center"><img src="https://img.shields.io/badge/LIVE-34d399?style=for-the-badge" alt="Live"></td>
+    <td>HQ, the private dashboard for organizers, judges and check-in crew, at <a href="https://dragonconnector.com/app/hq/">dragonconnector.com/app/hq</a>. Staff sign in with personal access codes; organizers create them in HQ.</td>
+    <td><a href="#hq-run-the-event">HQ</a></td>
+  </tr>
+  <tr valign="top">
     <td align="center"><img src="https://img.shields.io/badge/DATE_SET-D4AF37?style=for-the-badge" alt="Date set"></td>
     <td>The event itself. Dragon Connector · Da Nang / 001 is on Saturday 12 and Sunday 13 December 2026, in the daytime only: 08:30–19:00 on Saturday and 08:30–18:45 on Sunday, with 13 hours 15 minutes of building. Code freezes at 16:00 on Sunday, submissions close at 16:30 and the finalist demos start at 16:45. The planned venue is Swinburne University Vietnam, with the booking being confirmed. Sponsor tiers and prizes are on the event site.</td>
     <td><a href="https://dragonconnector.com">The event site</a></td>
   </tr>
   <tr valign="top">
     <td align="center"><img src="https://img.shields.io/badge/CLOSED-9A7624?style=for-the-badge" alt="Closed"></td>
-    <td>Registration, check-in and submission. Registration opens soon. Check-in opens on Saturday 12 December, and submissions on Sunday 13 December. The organizers open each one with a switch in the database. Until then, Preview mode unlocks all three on one device behind a Preview badge, and nothing done in Preview reaches the organizers.</td>
+    <td>Registration, check-in and submission. Registration opens soon. Check-in opens on Saturday 12 December, and submissions on Sunday 13 December. The organizers open each one with a switch in HQ. Until then, Preview mode unlocks all three on one device behind a Preview badge, and nothing done in Preview reaches the organizers.</td>
     <td><a href="#honest-by-design">Honest by design</a></td>
   </tr>
 </table>
@@ -194,7 +195,7 @@ The tests enforce these rules: no prospect names, no "apply now", no screen clai
   <tr valign="top">
     <td width="33%"><b>Prerequisites</b><br><sub>Node 20 or newer for the tests, and Python 3 for <code>npm start</code> (or any static file server pointed at <code>public/</code>). There are no dependencies to install.</sub></td>
     <td width="33%"><b>Read first</b><br><sub><a href="#honest-by-design">Honest by design</a> before changing any wording, and <a href="#live-services">Live services</a> before touching data: a local copy talks to the live project.</sub></td>
-    <td width="33%"><b>What the checks prove</b><br><sub>58 <code>node:test</code> cases: the quest engine, matching, validation, the Guide and escaping, the event's schedule, tiers and prize policy, every link and screen, the PWA files, and the live services against an in-memory Supabase.</sub></td>
+    <td width="33%"><b>What the checks prove</b><br><sub>75 <code>node:test</code> cases: the quest engine, matching, validation, the Guide and escaping, the event's schedule, tiers and prize policy, every link and screen, the PWA files, the live services against an in-memory Supabase, and HQ. <code>npm run test:db</code> runs the migrations and HQ's SQL tests on a throwaway PostgreSQL.</sub></td>
   </tr>
 </table>
 
@@ -206,7 +207,7 @@ The tests enforce these rules: no prospect names, no "apply now", no screen clai
 npm start   # Python serves public/ at http://127.0.0.1:8428
 ```
 
-It is a static site with no build step and no dependencies, so after `npm start` you open http://127.0.0.1:8428. Any static file server pointed at `public/` works. The service worker needs `localhost` or HTTPS. To try the closed steps, open Settings and turn on Preview mode; the check-in code is then `DRAGON-001`.
+It is a static site with no build step and no dependencies, so after `npm start` you open http://127.0.0.1:8428, and HQ at http://127.0.0.1:8428/hq/ (it talks to the live project too). Any static file server pointed at `public/` works. The service worker needs `localhost` or HTTPS. To try the closed steps, open Settings and turn on Preview mode; the check-in code is then `DRAGON-001`.
 
 ### 2. Run the tests
 
@@ -221,7 +222,15 @@ The tests cover the quest engine, the store, matching, validation, the Dragon Gu
 - every in-app link leads somewhere, and the PWA manifest and icons are valid;
 - every screen renders for a new and a busy builder, in every connection state, without turning anything another builder wrote into markup.
 
-The live services are tested against an in-memory Supabase ([`tests/fake-supabase.mjs`](tests/fake-supabase.mjs)): accounts, syncing, offline and reconnecting, messages, teams, check-in and deleting data. Static checks make sure every table has row-level security, every function pins its search path, and every table, column, function and argument the app uses exists in [`supabase/migrations`](supabase/migrations). The app ships only the public anon key, and the security policy allows only this project.
+The live services are tested against an in-memory Supabase ([`tests/fake-supabase.mjs`](tests/fake-supabase.mjs)): accounts, syncing, offline and reconnecting, messages, teams, check-in and deleting data. Static checks make sure every table has row-level security, every function pins its search path, every HQ function checks its session first, and every table, column, function and argument the app and HQ use exists in [`supabase/migrations`](supabase/migrations). The app ships only the public anon key, and the security policy allows only this project. HQ's own tests ([`tests/hq.test.mjs`](tests/hq.test.mjs)) cover its numbers, the leaderboard, CSV exports, the score sheet and every page for each role.
+
+### 3. Test the database
+
+```bash
+npm run test:db   # needs PostgreSQL 15 or newer installed locally; never touches the live project
+```
+
+[`scripts/test-database.sh`](scripts/test-database.sh) starts a throwaway PostgreSQL, adds a stand-in for the parts of Supabase the migrations use ([`supabase/tests/supabase.sql`](supabase/tests/supabase.sql)), applies every migration in order and runs [`supabase/tests/hq.test.sql`](supabase/tests/hq.test.sql): signing in, sessions ending, what each role can and cannot reach, scoring, the check-in desk, replies, announcements, switches, crew codes, and that builders gain nothing.
 
 <br>
 
@@ -235,7 +244,7 @@ Edit [`public/src/data/event.js`](public/src/data/event.js):
 - **Tracks, judging and prizes:** `TRACKS`, `JUDGING` and `PRIZES`.
 - **Sponsor tiers:** `PACKAGES`, with the same tiers and amounts as the event site.
 - **FAQ:** `FAQS`.
-- **Opening a step:** the organizers' switches in the database decide (see [Live services](#live-services), under "Run the event from the dashboard"). `GATES` holds the fallback the app uses before it has heard from the server.
+- **Opening a step:** the organizers' switches in the database decide (see [HQ](#hq-run-the-event)). `GATES` holds the fallback the app uses before it has heard from the server.
 - **An external registration page:** `INTEGRATIONS.registrationUrl`, if registration moves elsewhere. Once registration is open, the registration screen links to it.
 
 Then run `npm run precache` and `npm test`. The content tests check the schedules still add up.
@@ -248,7 +257,7 @@ Some tests pin today's state on purpose: the fallback `GATES.registration.open` 
 
 The project is `ondistgfpmodesjrharp` (https://ondistgfpmodesjrharp.supabase.co), hosted in the United States (Ohio). `INTEGRATIONS.supabase` in [`public/src/data/event.js`](public/src/data/event.js) holds its URL and anon key. The anon key is public by design: row-level security decides what it can reach. Never put a service_role or secret key in the app; a test fails if one appears. To use another project, change `INTEGRATIONS.supabase` and the `connect-src` of the security policy in [`vercel.json`](vercel.json) together (the tests require both to name the same project), then apply the migrations there.
 
-Builders use anonymous accounts, so an account is a browser: there is no password, and clearing the browser's data loses access to it. The device keeps the source of truth for what a builder types (profile, pre-registration, submission and waitlist entry) and syncs a copy. The server is the source of truth for check-in, conversations and teams, and it holds teams to 4 people, counting pending invitations. The client library ([`public/src/vendor/supabase.js`](public/src/vendor/supabase.js), supabase-js 2.118.0) loads after the first render, so the app never waits for it.
+Builders use anonymous accounts, so an account is a browser: there is no password, and clearing the browser's data loses access to it. The device keeps the source of truth for what a builder types (profile, registration, submission and waitlist entry) and syncs a copy. The server is the source of truth for check-in, conversations and teams, and it holds teams to 4 people, counting pending invitations. The client library ([`public/src/vendor/supabase.js`](public/src/vendor/supabase.js), supabase-js 2.118.0) loads after the first render, so the app never waits for it.
 
 ### One-time settings in the Supabase dashboard
 
@@ -256,39 +265,49 @@ Builders use anonymous accounts, so an account is a browser: there is no passwor
 - **Rate limit for anonymous sign-ins:** Authentication → Rate Limits. Raise it before the event. The default allows about 30 new accounts per hour from one IP address, and a venue's Wi-Fi often shares one.
 - Consider CAPTCHA protection (Authentication → Attack Protection) if the app is promoted widely.
 
+## HQ: run the event
+
+HQ is the private dashboard at [dragonconnector.com/app/hq](https://dragonconnector.com/app/hq/), in [`public/hq/`](public/hq). It has no Supabase account of its own. Each staff member signs in with a personal access code, and every `hq_` function in [`supabase/migrations/20261105120100_hq.sql`](supabase/migrations/20261105120100_hq.sql) checks the session and the role before it reads or changes anything. Codes and session tokens are kept only as SHA-256 hashes; a session lasts 14 days from its last use, and a new code or revoking someone ends their sessions.
+
+| Role | What HQ shows them |
+|---|---|
+| Organizer | **Overview**: the headline numbers, the switches, sign-ups per day and who is coming by track, role and experience. **People**: registrations, builder profiles and the waitlist, with search, filters and CSV exports, including the dietary and access list for catering. **Teams**, **Projects**, and **Judging**: the leaderboard, each judge's progress and a results CSV. The **check-in desk**, the **inbox** (replies reach the builder's app as "Organizers"), **announcements** (now or scheduled), **sponsor enquiries** as a pipeline, the **crew** (add people, new codes, revoke) and the **event switches** with the venue code |
+| Judge | The submitted projects and a scoring sheet: the four published criteria at 25 points each, a conflict-of-interest option and notes only organizers see. Scores save while an organizer has judging open |
+| Check-in crew | The check-in desk only: look up a pass and check its builder in. They see the name, team, photo consent and access needs, never the email or dietary needs |
+
+A builder's pass carries a QR code with the desk's link (`https://dragonconnector.com/app/hq/#/door/DC-7KQ4-M2XP`), so any phone camera opens HQ on that pass, and the code under it can be typed instead. HQ shows only the organizer channel, never builders' direct messages or team chats, and builders' own access to the database is unchanged. HQ is not part of the offline app: the service worker never caches it, and it always loads fresh.
+
+**The first organizer** is created once in the Supabase SQL editor; the code it returns is shown only then. Everyone else is added in HQ, under Crew.
+
+```sql
+select private.hq_create_staff('Matt Sim', 'organizer');
+```
+
 <details>
-<summary><b>Run the event from the dashboard</b></summary>
+<summary><b>The same jobs in the Supabase dashboard</b></summary>
 <br>
 
-Organizers use the Table Editor or the SQL editor. Both bypass row-level security.
+The Table Editor and the SQL editor bypass row-level security, so organizers can always fall back on them.
 
-- **Sponsor enquiries:** the `sponsor_inquiries` table, filled by the event site's "Become a sponsor" form through `submit_sponsor_inquiry`. No client can read it.
-- **Waitlist, pre-registrations, submissions, check-ins:** the `waitlist`, `registrations`, `submissions` and `check_ins` tables. A pass code in `registrations.pass_code` matches the QR code a builder shows at the desk (`DC001:` followed by the pass code).
-- **Post an announcement.** It reaches open apps at once. A future `published_at` schedules it.
+- **Post an announcement.** A future `published_at` schedules it.
 
   ```sql
   insert into announcements (body) values ('Doors open at 08:30.');
   ```
 
-- **Reply to a builder who asked the organizers.** Find the conversation in `conversations` (kind `organizers`, `pair_key` is `organizers:` followed by their account id). Set `from_organizers`, or the app shows the reply as from a former member.
-
-  ```sql
-  insert into messages (conversation_id, from_organizers, body) values ('<conversation id>', true, 'Thanks! The venue is not confirmed yet.');
-  ```
-
 - **Open a step:**
 
   ```sql
-  update event_settings set registration_open = true;  -- also check_in_open, submissions_open
+  update event_settings set registration_open = true where id;  -- also check_in_open, submissions_open, judging_open
   ```
 
 - **Set the venue code for self check-in.** It is never readable from the app. Each account gets ten tries per ten minutes.
 
   ```sql
-  update event_secrets set check_in_code = 'GOLD-7';
+  update event_secrets set check_in_code = 'GOLD-7' where id;
   ```
 
-- **Check someone in at the desk:**
+- **Check someone in by pass code:**
 
   ```sql
   insert into check_ins (user_id) select user_id from registrations where pass_code = 'DC-7KQ4-M2XP';
@@ -298,7 +317,7 @@ Organizers use the Table Editor or the SQL editor. Both bypass row-level securit
 
 ### Change the database
 
-Add a new file to [`supabase/migrations/`](supabase/migrations); never edit one that has been applied. Apply it to the project, then run `npm test`. The database tests check that every table has row-level security and that every table, column, function and argument the app uses exists.
+Add a new file to [`supabase/migrations/`](supabase/migrations); never edit one that has been applied. Run `npm run test:db`, apply it to the project, then run `npm test`. The database tests check that every table has row-level security and that every table, column, function and argument the app uses exists.
 
 The file names match the versions in the project's migration history. That history also lists six unnamed migrations from September 2025, from an earlier prototype in the same project. The first migration here removes what they created.
 
@@ -340,10 +359,12 @@ The Vercel project `dragonconnectorapp` deploys `main` to https://dragonconnecto
 | `public/src/vendor/` | qrcode-generator 2.0.4 and the published UMD build of supabase-js 2.118.0, both unmodified, with their licenses |
 | `public/styles/app.css` | Dragon Connector Brand System v1.0: Obsidian `#0B0B0B`, Ivory `#F8F8F6` and Dragon Gold `#D4AF37` at about 70/20/10, with Oxanium, Space Grotesk and IBM Plex Mono, including Vietnamese subsets |
 | `public/brand/`, `public/fonts/`, `public/icons/` | Logos, self-hosted fonts with their licenses, app icons and install screenshots |
-| `public/sw.js`, `public/precache.js` | The service worker and its generated file list |
+| `public/hq/` | HQ, the staff dashboard: `main.js` (sign-in, roles and routing), `api.js` (the `hq_` functions), `model.js` (numbers, the leaderboard and exports, all pure), `charts.js`, one module per page in `views/`, and `hq.css` on top of the app's styles |
+| `public/sw.js`, `public/precache.js` | The service worker and its generated file list (HQ is left out) |
 | `supabase/migrations/` | The database: tables, row-level security policies and functions, in the order they were applied |
-| `scripts/` | `build-precache.mjs` (the cache list) and `render-assets.cjs` (icons and install screenshots) |
-| `tests/` | The 58 `node:test` cases, and `fake-supabase.mjs`, an in-memory stand-in for the parts of supabase-js the app uses |
+| `supabase/tests/` | SQL tests for HQ, and a stand-in for Supabase so the migrations run on a plain PostgreSQL |
+| `scripts/` | `build-precache.mjs` (the cache list), `render-assets.cjs` (icons and install screenshots) and `test-database.sh` (the migrations and SQL tests on a throwaway PostgreSQL) |
+| `tests/` | The 75 `node:test` cases, `fake-supabase.mjs`, an in-memory stand-in for the parts of supabase-js the app uses, and `hq-fixture.mjs`, a sample event for HQ's tests |
 | `docs/readme/` | The images in this README |
 
 </details>

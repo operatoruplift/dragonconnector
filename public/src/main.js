@@ -5,6 +5,7 @@ import { createBackend } from './lib/backend.js';
 import { html } from './lib/html.js';
 import { icon } from './lib/icons.js';
 import { levelFor, xpOf } from './lib/game.js';
+import { registrationOpen } from './lib/gates.js';
 import { celebrate, startTour, toast } from './lib/ui.js';
 import { seedThreads } from './data/threads.js';
 import { EVENT, INTEGRATIONS } from './data/event.js';
@@ -33,8 +34,8 @@ const ROUTES = { home, waitlist, register, profile, checkin, team, inbox, submit
 const NAV = [
   { label: 'Journey', items: [
     { route: 'home', icon: 'home', title: 'Home' },
-    { route: 'waitlist', icon: 'list', title: 'Waitlist', quest: 'waitlist' },
-    { route: 'register', icon: 'pen', title: 'Pre-register', quest: 'register' },
+    // One way in: the waitlist until registration opens, then registration.
+    (state) => (registrationOpen(state) ? { route: 'register', icon: 'pen', title: 'Register', quest: 'register' } : { route: 'waitlist', icon: 'list', title: 'Waitlist', quest: 'waitlist' }),
     { route: 'checkin', icon: 'scan', title: 'Check-in', quest: 'checkin' },
     { route: 'team', icon: 'team', title: 'Teammates', quest: 'team' },
     { route: 'inbox', icon: 'inbox', title: 'Messages', unread: true },
@@ -67,7 +68,7 @@ const TABS = [
 const TOUR = [
   { target: '[data-tour="level"]', title: 'Your level', text: 'Every quest you complete earns XP. Level up from Hatchling to Dragon.' },
   { target: '#topbar .xp-chip', title: 'XP at a glance', text: 'Your level and XP follow you everywhere. Tap here to see every quest.' },
-  { target: '[data-tour="journey"]', title: 'Your journey', text: 'Waitlist, pre-registration, check-in, teammates, messages and submission, in order. The gold step is next.' },
+  { target: '[data-tour="journey"]', title: 'Your journey', text: 'The waitlist (then registration), check-in, teammates, messages and submission, in order. The gold step is next.' },
   { target: ['#sidebar a[href="#/team"]', '#tabbar a[href="#/team"]'], title: 'Find your crew', text: 'Teammates ranks builders whose skills complement yours and shows why.' },
   { target: ['#sidebar a[href="#/inbox"]', '#tabbar a[href="#/inbox"]'], title: 'Messages', text: 'Talk to your team, read announcements and ask the Dragon Guide about the event.' },
   { target: ['#sidebar .nav-group:nth-child(2)', '#tabbar a[href="#/more"]'], title: 'Everything else', text: 'The schedule, guides, docs, requirements, venue map, prize pool and sponsors.' },
@@ -198,7 +199,7 @@ function renderShell(state, current) {
       <span class="meter" aria-hidden="true"><span style="width:${Math.round(level.progress * 100)}%"></span></span>
       <span class="points">${xp} XP</span>
     </a>`);
-  document.getElementById('sidebar').innerHTML = String(html`${NAV.map((group) => html`<div class="nav-group"><span class="label">${group.label}</span>${group.items.map((item) => navLink(state, item, current))}</div>`)}`);
+  document.getElementById('sidebar').innerHTML = String(html`${NAV.map((group) => html`<div class="nav-group"><span class="label">${group.label}</span>${group.items.map((item) => navLink(state, typeof item === 'function' ? item(state) : item, current))}</div>`)}`);
   const tabbed = TABS.some((tab) => tab.route === current) ? current : 'more';
   const unread = Object.values(state.threads).reduce((sum, thread) => sum + (thread.unread || 0), 0);
   document.getElementById('tabbar').innerHTML = String(html`${TABS.map((tab) => html`<a class="tab" href="#/${tab.route === 'home' ? '' : tab.route}" ${tabbed === tab.route ? html`aria-current="page"` : ''}>${icon(tab.icon)}<span>${tab.title}</span>${tab.unread && unread ? html`<span class="dot" aria-label="${unread} unread">${unread}</span>` : ''}</a>`)}`);

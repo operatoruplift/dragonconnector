@@ -1,7 +1,7 @@
 // Live services through Supabase: an anonymous account per device, a copy of the builder's own
 // records for the organizers, live messages, real teams and check-in.
 //
-// The device stays the source of truth for what the builder types (profile, pre-registration,
+// The device stays the source of truth for what the builder types (profile, registration,
 // submission and waitlist entry); the server keeps a copy, and it is the source of truth for
 // check-in, conversations and teams. Browsing creates no account: one is made the first time there
 // is something to save or someone to talk to. Offline, or with anonymous sign-ins switched off, the
@@ -22,7 +22,7 @@ const TEAM_COLUMNS = 'id, name, track, open_roles, owner_id, conversation_id, cr
 const PROFILE_FIELDS = ['id', 'name', 'role', 'skills', 'tracks', 'looking_for', 'languages', 'formats', 'bio', 'github', 'discoverable'];
 const REGISTRATION_FIELDS = ['user_id', 'name', 'email', 'phone', 'format', 'experience', 'dietary', 'access_needs', 'agrees_to_conduct', 'media_consent', 'status', 'pass_code'];
 const SUBMISSION_FIELDS = ['owner_id', 'team_id', 'name', 'tagline', 'track', 'description', 'stack', 'integration', 'repo_url', 'video_url', 'live_url', 'status', 'submitted_at'];
-const LABELS = { profile: 'Your profile', registration: 'Your pre-registration', submission: 'Your submission' };
+const LABELS = { profile: 'Your profile', registration: 'Your registration', submission: 'Your submission' };
 
 const trimmed = (value) => String(value ?? '').trim();
 const webUrl = (value, max) => (isWebUrl(trimmed(value)) && trimmed(value).length <= max ? trimmed(value) : null);
@@ -51,8 +51,9 @@ export function profilePayload(profile, userId) {
 }
 
 export function registrationPayload(state, userId) {
-  const { status, data } = state.registration;
-  if (!['pre-registered', 'registered'].includes(status) || !data.conduct || !data.format || !data.experience || !data.media || !state.passCode) return null;
+  const { status, data, preview } = state.registration;
+  // A registration made in preview mode, before registration opened, stays on the device.
+  if (!['pre-registered', 'registered'].includes(status) || preview || !data.conduct || !data.format || !data.experience || !data.media || !state.passCode) return null;
   return {
     user_id: userId,
     name: trimmed(data.name),

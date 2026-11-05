@@ -1,6 +1,7 @@
 import { html } from '../lib/html.js';
 import { icon } from '../lib/icons.js';
 import { validateWaitlist } from '../lib/validate.js';
+import { officialRegistrationOpen } from '../lib/gates.js';
 import { EVENT, TRACKS } from '../data/event.js';
 import { ROLES } from '../data/people.js';
 import { SERVICES, errorSummary, field, head, liveMode, questTag, readForm, roleLabel, showErrors, trackTitle } from './common.js';
@@ -37,7 +38,21 @@ export default {
   render(state, params, ctx) {
     const entry = state.waitlist;
     const editing = params[0] === 'edit';
-    const intro = head('Step 01 · Get in', 'Join the waitlist', `Registration for ${EVENT.name} is not open yet. Join the waitlist to show your interest and be ready when it opens.`);
+    const open = officialRegistrationOpen(state);
+    const intro = head('Step 01 · Get in', 'Join the waitlist', open
+      ? `Registration for ${EVENT.name} is open, so there is no need to wait: register now.`
+      : `Registration for ${EVENT.name} is not open yet. Join the waitlist to hear first when it opens: your details carry over to registration.`);
+    // Once registration opens, the waitlist has done its job: new builders register straight away.
+    if (open && !entry) {
+      return html`<section class="view">${intro}
+        <div class="card accent">
+          <div class="card-head"><p class="eyebrow">Registration is open</p>${questTag(state, 'register')}</div>
+          <h2>Register instead</h2>
+          <p class="muted">It takes a few minutes, and your profile is filled in for you.</p>
+          <div class="form-actions"><a class="btn primary" href="#/register">${icon('pen')} Register now</a></div>
+        </div>
+      </section>`;
+    }
     if (entry && !editing) {
       return html`<section class="view">${intro}
         <div class="card accent">
@@ -45,7 +60,7 @@ export default {
           <h2>${entry.name}</h2>
           <dl class="summary-list"><div><dt>Email</dt><dd>${entry.email}</dd></div><div><dt>Role</dt><dd>${roleLabel(entry.role)}</dd></div><div><dt>Track</dt><dd>${entry.track ? trackTitle(entry.track) : 'Not sure yet'}</dd></div><div><dt>Joined</dt><dd>${new Date(entry.joinedAt).toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' })}</dd></div></dl>
           <p class="muted">${entryStatus(state, ctx)}</p>
-          <div class="form-actions"><a class="btn primary" href="#/register">Pre-register next ${icon('arrow')}</a>${SERVICES && !entry.sent && !sending ? html`<button type="button" class="btn" data-action="send">${icon('send')} Send my entry</button>` : ''}<a class="btn" href="#/waitlist/edit">Edit entry</a><button type="button" class="btn ghost" data-action="leave">Leave the waitlist</button></div>
+          <div class="form-actions">${open ? html`<a class="btn primary" href="#/register">${icon('pen')} Register now</a>` : html`<a class="btn primary" href="#/profile">Build your profile ${icon('arrow')}</a>`}${SERVICES && !entry.sent && !sending ? html`<button type="button" class="btn" data-action="send">${icon('send')} Send my entry</button>` : ''}<a class="btn" href="#/waitlist/edit">Edit entry</a><button type="button" class="btn ghost" data-action="leave">Leave the waitlist</button></div>
         </div>
       </section>`;
     }

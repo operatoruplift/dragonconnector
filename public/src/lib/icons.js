@@ -28,6 +28,13 @@ const PATHS = {
   arrow: 'M5 12h14m-6-6 6 6-6 6',
   back: 'M19 12H5m6-6-6 6 6 6',
   lock: 'M6 11h12v9H6v-9Zm2 0V8a4 4 0 0 1 8 0v3',
+  // HQ
+  refresh: 'M20 11a8 8 0 0 0-14.3-4.9L4 8m0-4v4h4M4 13a8 8 0 0 0 14.3 4.9L20 16m0 4v-4h-4',
+  chart: 'M4 20V4m0 16h16M8 16v-5m4 5V8m4 8v-3',
+  copy: 'M9 9h11v11H9V9Zm-5 6V4h11',
+  logout: 'M15 4h4v16h-4M10 8l-4 4 4 4M6 12h10',
+  megaphone: 'M4 10v4h3l7 4V6L7 10H4Zm14-1.5a4 4 0 0 1 0 7',
+  key: 'M11 12.5 20 3.5M16 7.5l2.5 2.5M13.5 10l2 2M8 19a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z',
   bolt: 'M13 3 5 14h6l-1 7 8-11h-6l1-7Z',
   download: 'M12 4v12m0 0-5-5m5 5 5-5M4 20h16',
   external: 'M14 5h5v5M19 5l-8 8M10 5H5v14h14v-5',

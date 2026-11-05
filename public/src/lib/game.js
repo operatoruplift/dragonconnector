@@ -1,6 +1,7 @@
 // Quests, levels and badges. XP is never stored: it is the sum of the quests a person has
 // completed, and a quest stays complete once earned.
 import { GUIDES, REQUIREMENTS } from '../data/content.js';
+import { registrationOpen } from './gates.js';
 
 export const LEVELS = [
   { name: 'Hatchling', min: 0 },
@@ -15,6 +16,8 @@ export const LEVELS = [
 export const PHASES = ['Get in', 'Find your crew', 'Prepare', 'At the event'];
 
 const sentByMe = (thread) => thread?.messages?.some((message) => message.from === 'me');
+/** Registered, or holding details saved before the waitlist and pre-registration became one step. */
+export const registered = (state) => ['pre-registered', 'registered'].includes(state.registration?.status);
 const requirementIds = REQUIREMENTS.flatMap((group) => group.items.map((item) => item.id));
 
 export function profileComplete(profile = {}) {
@@ -22,9 +25,11 @@ export function profileComplete(profile = {}) {
 }
 
 export const QUESTS = [
-  { id: 'waitlist', phase: 'Get in', title: 'Join the waitlist', xp: 50, route: 'waitlist', done: (s) => Boolean(s.waitlist) },
+  // One step to get in: the waitlist until registration opens, then registration. Registering counts
+  // for the list too, so builders who arrive after it opens are not left a quest short.
+  { id: 'waitlist', phase: 'Get in', title: 'Get on the list', xp: 50, route: 'waitlist', hint: 'Join the waitlist, or register when registration opens.', done: (s) => Boolean(s.waitlist) || registered(s) },
   { id: 'profile', phase: 'Get in', title: 'Build your builder profile', xp: 100, route: 'profile', hint: 'Name, role, three skills, a track and what you are looking for.', done: (s) => profileComplete(s.profile) },
-  { id: 'register', phase: 'Get in', title: 'Pre-register', xp: 150, route: 'register', done: (s) => ['pre-registered', 'registered'].includes(s.registration.status) },
+  { id: 'register', phase: 'Get in', title: 'Register', xp: 150, route: 'register', hint: 'Opens with registration. Your waitlist details are filled in for you.', ready: (s) => registrationOpen(s), done: registered },
   { id: 'tour', phase: 'Get in', title: 'Take the app tour', xp: 50, route: 'home', done: (s) => s.tourDone },
   { id: 'install', phase: 'Get in', title: 'Install the app', xp: 50, route: 'settings', done: (s) => s.installed },
   { id: 'browse', phase: 'Find your crew', title: 'Explore teammate matches', xp: 20, route: 'team', done: (s) => Boolean(s.visited.team) },
@@ -48,9 +53,9 @@ export const QUESTS = [
 export const MAX_XP = QUESTS.reduce((sum, quest) => sum + quest.xp, 0);
 
 export const BADGES = [
-  { id: 'listed', title: 'On the list', detail: 'Joined the waitlist', quests: ['waitlist'] },
+  { id: 'listed', title: 'On the list', detail: 'Joined the waitlist or registered', quests: ['waitlist'] },
   { id: 'pathfinder', title: 'Pathfinder', detail: 'Took the tour and built a profile', quests: ['tour', 'profile'] },
-  { id: 'ready', title: 'Pre-registered', detail: 'Completed pre-registration', quests: ['register'] },
+  { id: 'ready', title: 'Registered', detail: 'Completed registration', quests: ['register'] },
   { id: 'pocket', title: 'Pocket dragon', detail: 'Installed the app', quests: ['install'] },
   { id: 'crew', title: 'Crew assembled', detail: 'Sent an intro and created a team', quests: ['intro', 'team'] },
   { id: 'scholar', title: 'Scholar', detail: 'Read every guide', quests: ['all-guides'] },
@@ -90,4 +95,9 @@ export function applyProgress(draft, now) {
   return events;
 }
 
-export const nextQuest = (state) => QUESTS.find((quest) => !state.quests[quest.id] && quest.phase !== 'At the event') ?? QUESTS.find((quest) => !state.quests[quest.id]) ?? null;
+/** The next quest to suggest: one that can be done now, before the event's own steps. */
+export function nextQuest(state) {
+  const open = QUESTS.filter((quest) => !state.quests[quest.id]);
+  const ready = open.filter((quest) => quest.ready?.(state) ?? true);
+  return ready.find((quest) => quest.phase !== 'At the event') ?? ready[0] ?? open[0] ?? null;
+}

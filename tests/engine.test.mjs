@@ -36,7 +36,19 @@ test('progress is recorded once, derives XP, and reports quests, level-ups and b
   state.waitlist = null;
   applyProgress(state, 300);
   assert.equal(state.quests.waitlist, 100, 'a completed quest stays complete');
-  assert.equal(nextQuest(state).id, 'register');
+  assert.equal(nextQuest(state).id, 'tour', 'registration has not opened, so the next quest is one that can be done now');
+  assert.equal(nextQuest({ ...state, preview: true }).id, 'register', 'preview mode unlocks registration');
+  assert.equal(nextQuest({ ...state, eventSettings: { registrationOpen: true } }).id, 'register', 'and so do the organizers');
+});
+
+test('registering also puts a builder on the list, so arriving after registration opens costs no XP', () => {
+  const state = initialState(1);
+  state.registration = { status: 'registered', step: 0, data: {}, updatedAt: 1 };
+  const quests = applyProgress(state, 100).filter((event) => event.type === 'quest').map((event) => event.quest.id);
+  assert.deepEqual(quests, ['waitlist', 'register']);
+  assert.deepEqual(earnedBadges(state).map((badge) => badge.id), ['listed', 'ready']);
+  assert.equal(BADGES.find((badge) => badge.id === 'ready').title, 'Registered');
+  assert.ok(!QUESTS.some((quest) => /pre-?regist/i.test(`${quest.title} ${quest.hint ?? ''}`)), 'no quest asks people to pre-register');
 });
 
 test('a profile needs a name, role, three skills, a track and a goal', () => {

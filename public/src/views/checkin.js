@@ -3,7 +3,7 @@ import { icon } from '../lib/icons.js';
 import { checkInOpen, formatOf } from '../lib/gates.js';
 import { countdown, eventWindow } from '../lib/time.js';
 import qrcode from '../vendor/qrcode.mjs';
-import { GATES, PREVIEW_CHECK_IN_CODE } from '../data/event.js';
+import { EVENT, GATES, PREVIEW_CHECK_IN_CODE } from '../data/event.js';
 import { SERVICES, head, previewNotice, questTag } from './common.js';
 
 /** An SVG QR code with a quiet zone, dark modules on ivory for reliable scanning. */
@@ -23,6 +23,9 @@ export function qrSvg(text) {
 
 export const normaliseCode = (value) => String(value).trim().toUpperCase().replace(/\s+/g, '');
 
+/** What the pass's QR code holds: the check-in desk page in HQ, so any phone camera opens it there. */
+export const passUrl = (passCode) => `${EVENT.appUrl}hq/#/door/${passCode}`;
+
 export default {
   title: () => 'Check-in',
   render(state, params, ctx) {
@@ -37,7 +40,7 @@ export default {
       <div class="grid cols-2">
         <div class="pass">
           <p class="eyebrow">Check-in pass</p>
-          <div class="qr">${qrSvg(`DC001:${state.passCode}`)}</div>
+          <div class="qr">${qrSvg(passUrl(state.passCode))}</div>
           <p class="pass-code" aria-label="Pass code ${state.passCode.split('').join(' ')}">${state.passCode}</p>
           <p><strong>${state.profile.name || 'Add your name in Profile'}</strong></p>
           <p class="small-print">${open ? 'Show this at the check-in desk.' : `This pass is a preview. ${GATES.checkIn.note}${until.past ? '' : ` That is ${until.days} days away.`}`}</p>
@@ -49,7 +52,7 @@ export default {
             ${state.preview ? html`<p class="hint">Preview mode: use ${PREVIEW_CHECK_IN_CODE}.</p>` : ''}</div>
           <button class="btn primary" type="submit" ${open && !checked ? '' : 'disabled'}>${icon('scan')} Check in</button>
           ${!open ? html`<p class="small-print">${GATES.checkIn.note} Turn on preview mode in <a href="#/settings">Settings</a> to try it now.</p>` : ''}
-          ${SERVICES && !checked && !['pre-registered', 'registered'].includes(state.registration.status) ? html`<p class="small-print"><a href="#/register">Pre-register</a> first, so the organizers know who is checking in.</p>` : ''}
+          ${SERVICES && !checked && (state.registration.status !== 'registered' || state.registration.preview) ? html`<p class="small-print"><a href="#/register">Register</a> first, so the organizers know who is checking in.</p>` : ''}
         </form>
       </div>
     </section>`;

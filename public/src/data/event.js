@@ -42,7 +42,7 @@ export const EVENT = {
 // switches in the event_settings table decide (see lib/gates.js). Preview mode unlocks the closed
 // steps on this device for demonstration only.
 export const GATES = {
-  registration: { open: false, note: 'Registration is not open. Pre-register now so your details are ready when it opens.' },
+  registration: { open: false, note: 'Registration is not open yet. Join the waitlist to hear first when it opens: your details carry over.' },
   checkIn: { note: 'Check-in opens at the venue at 08:30 on Saturday 12 December.' },
   submissions: { note: 'Submissions open on Sunday 13 December and close at 16:30.' },
 };
@@ -188,7 +188,7 @@ export const EXAMPLE_SPONSORS = [
 export const FAQS = [
   { q: 'How much does it cost?', a: 'Nothing. Dragon Connector is free to attend, and meals are included: breakfast and lunch on both days, and dinner on Saturday.' },
   { q: 'When and where is it?', a: `On ${EVENT.dateLabel} in Da Nang: ${FORMATS.A.hours}. The planned venue is Swinburne University Vietnam. ${EVENT.venue.alternative} The venue is confirmed when registration opens.` },
-  { q: 'Can people register now?', a: 'Not yet. Join the waitlist and pre-register in this app so your details are ready; registration opens here soon and waitlist members hear first.' },
+  { q: 'Can people register now?', a: 'Not yet. Join the waitlist in this app: waitlist members hear first when registration opens here, and their details carry over to the registration form.' },
   { q: 'How big can a team be?', a: 'Up to 4 people. You can also come alone and find teammates here or at team formation on Saturday morning.' },
   { q: 'Does our code have to be public?', a: `Yes. Code freezes at ${FORMATS.A.codeFreeze} on Sunday, and you submit a public GitHub repository in the app by ${FORMATS.A.submissionsClose}. Judges only score projects they can open, and you keep ownership of your code.` },
   { q: 'How are prizes paid?', a: 'In VND by bank transfer, or in goods. Never in crypto. Prizes over VND 20 million carry 10% personal income tax, which the payer withholds.' },

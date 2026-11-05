@@ -6,9 +6,9 @@ import { fileURLToPath } from 'node:url';
 import { join, relative, sep } from 'node:path';
 
 export const PUBLIC = fileURLToPath(new URL('../public/', import.meta.url));
-// The worker itself, its generated list, licence texts, install-dialog screenshots and the link-preview
-// image are not needed offline.
-const SKIP = [/^sw\.js$/, /^precache\.js$/, /\.txt$/, /^icons\/screenshot-/, /^og\.png$/];
+// The worker itself, its generated list, licence texts, install-dialog screenshots, the link-preview
+// image and HQ (the staff dashboard, never offline) are not cached.
+const SKIP = [/^sw\.js$/, /^precache\.js$/, /\.txt$/, /^icons\/screenshot-/, /^og\.png$/, /^hq\//];
 
 function walk(directory) {
   return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
