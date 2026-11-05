@@ -63,6 +63,12 @@ export function avatar(name, { me = false, large = false } = {}) {
   return html`<span class="avatar${me ? ' me' : ''}${large ? ' large' : ''}" aria-hidden="true">${initials(name)}</span>`;
 }
 
+/** The official voices carry the Dragon Connector marks: the round logo, or the gold star for the Dragon Guide. */
+export function brandAvatar(kind) {
+  const src = kind === 'guide' ? 'brand/dragon-connector-star.svg' : 'brand/dragon-connector-avatar.svg';
+  return html`<span class="avatar brand ${kind}" aria-hidden="true"><img src="${src}" alt="" width="46" height="46"></span>`;
+}
+
 export const previewNotice = (state) => (state.preview
   ? html`<p class="notice"><strong>Preview mode is on.</strong> Steps that open later are unlocked on this device so you can try them. Preview check-ins and submissions are not sent to the organizers.</p>`
   : '');

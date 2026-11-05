@@ -243,6 +243,9 @@ textarea { min-height: 110px; resize: vertical; line-height: 1.5; }
 .avatar { flex: none; display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; background: var(--charcoal); color: var(--gold-light); font: 700 0.95rem/1 var(--body); border: 1px solid var(--line-strong); }
 .avatar.me { background: var(--gold); color: var(--obsidian); }
 .avatar.large { width: 72px; height: 72px; font-size: 1.4rem; }
+.avatar.brand { overflow: hidden; background: var(--obsidian); }
+.avatar.brand img { display: block; width: 100%; height: 100%; }
+.avatar.brand.guide img { width: 56%; height: 56%; }
 .score { margin-left: auto; text-align: right; }
 .score strong { display: block; font: 800 1.35rem/1 var(--display); color: var(--gold); }
 .score span { font: 600 0.62rem/1 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }

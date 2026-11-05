@@ -4,14 +4,16 @@ import { answer, QUICK_QUESTIONS } from '../lib/guide.js';
 import { relativeTime } from '../lib/time.js';
 import { latestAt } from '../lib/backend.js';
 import { SAMPLE_PROFILES } from '../data/people.js';
-import { avatar, back, canGoLive, connectCard, head, liveMode } from './common.js';
+import { avatar, back, brandAvatar, canGoLive, connectCard, head, liveMode } from './common.js';
 
 const lastAt = (thread) => thread.messages.at(-1)?.at ?? 0;
-const AVATARS = { guide: 'Dragon Guide', announcements: 'Dragon Connector', organizers: 'Organizers', team: null };
+// Dragon Connector's announcements, the organizers and the Dragon Guide show the brand marks; people show initials.
+const OFFICIAL = ['announcements', 'organizers', 'guide'];
 
 function threadAvatar(state, thread) {
   if (thread.kind === 'team') return avatar(state.team?.name ?? 'Team');
-  return avatar(AVATARS[thread.kind] ?? thread.title);
+  if (OFFICIAL.includes(thread.kind)) return brandAvatar(thread.kind);
+  return avatar(thread.title);
 }
 
 function authorOf(thread, item) {

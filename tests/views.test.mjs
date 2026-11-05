@@ -273,3 +273,14 @@ test('the app lives at dragonconnector.com/app/, and only its old address moves 
   assert.equal(visit('localhost', ''), null);
   assert.equal(JSON.parse(read('manifest.webmanifest')).id, './', 'the installed app is identified by its own path');
 });
+
+test('Dragon Connector, the organizers and the Dragon Guide carry the brand marks in the inbox; people keep their initials', () => {
+  const state = fresh();
+  const list = String(views.inbox.render(state, [], ctx(before)));
+  assert.match(list, /<span class="avatar brand announcements" aria-hidden="true"><img src="brand\/dragon-connector-avatar\.svg"/);
+  assert.match(list, /<span class="avatar brand guide" aria-hidden="true"><img src="brand\/dragon-connector-star\.svg"/);
+  const thread = String(views.inbox.render(state, ['announcements'], ctx(before)));
+  assert.match(thread, /class="avatar brand announcements"/);
+  const person = String(views.inbox.render(busy(), ['dm-linh'], ctx(before)));
+  assert.match(person, /<span class="avatar" aria-hidden="true">LN<\/span>/);
+});
