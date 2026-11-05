@@ -10,7 +10,7 @@ export default {
   render(state) {
     const zone = MAP_ZONES.find((item) => item.id === selected) ?? MAP_ZONES[0];
     return html`<section class="view">
-      ${head('Explore', 'Venue map', `${EVENT.venue.name}, ${EVENT.venue.city}. ${EVENT.venue.status}`)}
+      ${head('Explore', 'Venue map', `${EVENT.venue.name}, ${EVENT.venue.city}. ${EVENT.venue.status} ${EVENT.venue.alternative}`)}
       <p class="notice quiet"><strong>Illustrative layout.</strong> The zones come from the stations in the event plan. The real floor plan will follow the confirmed room.</p>
       <div class="map-wrap">
         <svg class="floor" viewBox="0 0 800 400" role="group" aria-label="Illustrative venue floor plan">

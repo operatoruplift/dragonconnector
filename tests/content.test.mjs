@@ -167,3 +167,12 @@ test('the event is independent: no "Solana Mobile" track, no fast-track prize an
   assert.doesNotMatch(appText, /fast-track(?! is)|USDC|USDT|USDG|paid in (SOL|crypto|tokens)/i);
   assert.equal(EVENT.teamMax, 4);
 });
+
+test('the venue answers name the planned venue and S-Talent Cafe, which is also available', async () => {
+  const { answer } = await import('../public/src/lib/guide.js');
+  const { EVENT } = await import('../public/src/data/event.js');
+  const reply = answer('Where is the venue?');
+  assert.match(reply.text, /Swinburne University Vietnam/);
+  assert.match(reply.text, /S-Talent Cafe is also available, with two floors, a large event space, a big-screen projector and a rooftop\./);
+  assert.match(EVENT.venue.alternative, /^S-Talent Cafe/);
+});

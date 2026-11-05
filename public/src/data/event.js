@@ -33,6 +33,8 @@ export const EVENT = {
     name: 'Swinburne University Vietnam',
     city: 'Da Nang',
     status: 'Planned venue. The booking is being confirmed and is announced with registration.',
+    // Also available to the organizers.
+    alternative: 'S-Talent Cafe is also available, with two floors, a large event space, a big-screen projector and a rooftop.',
   },
 };
 
@@ -185,7 +187,7 @@ export const EXAMPLE_SPONSORS = [
 
 export const FAQS = [
   { q: 'How much does it cost?', a: 'Nothing. Dragon Connector is free to attend, and meals are included: breakfast and lunch on both days, and dinner on Saturday.' },
-  { q: 'When and where is it?', a: `On ${EVENT.dateLabel} in Da Nang: ${FORMATS.A.hours}. The planned venue is Swinburne University Vietnam; the venue is confirmed when registration opens.` },
+  { q: 'When and where is it?', a: `On ${EVENT.dateLabel} in Da Nang: ${FORMATS.A.hours}. The planned venue is Swinburne University Vietnam. ${EVENT.venue.alternative} The venue is confirmed when registration opens.` },
   { q: 'Can people register now?', a: 'Not yet. Join the waitlist and pre-register in this app so your details are ready; registration opens here soon and waitlist members hear first.' },
   { q: 'How big can a team be?', a: 'Up to 4 people. You can also come alone and find teammates here or at team formation on Saturday morning.' },
   { q: 'Does our code have to be public?', a: `Yes. Code freezes at ${FORMATS.A.codeFreeze} on Sunday, and you submit a public GitHub repository in the app by ${FORMATS.A.submissionsClose}. Judges only score projects they can open, and you keep ownership of your code.` },
