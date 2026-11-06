@@ -37,7 +37,7 @@
 
 <br>
 
-<img src="docs/readme/screens.png" alt="Four phone screens of the app with a fictional builder, An Nguyen. 01, level up: the home screen at level 3, Builder, with 415 XP, 7 of 21 quests and 3 of 10 badges, and the date card: Saturday 12 and Sunday 13 December 2026, free, meals included, two days in Da Nang, 08:30–19:00 on Saturday and 08:30–18:45 on Sunday. 02, find your crew: sample profiles of mobile developers with match scores of 78 and 72 and the reasons, each labelled as a sample profile. 03, ask the Guide: the Dragon Guide answers that Dragon Connector is on Saturday 12 and Sunday 13 December 2026, 08:30–19:00 on Saturday and 08:30–18:45 on Sunday, with a link to the schedule. 04, carry your pass: a QR check-in pass with the code DC-7KQ4-M2XP, marked as a preview until check-in opens on Saturday 12 December, and self check-in with a venue code." width="100%">
+<img src="docs/readme/screens.png" alt="Four phone screens of the app with a fictional builder, An Nguyen. 01, level up: the home screen at level 3, Builder, with 415 XP, 7 of 21 quests and 3 of 10 badges, and the date card: Saturday 12 and Sunday 13 December 2026, free, meals included, two days in Da Nang, 08:30 to 19:00 on Saturday and 08:30 to 18:45 on Sunday. 02, find your crew: sample profiles of mobile developers with match scores of 78 and 72 and the reasons, each labelled as a sample profile. 03, ask the Guide: the Dragon Guide answers that Dragon Connector is on Saturday 12 and Sunday 13 December 2026, 08:30 to 19:00 on Saturday and 08:30 to 18:45 on Sunday, with a link to the schedule. 04, carry your pass: a QR check-in pass with the code DC-7KQ4-M2XP, marked as a preview until check-in opens on Saturday 12 December, and self check-in with a venue code." width="100%">
 
 <p align="center"><sub>Captured from a local build on 4 November 2026 with a fictional builder, connected to the in-memory Supabase from <code>tests/fake-supabase.mjs</code>. Nothing was sent to the live project.</sub></p>
 
@@ -177,7 +177,7 @@ The tests enforce these rules: no prospect names, no "apply now", no screen clai
   </tr>
   <tr valign="top">
     <td align="center"><img src="https://img.shields.io/badge/DATE_SET-D4AF37?style=for-the-badge" alt="Date set"></td>
-    <td>The event itself. Dragon Connector · Da Nang / 001 is on Saturday 12 and Sunday 13 December 2026, in the daytime only: 08:30–19:00 on Saturday and 08:30–18:45 on Sunday, with 13 hours 15 minutes of building. Code freezes at 16:00 on Sunday, submissions close at 16:30 and the finalist demos start at 16:45. The planned venue is Swinburne University Vietnam, with the booking being confirmed. Sponsor tiers and prizes are on the event site.</td>
+    <td>The event itself. Dragon Connector · Da Nang / 001 is on Saturday 12 and Sunday 13 December 2026, in the daytime only: 08:30 to 19:00 on Saturday and 08:30 to 18:45 on Sunday, with 13 hours 15 minutes of building. Code freezes at 16:00 on Sunday, submissions close at 16:30 and the finalist demos start at 16:45. The planned venue is Swinburne University Vietnam, with the booking being confirmed. Sponsor tiers and prizes are on the event site.</td>
     <td><a href="https://dragonconnector.com">The event site</a></td>
   </tr>
   <tr valign="top">
